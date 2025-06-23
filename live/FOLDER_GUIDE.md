@@ -28,8 +28,17 @@ This directory contains the real-time collaboration service for Plane. It provid
 live/
 ├── FOLDER_GUIDE.md (This file)
 ├── src/                        # TypeScript source code
-│   ├── [live service modules]  # Real-time service implementation
-│   └── [WebSocket handlers]    # WebSocket connection and event handlers
+│   ├── server.ts              # Main server entry point (3.7KB, 141 lines)
+│   ├── ce/                    # Community Edition live features
+│   ├── core/                  # Core live service implementation
+│   │   ├── config/            # Configuration management
+│   │   ├── extensions/        # Live service extensions
+│   │   ├── helpers/           # Helper utilities
+│   │   ├── lib/               # Core libraries
+│   │   ├── services/          # Live service implementations
+│   │   ├── types/             # TypeScript type definitions
+│   │   └── hocuspocus-server.ts # Hocuspocus collaboration server (2.3KB)
+│   └── ee/                    # Enterprise Edition live features
 ├── package.json               # Node.js dependencies and scripts
 ├── tsconfig.json              # TypeScript configuration
 ├── tsup.config.ts             # Build configuration with tsup

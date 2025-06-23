@@ -37,6 +37,12 @@ admin/
 ├── ce/                    # Community Edition components
 ├── core/                  # Core admin components and utilities
 │   ├── components/       # Reusable admin components
+│   │   ├── admin-sidebar/    # Admin navigation sidebar
+│   │   ├── authentication/  # Authentication components
+│   │   ├── common/          # Common admin components
+│   │   ├── instance/        # Instance management components
+│   │   ├── login/           # Login interface components
+│   │   └── workspace/       # Workspace admin components
 │   ├── hooks/           # Admin-specific React hooks
 │   ├── layouts/         # Admin layout components
 │   ├── lib/             # Admin utility libraries

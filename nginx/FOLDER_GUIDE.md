@@ -27,14 +27,13 @@ This directory contains Nginx reverse proxy configurations for Plane. It provide
 ```
 nginx/
 ├── FOLDER_GUIDE.md (This file)
-├── nginx.conf.template         # Production Nginx configuration template
-├── nginx.conf.dev             # Development Nginx configuration
-├── nginx-single-docker-image.conf # Single Docker image configuration
-├── env.sh                     # Environment variable processing script
-├── Dockerfile                 # Production Nginx Docker image
-├── Dockerfile.dev            # Development Nginx Docker image
-├── .prettierignore           # Prettier formatting ignore file
-└── [additional configs]       # Additional configuration files
+├── nginx.conf.template         # Production Nginx configuration template (2.7KB, 80 lines)
+├── nginx.conf.dev             # Development Nginx configuration (2.5KB, 72 lines)
+├── nginx-single-docker-image.conf # Single Docker image configuration (766B, 31 lines)
+├── env.sh                     # Environment variable processing script (181B, 8 lines)
+├── Dockerfile                 # Production Nginx Docker image (258B, 11 lines)
+├── Dockerfile.dev            # Development Nginx Docker image (253B, 11 lines)
+└── .prettierignore           # Prettier formatting ignore file (19B, 1 line)
 ```
 
 ## Key Features

@@ -87,11 +87,14 @@ apiserver/
 - **Permission System**: Role-based access control
 
 ### Background Tasks (`bgtasks/`)
-- **Celery Tasks**: Asynchronous task processing
-- **Scheduled Jobs**: Periodic task execution
-- **Email Processing**: Email sending and templates
-- **Data Processing**: Background data processing
-- **Integration Tasks**: External service integration
+- **Celery Tasks**: Asynchronous task processing (29 task files)
+- **Email Tasks**: User activation, deactivation, invitations, forgot password, magic links
+- **Issue Tasks**: Issue activities, automation, version sync, description versioning
+- **Notification Tasks**: Email notifications, in-app notifications (36KB notification engine)
+- **Export Tasks**: Data export, analytics export, exporter cleanup
+- **Webhook Tasks**: External webhook processing (14KB webhook engine)
+- **Data Tasks**: Dummy data generation, deletion tasks, storage metadata
+- **Integration Tasks**: API logs, event tracking, file assets, page transactions
 
 ## Technical Architecture
 

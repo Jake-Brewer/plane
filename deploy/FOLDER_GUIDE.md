@@ -27,13 +27,16 @@ This directory contains deployment configurations and infrastructure-as-code for
 deploy/
 ├── FOLDER_GUIDE.md (This file)
 ├── selfhost/                   # Self-hosted deployment configurations
-│   ├── [deployment scripts]   # Scripts for self-hosted setup
-│   ├── [configuration files]  # Environment configurations
-│   └── [setup utilities]      # Installation and setup utilities
+│   ├── install.sh             # Main installation script (20KB, 653 lines)
+│   ├── docker-compose.yml     # Docker Compose configuration (6.3KB, 234 lines)
+│   ├── variables.env          # Environment variables template (1.1KB, 58 lines)
+│   ├── build.yml              # Build configuration (764B, 31 lines)
+│   ├── restore.sh             # Backup restoration script (3.5KB, 121 lines)
+│   ├── migration-0.13-0.14.sh # Version migration script (3.4KB, 119 lines)
+│   ├── README.md              # Self-hosting documentation (16KB, 483 lines)
+│   └── images/                # Docker image configurations
 └── kubernetes/                 # Kubernetes deployment manifests
-    ├── [k8s manifests]        # Kubernetes YAML configurations
-    ├── [helm charts]          # Helm chart templates (if present)
-    └── [config maps]          # Kubernetes configuration maps
+    └── README.md              # Kubernetes deployment guide (238B, 6 lines)
 ```
 
 ## Deployment Options

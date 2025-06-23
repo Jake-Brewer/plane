@@ -54,7 +54,9 @@ packages/
 #### types/
 - **Purpose**: TypeScript type definitions and interfaces
 - **Usage**: Provides type safety across the entire project
-- **Key Files**: Domain-specific type definitions
+- **Key Files**: 37+ type definition files organized by domain
+- **Structure**: Includes subdirectories for issues/, project/, instance/, cycle/, module/, importer/, favorite/, current-user/, workspace-draft-issues/
+- **Coverage**: Comprehensive types for workspace, users, issues, projects, analytics, integrations, and more
 
 #### utils/
 - **Purpose**: General utility functions and helpers
@@ -66,7 +68,9 @@ packages/
 #### ui/
 - **Purpose**: Reusable UI component library
 - **Usage**: Core components used across all frontend applications
-- **Key Files**: Component definitions, styles, and documentation
+- **Key Files**: 27+ component directories including buttons, forms, modals, tables, icons, dropdowns, etc.
+- **Structure**: Organized by component type (avatar/, badge/, button/, card/, dropdown/, form-fields/, modals/, tables/, etc.)
+- **Components**: Comprehensive UI library with toast, tooltip, progress, typography, breadcrumbs, and specialized components
 
 #### tailwind-config/
 - **Purpose**: Shared Tailwind CSS configuration
@@ -105,7 +109,9 @@ packages/
 #### services/
 - **Purpose**: API service layer abstractions
 - **Usage**: Standardized API communication across applications
-- **Key Files**: API client configurations and service abstractions
+- **Key Files**: 16+ service directories covering all API domains
+- **Structure**: Organized by domain (analytics/, auth/, cycle/, dashboard/, file/, issue/, project/, user/, workspace/, etc.)
+- **Coverage**: Complete API service layer with specialized services for AI, developer tools, intake, labels, modules, and states
 
 #### shared-state/
 - **Purpose**: Shared state management utilities

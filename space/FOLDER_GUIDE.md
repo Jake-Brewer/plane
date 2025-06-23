@@ -40,10 +40,17 @@ space/
 │   └── store/                 # CE public state management
 ├── core/                       # Core public components
 │   ├── components/            # Reusable public components (7 dirs)
-│   ├── hooks/                 # Core public React hooks
-│   ├── lib/                   # Public utility libraries
-│   ├── store/                 # Core public state management
-│   └── types/                 # TypeScript type definitions
+│   │   ├── account/           # Public account components
+│   │   ├── common/            # Common public components
+│   │   ├── editor/            # Public editor components
+│   │   ├── instance/          # Public instance components
+│   │   ├── issues/            # Public issue components
+│   │   ├── ui/                # Public UI components
+│   │   └── views/             # Public view components
+│   ├── hooks/                 # Core public React hooks (5 files)
+│   ├── lib/                   # Public utility libraries (3 files)
+│   ├── store/                 # Core public state management (12+ stores)
+│   └── types/                 # TypeScript type definitions (6 files)
 ├── ee/                         # Enterprise Edition components
 │   ├── components/            # EE-specific public components
 │   ├── hooks/                 # EE public hooks

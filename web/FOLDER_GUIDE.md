@@ -49,14 +49,55 @@ web/
 │   ├── store/                # CE state management
 │   └── types/                # CE TypeScript types
 ├── core/                       # Core application components
-│   ├── components/           # Reusable core components (40+ dirs)
-│   ├── constants/            # Application constants
-│   ├── hooks/                # Core React hooks
+│   ├── components/           # Reusable core components (41 dirs)
+│   │   ├── account/          # Account management components
+│   │   ├── analytics/        # Analytics and reporting components
+│   │   ├── api-token/        # API token management
+│   │   ├── archives/         # Archive functionality
+│   │   ├── auth-screens/     # Authentication screens
+│   │   ├── automation/       # Automation features
+│   │   ├── command-palette/  # Command palette interface
+│   │   ├── common/           # Common shared components
+│   │   ├── core/             # Core system components
+│   │   ├── cycles/           # Sprint/cycle management
+│   │   ├── dashboard/        # Dashboard components
+│   │   ├── dropdowns/        # Dropdown components
+│   │   ├── editor/           # Rich text editor
+│   │   ├── empty-state/      # Empty state illustrations
+│   │   ├── estimates/        # Issue estimation
+│   │   ├── exporter/         # Data export functionality
+│   │   ├── gantt-chart/      # Gantt chart visualization
+│   │   ├── global/           # Global UI components
+│   │   ├── graphs/           # Chart and graph components
+│   │   ├── home/             # Home page components
+│   │   ├── icons/            # Icon components
+│   │   ├── inbox/            # Inbox functionality
+│   │   ├── instance/         # Instance management
+│   │   ├── integration/      # External integrations
+│   │   ├── issues/           # Issue management
+│   │   ├── labels/           # Label management
+│   │   ├── modules/          # Module/feature management
+│   │   ├── onboarding/       # User onboarding
+│   │   ├── page-views/       # Page view components
+│   │   ├── pages/            # Page/document management
+│   │   ├── profile/          # User profile management
+│   │   ├── project/          # Project management
+│   │   ├── project-states/   # Project state management
+│   │   ├── sidebar/          # Navigation sidebar
+│   │   ├── stickies/         # Sticky notes functionality
+│   │   ├── ui/               # UI utility components
+│   │   ├── user/             # User management
+│   │   ├── views/            # Custom view management
+│   │   ├── web-hooks/        # Webhook management
+│   │   ├── workspace/        # Workspace management
+│   │   └── workspace-notifications/ # Workspace notifications
+│   ├── constants/            # Application constants (29 files)
+│   ├── hooks/                # Core React hooks (40+ hooks)
 │   ├── layouts/              # Application layouts
 │   ├── lib/                  # Core utility libraries
 │   ├── local-db/             # Local database utilities
-│   ├── services/             # API service layer
-│   └── store/                # Core state management
+│   ├── services/             # API service layer (23+ services)
+│   └── store/                # Core state management (18+ stores)
 ├── ee/                         # Enterprise Edition components
 │   ├── components/           # EE-specific components
 │   ├── constants/            # EE constants and configuration

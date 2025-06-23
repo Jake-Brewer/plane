@@ -37,9 +37,13 @@ Contains research findings, analysis, and evaluation materials.
 
 **Current Contents:**
 - `llm/` - LLM provider evaluations, performance analysis, and recommendations
-  - `preparation.md` - LLM setup and preparation guidelines
-  - `ratings.md` - Comparative analysis of LLM providers
-  - `strengths-and-weaknesses.md` - Detailed evaluation of LLM capabilities
+  - `preparation.md` - LLM setup and preparation guidelines (16KB, 350 lines)
+  - `ratings.md` - Comparative analysis of LLM providers (5.9KB, 104 lines)
+  - `strengths-and-weaknesses.md` - Detailed evaluation of LLM capabilities (9.5KB, 224 lines)
+  - `project_analysis_selector.md` - Project analysis selection guidance (16KB, 459 lines)
+  - `model_style_guide.md` - Model style and usage guidelines (23KB, 368 lines)
+  - `model_selection_prompt.md` - Model selection prompting strategies (7.2KB, 150 lines)
+  - `cheapest_model_selector.md` - Cost-effective model selection guide (9.7KB, 284 lines)
 
 ### working_with_llm/
 Contains analysis and reference materials for LLM agent workflows.
