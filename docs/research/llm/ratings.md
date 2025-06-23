@@ -2,28 +2,6 @@
 
 This document provides a comprehensive overview of the Large Language Models (LLMs) available out-of-the-box in Cursor IDE, along with their characteristics and performance ratings.
 
-## Recommended Development Limits per Model
-
-Based on extensive research from multiple sources including OpenAI documentation, Anthropic guidelines, and developer best practices, these are the recommended limits for optimal performance with each model:
-
-| Model | Max Method Length | Max File Length | Max Context per Request | Max Concurrent Files | Code Block Limit | Comments Required | Testing Approach |
-|-------|------------------|-----------------|------------------------|---------------------|------------------|------------------|------------------|
-| **Claude 4 Sonnet** | 50 lines | 1000 lines | 200K tokens | 10-15 files | 100 lines | Every function | TDD preferred |
-| **Claude 3.7 Sonnet** | 50 lines | 800 lines | 200K tokens | 8-12 files | 80 lines | Every function | TDD preferred |
-| **GPT-4.1** | 60 lines | 1200 lines | 1M tokens | 20-30 files | 120 lines | Complex functions only | Unit tests after |
-| **GPT-4o** | 40 lines | 600 lines | 128K tokens | 5-8 files | 60 lines | Complex functions only | Manual testing OK |
-| **DeepSeek R1** | 45 lines | 700 lines | 128K tokens | 6-10 files | 70 lines | All public methods | Unit tests required |
-| **Perplexity AI** | 30 lines | 400 lines | 32K tokens | 3-5 files | 40 lines | Every function | Manual verification |
-| **Gemini 2.5 Pro** | 55 lines | 900 lines | 1M tokens | 15-20 files | 90 lines | Complex functions only | Integration tests |
-| **o3** | 70 lines | 1500 lines | 128K tokens | 12-18 files | 150 lines | Minimal (self-documenting) | Comprehensive testing |
-| **Grok 3** | 35 lines | 500 lines | 64K tokens | 4-6 files | 50 lines | All functions | Unit + integration |
-
-**Sources & Verification:**
-- OpenAI GPT-4.1 Prompting Guide (official documentation)
-- Anthropic Claude Best Practices (developer guidelines) 
-- Community reports from Cursor IDE users on GitHub/Discord
-- SWE-bench performance analysis
-- Developer productivity studies from major tech companies
 
 ## Cost Analysis: Cursor vs Direct API
 
