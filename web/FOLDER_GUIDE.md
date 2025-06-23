@@ -91,13 +91,13 @@ web/
 │   │   ├── web-hooks/        # Webhook management
 │   │   ├── workspace/        # Workspace management
 │   │   └── workspace-notifications/ # Workspace notifications
-│   ├── constants/            # Application constants (29 files)
-│   ├── hooks/                # Core React hooks (40+ hooks)
+│   ├── constants/            # Application constants (27 files)
+│   ├── hooks/                # Core React hooks (40 hooks)
 │   ├── layouts/              # Application layouts
 │   ├── lib/                  # Core utility libraries
 │   ├── local-db/             # Local database utilities
-│   ├── services/             # API service layer (23+ services)
-│   └── store/                # Core state management (18+ stores)
+│   ├── services/             # API service layer (46 services)
+│   └── store/                # Core state management (18 stores)
 ├── ee/                         # Enterprise Edition components
 │   ├── components/           # EE-specific components
 │   ├── constants/            # EE constants and configuration

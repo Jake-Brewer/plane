@@ -2,6 +2,28 @@
 
 This document provides pseudocode algorithms to determine the most cost-effective LLM model for analyzing a given project based on project attributes, technical requirements, and user sentiment weighting.
 
+## File Size Metrics Usage Guide
+
+**LARGEST values** - Used for hard compatibility limits:
+- Must ensure the model can handle the worst-case scenario
+- If largest file/method doesn't fit, model will fail completely
+- Critical for initial filtering
+
+**95th PERCENTILE values** - Used for practical limits and complexity scoring:
+- Handles 95% of real-world cases
+- Ignores extreme outliers that might skew decisions
+- Better represents typical challenging scenarios
+
+**MEDIAN values** - Used for cost estimation:
+- Represents typical usage patterns
+- Most accurate for predicting actual costs
+- Not skewed by outliers or edge cases
+
+**AVERAGE values** - Used for complexity calculations:
+- Provides balanced view including outliers
+- Useful for mathematical complexity formulas
+- Considers impact of all files/methods
+
 ## Algorithm: Select Cheapest Analysis Model
 
 ### Input Parameters
@@ -227,8 +249,12 @@ FUNCTION select_cheapest_analysis_model(project_attributes, user_preferences):
 FUNCTION filter_by_technical_requirements(project_attributes):
     suitable = []
     FOR each model IN ANALYSIS_MODELS:
-        IF (model.max_method_length >= project_attributes.average_method_length AND
-            model.max_file_length >= project_attributes.average_file_length AND
+        // Use LARGEST values for hard limits (must handle worst case)
+        // Use P95 for practical limits (handles 95% of cases)
+        // Use MEDIAN for cost calculations (typical usage)
+        
+        IF (model.max_method_length >= project_attributes.largest_method_length AND
+            model.max_file_length >= project_attributes.largest_file_length AND
             model.max_context >= project_attributes.context_window_needed AND
             model.max_concurrent_files >= project_attributes.max_concurrent_analysis AND
             model.max_imports >= project_attributes.imports_per_file AND
@@ -298,12 +324,13 @@ FUNCTION calculate_monthly_analysis_cost(model, project_attributes):
     RETURN monthly_cost
 
 FUNCTION calculate_complexity_factor(project_attributes):
-    // Normalize complexity based on multiple factors
-    method_complexity = min(1.0, project_attributes.average_method_length / 100.0)
-    file_complexity = min(1.0, project_attributes.average_file_length / 2000.0)
-    scale_complexity = min(1.0, project_attributes.total_files / 1000.0)
+    // Use different metrics for different aspects of complexity
+    method_complexity = min(1.0, project_attributes.p95_method_length / 100.0)  // P95 for realistic complexity
+    file_complexity = min(1.0, project_attributes.p95_file_length / 2000.0)    // P95 for realistic complexity  
+    scale_complexity = min(1.0, project_attributes.total_files / 1000.0)       // Total for project scale
+    worst_case_penalty = min(0.3, project_attributes.largest_file_length / 5000.0) // Penalty for outliers
     
-    RETURN (method_complexity + file_complexity + scale_complexity) / 3.0
+    RETURN (method_complexity + file_complexity + scale_complexity + worst_case_penalty) / 4.0
 ```
 
 ## Example Usage Scenarios
@@ -311,16 +338,26 @@ FUNCTION calculate_complexity_factor(project_attributes):
 ### Scenario 1: Budget Web Development Analysis
 ```pseudocode
 project = {
-    average_method_length: 35,
-    average_file_length: 500,
+    // File Size Distribution
+    largest_file_length: 800,      // Worst case file that must fit
+    p95_file_length: 650,          // 95% of files are this size or smaller
+    median_file_length: 400,       // Typical file size
+    average_file_length: 450,      // For complexity calculations
+    
+    // Method Length Distribution  
+    largest_method_length: 60,     // Worst case method that must fit
+    p95_method_length: 45,         // 95% of methods are this size or smaller
+    median_method_length: 25,      // Typical method size
+    
+    // Project Scale
     total_files: 50,
     max_concurrent_analysis: 8,
-    imports_per_file: 15,
+    imports_per_file: 15,          // Median imports per file
     codebase_complexity: 0.3,
-    context_window_needed: 50000,
+    context_window_needed: 50000,  // Based on largest expected analysis
     project_type: "Web Development",
     analysis_depth: "medium",
-    analysis_frequency: 10,  // 10 times per month
+    analysis_frequency: 10,        // 10 times per month
     budget_limit: 5.00,
     quality_threshold: 3
 }

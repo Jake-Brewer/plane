@@ -47,9 +47,9 @@ space/
 │   │   ├── issues/            # Public issue components
 │   │   ├── ui/                # Public UI components
 │   │   └── views/             # Public view components
-│   ├── hooks/                 # Core public React hooks (5 files)
+│   ├── hooks/                 # Core public React hooks (5 files + store subdir)
 │   ├── lib/                   # Public utility libraries (3 files)
-│   ├── store/                 # Core public state management (12+ stores)
+│   ├── store/                 # Core public state management (12 stores)
 │   └── types/                 # TypeScript type definitions (6 files)
 ├── ee/                         # Enterprise Edition components
 │   ├── components/            # EE-specific public components
