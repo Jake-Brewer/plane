@@ -1,0 +1,287 @@
+{
+  "folders": [
+    {
+      "name": "🏠 Root",
+      "path": "."
+    },
+    {
+      "name": "🌐 Web App",
+      "path": "./web"
+    },
+    {
+      "name": "🚀 Space App", 
+      "path": "./space"
+    },
+    {
+      "name": "⚙️ Admin Panel",
+      "path": "./admin"
+    },
+    {
+      "name": "🔧 API Server",
+      "path": "./apiserver"
+    },
+    {
+      "name": "⚡ Live Service",
+      "path": "./live"
+    },
+    {
+      "name": "📦 Packages",
+      "path": "./packages"
+    },
+    {
+      "name": "🚀 Deployment",
+      "path": "./deploy"
+    },
+    {
+      "name": "🤖 LLM Guidance",
+      "path": "./for_llm"
+    },
+    {
+      "name": "📚 Documentation",
+      "path": "./docs"
+    }
+  ],
+  "settings": {
+    // Import from .cursor/settings.json
+    "cursor.chat.model": "claude-4-sonnet",
+    "cursor.autocomplete.model": "claude-3.5-sonnet",
+    
+    // Multi-root workspace settings
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/build": true,
+      "**/.git": false,
+      "**/coverage": true,
+      "**/.mypy_cache": true,
+      "**/__pycache__": true
+    },
+    
+    // Language-specific settings
+    "typescript.preferences.includePackageJsonAutoImports": "on",
+    "python.defaultInterpreterPath": "./apiserver/venv/bin/python",
+    "python.analysis.extraPaths": ["./apiserver"],
+    
+    // Monorepo support
+    "typescript.workspaceSymbols.scope": "allOpenProjects",
+    "search.followSymlinks": false,
+    
+    // Git configuration
+    "git.ignoreLimitWarning": true,
+    "git.detectSubmodules": false,
+    
+    // Terminal configuration
+    "terminal.integrated.cwd": "${workspaceFolder}",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.defaultProfile.osx": "zsh"
+  },
+  "extensions": {
+    "recommendations": [
+      // Essential for Plane development
+      "ms-python.python",
+      "ms-python.pylint",
+      "ms-vscode.vscode-typescript-next",
+      "bradlc.vscode-tailwindcss",
+      "ms-vscode.vscode-json",
+      "redhat.vscode-yaml",
+      "ms-vscode.vscode-eslint",
+      "esbenp.prettier-vscode",
+      
+      // Docker & Deployment
+      "ms-azuretools.vscode-docker",
+      "ms-kubernetes-tools.vscode-kubernetes-tools",
+      
+      // Git & Version Control
+      "eamodio.gitlens",
+      "github.vscode-pull-request-github",
+      
+      // Markdown & Documentation
+      "yzhang.markdown-all-in-one",
+      "davidanson.vscode-markdownlint",
+      
+      // Database
+      "ms-mssql.mssql",
+      "ckolkman.vscode-postgres",
+      
+      // Productivity
+      "ms-vscode.vscode-thunder-client",
+      "humao.rest-client",
+      "gruntfuggly.todo-tree"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "🚀 Start All Services",
+        "type": "shell",
+        "command": "docker-compose",
+        "args": ["-f", "docker-compose-local.yml", "up", "-d"],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "🛑 Stop All Services", 
+        "type": "shell",
+        "command": "docker-compose",
+        "args": ["-f", "docker-compose-local.yml", "down"],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "🌐 Start Web Dev",
+        "type": "shell",
+        "command": "yarn",
+        "args": ["dev"],
+        "options": {
+          "cwd": "${workspaceFolder}/web"
+        },
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "dedicated"
+        }
+      },
+      {
+        "label": "🚀 Start Space Dev",
+        "type": "shell", 
+        "command": "yarn",
+        "args": ["dev"],
+        "options": {
+          "cwd": "${workspaceFolder}/space"
+        },
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "dedicated"
+        }
+      },
+      {
+        "label": "⚙️ Start Admin Dev",
+        "type": "shell",
+        "command": "yarn", 
+        "args": ["dev"],
+        "options": {
+          "cwd": "${workspaceFolder}/admin"
+        },
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "dedicated"
+        }
+      },
+      {
+        "label": "🔧 Start API Server",
+        "type": "shell",
+        "command": "python",
+        "args": ["manage.py", "runserver", "0.0.0.0:8000"],
+        "options": {
+          "cwd": "${workspaceFolder}/apiserver"
+        },
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "dedicated"
+        }
+      },
+      {
+        "label": "🧪 Run Tests",
+        "type": "shell",
+        "command": "yarn",
+        "args": ["test"],
+        "group": "test",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "🔍 Lint All",
+        "type": "shell",
+        "command": "yarn",
+        "args": ["lint"],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "📦 Build All",
+        "type": "shell",
+        "command": "yarn",
+        "args": ["build"],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      }
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "🐍 Debug Django API",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/apiserver/manage.py",
+        "args": ["runserver", "0.0.0.0:8000", "--noreload"],
+        "django": true,
+        "cwd": "${workspaceFolder}/apiserver",
+        "env": {
+          "DEBUG": "1"
+        }
+      },
+      {
+        "name": "🌐 Debug Next.js Web",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/web/node_modules/.bin/next",
+        "args": ["dev"],
+        "cwd": "${workspaceFolder}/web",
+        "env": {
+          "NODE_ENV": "development"
+        }
+      },
+      {
+        "name": "🚀 Debug Next.js Space",
+        "type": "node", 
+        "request": "launch",
+        "program": "${workspaceFolder}/space/node_modules/.bin/next",
+        "args": ["dev"],
+        "cwd": "${workspaceFolder}/space",
+        "env": {
+          "NODE_ENV": "development"
+        }
+      }
+    ]
+  }
+} 

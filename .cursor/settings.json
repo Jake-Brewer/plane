@@ -1,0 +1,121 @@
+{
+  "cursor.cpp.disabledLanguages": [],
+  "cursor.general.enableAutoCompletion": true,
+  "cursor.general.enableChatWithContext": true,
+  "cursor.general.enableDiffView": true,
+  "cursor.general.enableInlineEditing": true,
+  
+  // Model Configuration for Plane Project
+  "cursor.chat.model": "claude-4-sonnet",
+  "cursor.autocomplete.model": "claude-3.5-sonnet",
+  "cursor.chat.maxTokens": 8192,
+  
+  // Project-specific context
+  "cursor.context.includePatterns": [
+    "**/*.ts",
+    "**/*.tsx", 
+    "**/*.py",
+    "**/*.md",
+    "**/package.json",
+    "**/requirements.txt",
+    "**/.env.example",
+    "**/docker-compose*.yml",
+    "**/Dockerfile*",
+    "**/*primer*.md",
+    "**/FOLDER_GUIDE.md"
+  ],
+  
+  "cursor.context.excludePatterns": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.git/**",
+    "**/coverage/**",
+    "**/*.log",
+    "**/yarn.lock",
+    "**/package-lock.json",
+    "**/.mypy_cache/**",
+    "**/__pycache__/**",
+    "**/migrations/**"
+  ],
+  
+  // Plane-specific file associations
+  "files.associations": {
+    "*.cursorrules": "plaintext",
+    "*primer*.md": "markdown",
+    "FOLDER_GUIDE.md": "markdown",
+    "docker-compose*.yml": "yaml",
+    "*.env.example": "dotenv"
+  },
+  
+  // Enhanced IntelliSense for monorepo
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "typescript.suggest.autoImports": true,
+  "typescript.suggest.includeCompletionsForModuleExports": true,
+  "typescript.workspaceSymbols.scope": "allOpenProjects",
+  
+  // Python configuration for Django
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.packageIndexDepths": [
+    {
+      "name": "django",
+      "depth": 3
+    },
+    {
+      "name": "rest_framework", 
+      "depth": 3
+    }
+  ],
+  
+  // Tailwind CSS support
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    "cn\\(([^)]*)\\)"
+  ],
+  
+  // Editor optimizations for large codebase
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "editor.suggestSelection": "first",
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.acceptSuggestionOnEnter": "on",
+  
+  // Git integration
+  "git.enableSmartCommit": true,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  
+  // Search optimization
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.git": true,
+    "**/coverage": true,
+    "**/.mypy_cache": true,
+    "**/__pycache__": true,
+    "**/yarn.lock": true
+  },
+  
+  // Workspace trust for Plane project
+  "security.workspace.trust.untrustedFiles": "open",
+  "security.workspace.trust.banner": "never",
+  
+  // Performance optimizations
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/build/**": true,
+    "**/.mypy_cache/**": true,
+    "**/__pycache__/**": true
+  }
+} 

@@ -1,0 +1,174 @@
+# Plane Project - Cursor Rules
+# Last Updated: 2025-01-27
+
+## Project Overview
+This is the Plane project - an open-source project management platform built with Next.js, Django, and TypeScript.
+
+## Architecture Guidelines
+- **Frontend**: Next.js/React/TypeScript with Tailwind CSS
+- **Backend**: Django REST Framework with Python
+- **Database**: PostgreSQL with Redis caching
+- **Monorepo**: Turbo-managed with shared packages
+- **Deployment**: Docker containers with Kubernetes support
+
+## Code Standards
+
+### TypeScript/JavaScript
+- Use TypeScript for all new frontend code
+- Prefer functional components with hooks
+- Use Zustand for state management
+- Follow existing component patterns in `packages/ui/`
+- Import order: React → Third-party → Local imports → Types
+
+### Python/Django
+- Follow PEP 8 style guidelines
+- Use Django REST Framework patterns
+- Maintain comprehensive API documentation
+- Handle database migrations carefully
+- Use proper error handling and logging
+
+### File Organization
+- Components in `core/components/` directories
+- Services in `core/services/` directories
+- Types in `packages/types/src/`
+- Shared utilities in `packages/utils/src/`
+- UI components in `packages/ui/src/`
+
+## LLM Integration Guidelines
+
+### Context Management
+- Read `_llm_primer.md` at start of every session
+- Check `_llm_project_primer.md` for project specifics
+- Use specialized guidance in `for_llm/` directory
+- Maintain FOLDER_GUIDE.md files for navigation
+
+### Linear Integration
+- Use Linear MCP server for project management
+- Sync issues between Plane and Linear
+- Follow authentication patterns in `for_llm/LINEAR_API_CREDENTIALS.md`
+- Maintain cross-references between systems
+
+### Development Workflow
+- Always commit changes to version control
+- Test changes before deployment
+- Update documentation with code changes
+- Follow security best practices
+- Use environment variables for configuration
+
+## Specific Patterns
+
+### Component Development
+```typescript
+// Preferred component structure
+import { FC } from "react";
+import { observer } from "mobx-react";
+import { useRouter } from "next/router";
+
+interface ComponentProps {
+  // Define props with proper types
+}
+
+export const Component: FC<ComponentProps> = observer(({ prop }) => {
+  // Component logic
+  return <div>Component JSX</div>;
+});
+```
+
+### API Service Pattern
+```typescript
+// Service class structure
+export class ServiceName extends APIService {
+  async methodName(params: Type): Promise<ReturnType> {
+    return this.get(`/api/endpoint`)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+}
+```
+
+### Store Pattern (Zustand)
+```typescript
+// Store structure
+interface StoreState {
+  data: Type[];
+  loading: boolean;
+}
+
+interface StoreActions {
+  fetchData: () => Promise<void>;
+  updateData: (data: Type) => void;
+}
+
+export const useStore = create<StoreState & StoreActions>((set, get) => ({
+  data: [],
+  loading: false,
+  fetchData: async () => {
+    // Implementation
+  },
+  updateData: (data) => set({ data }),
+}));
+```
+
+## File Naming Conventions
+- Components: PascalCase (e.g., `IssueCard.tsx`)
+- Hooks: camelCase with `use` prefix (e.g., `useIssues.ts`)
+- Services: camelCase with `.service.ts` suffix
+- Types: PascalCase with `.d.ts` extension
+- Constants: UPPER_SNAKE_CASE
+
+## Import/Export Patterns
+- Use named exports for components and utilities
+- Use default exports sparingly (only for pages/layouts)
+- Maintain barrel exports in index files
+- Group imports logically with blank lines
+
+## Performance Guidelines
+- Use React.memo for expensive components
+- Implement proper loading states
+- Use pagination for large data sets
+- Optimize images and assets
+- Minimize bundle size
+
+## Security Considerations
+- Validate all user inputs
+- Use proper authentication/authorization
+- Sanitize data before database operations
+- Follow OWASP security guidelines
+- Use environment variables for secrets
+
+## Testing Requirements
+- Write unit tests for utilities and services
+- Add integration tests for API endpoints
+- Test component rendering and interactions
+- Maintain test coverage above 80%
+- Use proper mocking for external dependencies
+
+## Documentation Standards
+- Update FOLDER_GUIDE.md when adding directories
+- Document API changes in OpenAPI format
+- Maintain component documentation
+- Keep README files current
+- Document deployment procedures
+
+## Deployment Notes
+- All components are containerized with Docker
+- Use proper environment configuration
+- Handle database migrations carefully
+- Monitor application performance
+- Follow security-first deployment practices
+
+## Linear Project Management Integration
+- Create Linear issues for all development tasks
+- Link commits to Linear issues
+- Update issue status as work progresses
+- Use Linear for sprint planning and tracking
+- Maintain project documentation in Linear
+
+## Emergency Procedures
+- Never delete `_llm_*.md` files
+- Always backup before major changes
+- Use git for version control rollbacks
+- Document incidents for future prevention
+- Follow security incident response procedures 
