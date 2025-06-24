@@ -1,5 +1,5 @@
 # For LLM Folder Guide
-# Last Updated: 2025-01-27T00:00:00Z
+# Last Updated: 2025-01-27T00:53:00Z
 
 ## Purpose
 
@@ -12,6 +12,7 @@ This folder contains specialized LLM guidance files that provide detailed instru
 - Detailed operational procedures and best practices
 - Authentication and configuration instructions
 - Advanced workflows and collaboration patterns
+- LLM agent workspaces and progress tracking
 
 ### Out-of-Scope
 - General behavioral standards (see `_llm_primer.md`)
@@ -21,20 +22,35 @@ This folder contains specialized LLM guidance files that provide detailed instru
 
 ## File Organization
 
+### Directory Structure
+```
+for_llm/
+├── FOLDER_GUIDE.md (This file)
+├── _llm_*.md (Specialized guidance files)
+├── LINEAR_API_CREDENTIALS.md (Authentication guide)
+└── llm_owned_notes/ (Agent workspaces and tracking)
+    ├── progress_summary.md (General progress tracking)
+    └── security-assessor/ (Security assessment workspace)
+        └── llm_todo_security-assessment.md (Security assessment todo)
+```
+
 ### Specialized Guidance Files
 All files follow the naming pattern `_llm_*.md` or `*.md` for specialized guidance that LLMs access when triggered by specific task types.
+
+### LLM Agent Workspaces
+The `llm_owned_notes/` directory contains individual agent workspaces and tracking files for ongoing work.
 
 ### Files in This Directory
 
 #### Core Collaboration and Management
-- **`_llm_linear_project_management.md`** (8.1KB, 211 lines)
+- **`_llm_linear_project_management.md`** (8.3KB, 234 lines)
   - Comprehensive Linear project management guidance
   - Issue management, workflow automation, dependency tracking
   - GitHub integration and cross-reference patterns
   - Team collaboration and progress tracking
   - Advanced features and best practices
 
-- **`_llm_multi-agent_primer.md`** (8.7KB, 220 lines)
+- **`_llm_multi-agent_primer.md`** (9.6KB, 233 lines)
   - Multi-agent collaboration coordination
   - Resource management and synchronization strategies
   - Communication frameworks and quality assurance
@@ -42,7 +58,7 @@ All files follow the naming pattern `_llm_*.md` or `*.md` for specialized guidan
   - Performance optimization and best practices
 
 #### Technical Operations
-- **`_llm_extraction_primer.md`** (9.3KB, 235 lines)
+- **`_llm_extraction_primer.md`** (9.0KB, 234 lines)
   - Component extraction and modularization
   - Directory structure design and dependency management
   - Step-by-step extraction processes
@@ -50,12 +66,18 @@ All files follow the naming pattern `_llm_*.md` or `*.md` for specialized guidan
   - Deployment, packaging, and maintenance procedures
 
 #### Authentication and Integration
-- **`LINEAR_API_CREDENTIALS.md`** (11.2KB, 275 lines)
+- **`LINEAR_API_CREDENTIALS.md`** (9.6KB, 319 lines)
   - Linear API authentication setup and management
   - OAuth and API key configuration
   - Global MCP configuration with 5 connection methods
   - Connection validation and troubleshooting
   - Security best practices and maintenance procedures
+
+#### Agent Workspaces and Tracking
+- **`llm_owned_notes/`** - Agent workspaces and progress tracking
+  - **`progress_summary.md`** (6.9KB, 165 lines) - General progress tracking
+  - **`security-assessor/`** - Security assessment workspace
+    - **`llm_todo_security-assessment.md`** (7.8KB, 175 lines) - Comprehensive security assessment todo with chunking strategy
 
 #### Documentation Standards
 - **`FOLDER_GUIDE.md`** (This file)
@@ -84,6 +106,10 @@ LLMs are directed to these files based on specific task triggers defined in `_ll
 **Triggers:** Linear API access needed, OAuth setup required, connection troubleshooting
 **File:** `LINEAR_API_CREDENTIALS.md`
 
+### 🛡️ Security Assessment
+**Triggers:** Security review, container assessment, multi-agent deployment analysis
+**File:** `llm_owned_notes/security-assessor/llm_todo_security-assessment.md`
+
 ## File Standards
 
 ### Header Requirements
@@ -99,6 +125,12 @@ All LLM guidance files must include:
 - Step-by-step procedures where applicable
 - Best practices and troubleshooting sections
 - Cross-references to related files when appropriate
+
+### Agent Workspace Standards
+- Progress tracking with clear task breakdown
+- Chunking strategies for manageable work units
+- Status indicators and completion tracking
+- Regular timestamp updates
 
 ### Maintenance Requirements
 - Update timestamp when any content changes
