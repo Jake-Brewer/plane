@@ -9,7 +9,7 @@ set -e
 BACKUP_DIR="Z:/plane-backups/postgres"
 CONTAINER_NAME="plane-db"
 DB_NAME="plane"
-DB_USER="plane"
+DB_USER="plane_admin"
 RETENTION_DAYS=30
 
 # Create backup directory if it doesn't exist

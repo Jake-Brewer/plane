@@ -15,7 +15,7 @@ fi
 BACKUP_FILE="$1"
 CONTAINER_NAME="plane-db"
 DB_NAME="plane"
-DB_USER="plane"
+DB_USER="plane_admin"
 
 if [ ! -f "$BACKUP_FILE" ]; then
     echo "Error: Backup file '$BACKUP_FILE' not found"
