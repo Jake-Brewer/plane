@@ -1,0 +1,85 @@
+{
+  "project": {
+    "largest_file_length": 800,
+    "p95_file_length": 650,
+    "median_file_length": 400,
+    "average_file_length": 450,
+    "largest_method_length": 50,
+    "p95_method_length": 40,
+    "median_method_length": 25,
+    "total_files": 100,
+    "max_concurrent_analysis": 5,
+    "imports_per_file": 20,
+    "codebase_complexity": 0.3,
+    "context_window_needed": 100000,
+    "project_type": "Web Development",
+    "programming_languages": [
+      "TypeScript",
+      "JavaScript"
+    ],
+    "frameworks_used": [
+      "React",
+      "Node.js",
+      "Express"
+    ],
+    "architecture_pattern": "MVC",
+    "analysis_depth": "AnalysisDepth.MEDIUM",
+    "analysis_frequency": 10,
+    "reasoning_required": false,
+    "internet_access_needed": false,
+    "mcp_tools_needed": 30,
+    "budget_limit": 10.0,
+    "quality_threshold": 3,
+    "max_cost_per_analysis": 1.0
+  },
+  "preferences": {
+    "sentiment_weight": 0.3,
+    "cost_weight": 0.4,
+    "performance_weight": 0.3,
+    "prefer_free_models": false,
+    "risk_tolerance": "RiskTolerance.MEDIUM"
+  },
+  "analysis": {
+    "total_models_evaluated": 10,
+    "technically_suitable": 5,
+    "budget_compatible": 5,
+    "recommended_model": "Claude 4 Sonnet",
+    "monthly_cost_range": {
+      "min": 0.10400000000000001,
+      "max": 1.04
+    }
+  },
+  "recommendations": [
+    {
+      "model": "Claude 4 Sonnet",
+      "monthly_cost": 0.10400000000000001,
+      "score": 1.074543,
+      "meets_budget": true
+    },
+    {
+      "model": "Claude 3.7 Sonnet",
+      "monthly_cost": 0.10400000000000001,
+      "score": 1.074543,
+      "meets_budget": true
+    },
+    {
+      "model": "GPT-4.1",
+      "monthly_cost": 0.10400000000000001,
+      "score": 1.074543,
+      "meets_budget": true
+    },
+    {
+      "model": "o1",
+      "monthly_cost": 1.04,
+      "score": 1.007055,
+      "meets_budget": true
+    },
+    {
+      "model": "o1 Mini",
+      "monthly_cost": 0.26,
+      "score": 0.893295,
+      "meets_budget": true
+    }
+  ],
+  "optimizations": {}
+}

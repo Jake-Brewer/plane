@@ -7,16 +7,16 @@ for analyzing a given project based on technical requirements, user preferences,
 and budget constraints.
 
 Usage:
-    python model_selector.py --config project_config.json
+    python model_selector.py --sample
     python model_selector.py --interactive
+    python model_selector.py --config project_config.json
 """
 
 import json
 import argparse
 from dataclasses import dataclass, asdict
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Tuple
 from enum import Enum
-import statistics
 
 
 class AnalysisDepth(Enum):
@@ -373,7 +373,14 @@ class ModelSelector:
         suitable_models = self.filter_by_technical_requirements(project)
         
         if not suitable_models:
-            return [], {"error": "No models meet the technical requirements"}
+            return [], {
+                "error": "No models meet the technical requirements",
+                "total_models_evaluated": len(self.models),
+                "technically_suitable": 0,
+                "budget_compatible": 0,
+                "recommended_model": None,
+                "monthly_cost_range": {"min": 0, "max": 0}
+            }
         
         # Step 2: Calculate scores
         scored_models = []
@@ -469,39 +476,39 @@ def create_sample_project() -> ProjectAttributes:
     """Create a sample project for testing"""
     return ProjectAttributes(
         # File Size Distribution
-        largest_file_length=1200,
-        p95_file_length=950,
-        median_file_length=600,
-        average_file_length=650,
+        largest_file_length=800,
+        p95_file_length=650,
+        median_file_length=400,
+        average_file_length=450,
         
         # Method Length Distribution
-        largest_method_length=80,
-        p95_method_length=60,
-        median_method_length=35,
+        largest_method_length=50,
+        p95_method_length=40,
+        median_method_length=25,
         
         # Project Scale
-        total_files=150,
-        max_concurrent_analysis=8,
-        imports_per_file=25,
-        codebase_complexity=0.4,
-        context_window_needed=180000,
+        total_files=100,
+        max_concurrent_analysis=5,
+        imports_per_file=20,
+        codebase_complexity=0.3,
+        context_window_needed=100000,
         
         # Project Characteristics
-        project_type="Professional Web Development",
+        project_type="Web Development",
         programming_languages=["TypeScript", "JavaScript"],
         frameworks_used=["React", "Node.js", "Express"],
         architecture_pattern="MVC",
         
         # Analysis Requirements
         analysis_depth=AnalysisDepth.MEDIUM,
-        analysis_frequency=15,
-        reasoning_required=True,
+        analysis_frequency=10,
+        reasoning_required=False,
         internet_access_needed=False,
-        mcp_tools_needed=50,
+        mcp_tools_needed=30,
         
         # Constraints
         budget_limit=10.0,
-        quality_threshold=4,
+        quality_threshold=3,
         max_cost_per_analysis=1.0
     )
 
@@ -632,7 +639,8 @@ def main():
     print_analysis_results(scored_models, analysis, optimizations)
     
     # Save results to JSON if desired
-    if input("\nSave results to JSON? (y/n): ").lower() == 'y':
+    save_results = input("\nSave results to JSON? (y/n): ").lower().strip()
+    if save_results == 'y':
         results = {
             "project": asdict(project),
             "preferences": asdict(preferences),
@@ -650,7 +658,7 @@ def main():
         }
         
         with open("model_selection_results.json", "w") as f:
-            json.dump(results, f, indent=2)
+            json.dump(results, f, indent=2, default=str)
         print("Results saved to model_selection_results.json")
 
 
