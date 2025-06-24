@@ -42,6 +42,46 @@ The `llm_owned_notes/` directory contains individual agent workspaces and tracki
 
 ### Files in This Directory
 
+#### Plane-Cursor Integration
+- **`plane-mcp-server.js`** (17.8KB, 368 lines)
+  - Complete MCP server for native Cursor integration with Plane
+  - 26 native tools covering workspaces, projects, issues, cycles
+  - Full Django REST API coverage with error handling
+  - Resource-based access for structured data retrieval
+
+- **`test-plane-integration.js`** (10.2KB, 254 lines)
+  - Comprehensive integration test suite
+  - API connectivity validation and MCP server testing
+  - Step-by-step diagnostics with detailed reporting
+  - Production readiness verification
+
+- **`SETUP_INSTRUCTIONS.md`** (8.9KB, 287 lines)
+  - Complete setup guide for Plane-Cursor integration
+  - Prerequisites, dependencies, and configuration steps
+  - Cursor MCP configuration and troubleshooting
+  - Advanced configuration for multiple environments
+
+- **`INTEGRATION_SUMMARY.md`** (4.1KB, 112 lines)
+  - Executive summary of the complete integration
+  - Capabilities overview and architecture benefits
+  - Usage examples and next steps guide
+
+- **`plane_cursor_integration.md`** (1.0KB, 40 lines)
+  - Integration approach documentation
+  - Technical architecture and implementation details
+
+- **`package.json`** (0.6KB, 27 lines)
+  - Node.js dependencies for MCP server
+  - Scripts for development and testing
+
+- **`mcp-config-template.json`** (0.6KB, 19 lines)
+  - Cursor MCP configuration template
+  - Local and production environment examples
+
+- **`plane-env-template.txt`** (0.7KB, 26 lines)
+  - Environment variable configuration template
+  - API keys, database, and Redis configuration
+
 #### Core Collaboration and Management
 - **`_llm_linear_project_management.md`** (8.3KB, 234 lines)
   - Comprehensive Linear project management guidance
@@ -105,6 +145,10 @@ LLMs are directed to these files based on specific task triggers defined in `_ll
 ### 🔐 API Authentication
 **Triggers:** Linear API access needed, OAuth setup required, connection troubleshooting
 **File:** `LINEAR_API_CREDENTIALS.md`
+
+### ✈️ Plane-Cursor Integration
+**Triggers:** Plane project management from Cursor, issue creation/management, workspace operations, MCP server setup
+**File:** `SETUP_INSTRUCTIONS.md` and related integration files
 
 ### 🛡️ Security Assessment
 **Triggers:** Security review, container assessment, multi-agent deployment analysis
