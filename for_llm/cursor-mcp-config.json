@@ -4,7 +4,7 @@
       "command": "node",
       "args": ["D:/repos/cursor-projects/categories/organization/project-management/plane-working/for_llm/plane-mcp-server.js"],
       "env": {
-        "PLANE_API_URL": "http://localhost",
+        "PLANE_API_URL": "http://localhost:8080",
         "PLANE_API_KEY": "your_plane_api_key_here",
         "PLANE_DEFAULT_WORKSPACE": "your-workspace-slug",
         "PLANE_DEFAULT_PROJECT": "your-project-id"

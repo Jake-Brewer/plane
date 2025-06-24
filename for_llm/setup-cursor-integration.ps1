@@ -19,9 +19,9 @@ if ($planeContainers) {
 # Test web interface
 Write-Host "`n2. Testing Plane web interface..." -ForegroundColor Yellow
 try {
-    $response = Invoke-WebRequest -Uri "http://localhost" -Method GET -UseBasicParsing -TimeoutSec 10
+    $response = Invoke-WebRequest -Uri "http://localhost:8080" -Method GET -UseBasicParsing -TimeoutSec 10
     if ($response.StatusCode -eq 200) {
-        Write-Host "✅ Plane web interface is accessible at http://localhost" -ForegroundColor Green
+        Write-Host "✅ Plane web interface is accessible at http://localhost:8080" -ForegroundColor Green
     }
 } catch {
     Write-Host "❌ Cannot access Plane web interface. Please check the deployment." -ForegroundColor Red
@@ -100,7 +100,7 @@ if ($cursorConfigPath -and (Test-Path $cursorConfigPath)) {
 }
 
 Write-Host "`n6. Next steps:" -ForegroundColor Yellow
-Write-Host "   1. Open Plane in your browser: http://localhost" -ForegroundColor Cyan
+Write-Host "   1. Open Plane in your browser: http://localhost:8080" -ForegroundColor Cyan
 Write-Host "   2. Create an account and workspace if needed" -ForegroundColor Cyan
 Write-Host "   3. Go to Settings → API → Create API Token" -ForegroundColor Cyan
 Write-Host "   4. Copy the API token" -ForegroundColor Cyan
@@ -117,7 +117,7 @@ Write-Host "`n🎉 Setup complete! Ready for API key configuration." -Foreground
 # Test the MCP server
 Write-Host "`n7. Testing MCP server..." -ForegroundColor Yellow
 try {
-    $env:PLANE_API_URL = "http://localhost"
+    $env:PLANE_API_URL = "http://localhost:8080"
     $env:PLANE_API_KEY = "test"
     node "plane-mcp-server.js" --help 2>$null
     Write-Host "✅ MCP server is ready" -ForegroundColor Green
