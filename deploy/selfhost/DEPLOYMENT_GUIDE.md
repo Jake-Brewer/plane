@@ -27,6 +27,11 @@ This guide covers secure deployment of Plane for local use with multi-agent LLM 
 # Verify NAS directories exist
 ls -la Z:/plane-data/
 ls -la Z:/plane-backups/
+
+# On Linux/WSL: Make scripts executable
+chmod +x *.sh
+
+# Note: On Windows PowerShell, scripts are executable by default
 ```
 
 ### 2. Configuration Review
@@ -73,15 +78,42 @@ ls -la Z:/plane-data/postgres/
 
 # Verify backup created
 ls -la Z:/plane-backups/postgres/
+
+# Test NAS resilience (comprehensive test)
+./test-nas-resilience.sh
 ```
 
 ## Maintenance Operations
 
-### Daily Backups
-Set up automated daily backups:
+### Daily Backups with NAS Resilience
+Set up automated daily backups with NAS offline handling:
 ```bash
 # Add to crontab (Linux/WSL) or Task Scheduler (Windows)
 0 2 * * * /path/to/backup-postgres.sh
+
+# Optional: Start NAS monitoring daemon for automatic sync
+./monitor-nas.sh --daemon --interval=60
+```
+
+**NAS Offline Handling:**
+- When NAS is offline, backups are stored locally in `/tmp/plane-backups/postgres/`
+- Only 7 most recent backups are kept locally (space management)
+- All backup operations are logged and queued for NAS sync
+- When NAS comes back online, pending backups are automatically synced
+
+**Manual NAS Operations:**
+```bash
+# Check current NAS status
+./monitor-nas.sh
+
+# Manually sync all local backups to NAS
+./sync-nas-backups.sh
+
+# Check monitor daemon status
+./monitor-nas.sh status
+
+# Stop monitor daemon
+./monitor-nas.sh stop
 ```
 
 ### Weekly Security Scans
@@ -106,11 +138,14 @@ ls -la Z:/plane-backups/exports/
 
 ### Database Recovery
 ```bash
-# List available backups
-ls -la Z:/plane-backups/postgres/
+# List available backups (check both locations)
+ls -la Z:/plane-backups/postgres/          # NAS backups (primary)
+ls -la /tmp/plane-backups/postgres/        # Local backups (if NAS offline)
 
-# Restore from backup
+# Restore from backup (works with both NAS and local paths)
 ./restore-postgres.sh Z:/plane-backups/postgres/plane_backup_YYYYMMDD_HHMMSS.sql.gz
+# OR
+./restore-postgres.sh /tmp/plane-backups/postgres/plane_backup_YYYYMMDD_HHMMSS.sql.gz
 ```
 
 ### Complete System Recovery

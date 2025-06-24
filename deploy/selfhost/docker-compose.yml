@@ -223,6 +223,8 @@ services:
 
 volumes:
   pgdata:
+    # Primary: NAS storage for data persistence
+    # Fallback: If NAS offline, Docker will create local volume
     driver: local
     driver_opts:
       type: none
