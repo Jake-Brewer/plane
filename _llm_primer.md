@@ -16,6 +16,7 @@ This file contains essential behavioral standards needed for every interaction. 
 
 ### Navigation Map
 - **Agent Registry** → `for_llm/_llm_agent_registry.md`
+- **Model Selection** → `for_llm/_llm_model_selection_guide.md`
 - **Linear Integration** → `for_llm/_llm_linear_project_management.md`
 - **Component Extraction** → `for_llm/_llm_extraction_primer.md`
 - **Multi-Agent Tasks** → `for_llm/_llm_multi-agent_primer.md`
@@ -144,6 +145,15 @@ yum install -y package-name
 ## Task-Specific Navigation Guide
 
 ### When to Access Specialized Guidance
+
+#### 🤖 Model Selection & Optimization
+**Access:** `for_llm/_llm_model_selection_guide.md`
+**Triggers:**
+- Choosing the right LLM for specific tasks
+- Budget optimization for model usage
+- Task-specific model recommendations
+- Performance vs cost analysis
+- Updating User Assigned Points
 
 #### 📋 Linear Project Management
 **Access:** `for_llm/_llm_linear_project_management.md`

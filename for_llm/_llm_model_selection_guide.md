@@ -171,14 +171,14 @@ Infrastructure Complexity?
 
 | Task | DeepSeek R1 | GPT-4.1 | Claude 3.7 | Claude 4 | o3 | User Assigned Points |
 |------|-------------|---------|-------------|----------|-----|---------------------|
-| **Python MCP Server** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | DeepSeek R1: 0, GPT-4.1: 0, Claude 3.7: 0, Claude 4: 0, o3: 0 |
-| **Django API Work** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | DeepSeek R1: 0, GPT-4.1: 0, Claude 3.7: 0, Claude 4: 0, o3: 0 |
-| **Next.js Frontend** | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | DeepSeek R1: 0, GPT-4.1: 0, Claude 3.7: 0, Claude 4: 0, o3: 0 |
-| **Docker/DevOps** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | DeepSeek R1: 0, GPT-4.1: 0, Claude 3.7: 0, Claude 4: 0, o3: 0 |
-| **Documentation** | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | DeepSeek R1: 0, GPT-4.1: 0, Claude 3.7: 0, Claude 4: 0, o3: 0 |
-| **Cost Efficiency** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ | DeepSeek R1: 0, GPT-4.1: 0, Claude 3.7: 0, Claude 4: 0, o3: 0 |
-| **Large Codebase** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | DeepSeek R1: 0, GPT-4.1: 0, Claude 3.7: 0, Claude 4: 0, o3: 0 |
-| **MCP Tools** | ⭐⭐⭐ (55) | ⭐⭐⭐⭐ (90) | ⭐⭐⭐⭐ (80) | ⭐⭐⭐⭐⭐ (100) | ⭐⭐⭐⭐ (95) | DeepSeek R1: 0, GPT-4.1: 0, Claude 3.7: 0, Claude 4: 0, o3: 0 |
+| **Python MCP Server** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | DeepSeek R1: +1, GPT-4.1: +1, Claude 3.7: +1, Claude 4: +1, o3: +1 |
+| **Django API Work** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | DeepSeek R1: +1, GPT-4.1: +1, Claude 3.7: +1, Claude 4: +1, o3: +1 |
+| **Next.js Frontend** | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | DeepSeek R1: +1, GPT-4.1: +1, Claude 3.7: +1, Claude 4: +1, o3: +1 |
+| **Docker/DevOps** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | DeepSeek R1: +1, GPT-4.1: +1, Claude 3.7: +1, Claude 4: +1, o3: +1 |
+| **Documentation** | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | DeepSeek R1: +1, GPT-4.1: +1, Claude 3.7: +1, Claude 4: +1, o3: +1 |
+| **Cost Efficiency** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ | DeepSeek R1: +1, GPT-4.1: +1, Claude 3.7: +1, Claude 4: +1, o3: +1 |
+| **Large Codebase** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | DeepSeek R1: +1, GPT-4.1: +1, Claude 3.7: +1, Claude 4: +1, o3: +1 |
+| **MCP Tools** | ⭐⭐⭐ (55) | ⭐⭐⭐⭐ (90) | ⭐⭐⭐⭐ (80) | ⭐⭐⭐⭐⭐ (100) | ⭐⭐⭐⭐ (95) | DeepSeek R1: +1, GPT-4.1: +1, Claude 3.7: +1, Claude 4: +1, o3: +1 |
 
 ### **User Assigned Points System**
 

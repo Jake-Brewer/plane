@@ -13,6 +13,8 @@ This guide provides comprehensive instructions for managing, updating, and maint
 - All files in `for_llm/` directory - Specialized guidance
 
 ### Specialized Guidance Files
+- `for_llm/_llm_agent_registry.md` - Agent coordination and registration
+- `for_llm/_llm_model_selection_guide.md` - LLM model selection and optimization
 - `for_llm/_llm_linear_project_management.md` - Linear integration
 - `for_llm/_llm_extraction_primer.md` - Component extraction
 - `for_llm/_llm_multi-agent_primer.md` - Multi-agent collaboration

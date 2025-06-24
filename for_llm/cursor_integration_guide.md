@@ -41,7 +41,7 @@ cursor plane.code-workspace
 ## 🔧 Cursor Configuration Details
 
 ### Model Selection Strategy
-Based on task complexity and cost considerations:
+Based on task complexity and cost considerations (See `for_llm/_llm_model_selection_guide.md` for detailed recommendations):
 
 | Task Type | Primary Model | Fallback Model | Reasoning |
 |-----------|---------------|----------------|-----------|
@@ -50,6 +50,8 @@ Based on task complexity and cost considerations:
 | **Documentation** | Claude 3.5 Sonnet | Gemini 2.5 Flash | Excellent for markdown/docs |
 | **Debugging** | Claude 4 Sonnet | o1-mini | Superior reasoning for complex bugs |
 | **Refactoring** | Claude 3.5 Sonnet | Claude 4 Sonnet | Good at understanding existing code |
+
+**Note**: These recommendations may be adjusted based on User Assigned Points in the model selection guide.
 
 ### Context Management
 ```json

@@ -72,10 +72,30 @@ The "User Assigned Points" column tracks your personal preferences and experienc
 - **+5 points**: Exceptional performance, exceeded expectations
 - **+3 points**: Very good performance, met expectations well
 - **+1 point**: Good performance, minor issues
-- **0 points**: Neutral/baseline (default starting point)
+- **+0.1 point**: Minimal baseline (never exactly 0)
+- **-0.1 point**: Minimal negative baseline (never exactly 0)
 - **-1 point**: Below expectations, some issues
 - **-3 points**: Poor performance, significant issues
 - **-5 points**: Terrible performance, major problems
+
+### **Zero-Avoidance Algorithm**
+**CRITICAL**: Scores may **never equal exactly 0 points**. The system enforces these rules:
+
+**Starting State**: All models begin at **+0.1 points** (not 0)
+
+**Zero-Prevention Logic**:
+- **Any adjustment resulting in exactly 0** → Automatically adjusted to avoid zero
+- **Reduction to 0 from positive** → Becomes **-0.1** instead
+- **Increase to 0 from negative** → Becomes **+0.1** instead
+- **Special case**: "Subtract 1 point" from +1 → Results in **-1** (skips zero entirely)
+
+**Examples**:
+```
+Current: +1, Command: "DeepSeek R1 -1" → Result: -1 (skips 0)
+Current: +0.5, Command: "GPT-4.1 -0.5" → Result: -0.1 (avoids 0)
+Current: -0.3, Command: "Claude 3.7 +0.3" → Result: +0.1 (avoids 0)
+Current: +2, Command: "o3 -2" → Result: -0.1 (avoids 0)
+```
 
 ### **Usage Instructions**
 When you want to adjust a model's score, simply say:
@@ -83,12 +103,13 @@ When you want to adjust a model's score, simply say:
 - "Subtract 2 points from GPT-4.1" or "GPT-4.1 -2"
 - "Give Claude 3.7 Sonnet 5 points" or "Claude 3.7 +5"
 
-The AI will automatically update both this document and the LLM selection guide to reflect your preferences.
+The AI will automatically update both this document and the LLM selection guide to reflect your preferences, ensuring scores never equal exactly zero.
 
 ### **Score Impact on Recommendations**
 - **High scores (+3 to +5)**: Model will be prioritized in recommendations
 - **Neutral scores (-1 to +2)**: Standard recommendations apply
 - **Low scores (-3 to -5)**: Model will be deprioritized or avoided in recommendations
+- **Minimal scores (±0.1 to ±0.9)**: Slight preference adjustments, minimal impact
 
 ### **Current Scores**
 All models start at 0 points. As you use different models and provide feedback, your personal scoring will help tailor future recommendations to your specific needs and preferences.
