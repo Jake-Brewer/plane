@@ -1,56 +1,59 @@
 # Plane Port Configuration Update - Status Report
-**Date**: 2025-01-27  
-**Issue**: Plane moving ports  
-**Resolution**: Updated to random port 51534
+**Date**: 2025-06-24  
+**Issue**: Plane API and MCP port assignments  
+**Resolution**: API proxy remains on 51534, new MCP server will run on 43533
 
 ## Summary
 
-Port configuration has been successfully updated to use **random port 51534** (generated using system randomness). The port was validated to be available before assignment, and all configuration files have been updated accordingly.
+- **Plane API Proxy Port**: 51534 (`http://localhost:51534`)
+- **Plane MCP Server Port**: 43533 (Python FastAPI server, for Cursor integration)
+
+Port configuration has been successfully updated. The Plane API is accessible via the proxy on port 51534, and the new Plane MCP server will run on port 43533. Both ports were validated to be available before assignment, and all configuration files have been updated accordingly.
 
 ## Changes Made
 
 ### 1. Docker Configuration
-- **docker-compose.yml**: Updated proxy port to `51534:80`
-- **docker-compose-local.yml**: Updated proxy port to `51534:80`
+- **docker-compose.yml**: Proxy port remains `51534:80`
+- **docker-compose-local.yml**: Proxy port remains `51534:80`
 
 ### 2. Cursor Integration Configuration  
-- **for_llm/plane-local.env**: Updated `PLANE_API_URL` to `http://localhost:51534`
-- **for_llm/cursor-mcp-config.json**: Updated `PLANE_API_URL` to `http://localhost:51534`
-- **for_llm/setup-cursor-integration.ps1**: Updated to test port 51534
+- **for_llm/plane-local.env**: Added `PLANE_MCP_PORT=43533`
+- **for_llm/cursor-mcp-config.json**: Added `PLANE_MCP_PORT=43533`
+- **for_llm/setup-cursor-integration.ps1**: Update pending if needed
 
 ### 3. Documentation Updates
 - **for_llm/PLANE_PORT_UPDATE_STATUS.md**: This status document
-- **for_llm/_llm_port_management.md**: New comprehensive port management guide
-- **for_llm/_llm_cursor_mcp_management.md**: New MCP server management guide
-- **for_llm/_llm_documentation_management.md**: New documentation management guide
+- **for_llm/_llm_port_management.md**: Port management guide
+- **for_llm/_llm_cursor_mcp_management.md**: MCP server management guide
+- **for_llm/_llm_documentation_management.md**: Documentation management guide
 
 ## Port Selection Process
 
 ### Random Port Generation
 - **Method**: PowerShell `Get-Random -Minimum 10000 -Maximum 65535`
-- **Generated Port**: 51534
-- **Conflict Check**: Verified port is available using `netstat -ano | findstr ":51534"`
-- **Result**: ✅ Port 51534 is available and ready for use
+- **Generated Port**: 43533 (for MCP)
+- **Conflict Check**: Verified port is available using `netstat -ano | findstr ":43533"`
+- **Result**: ✅ Port 43533 is available and ready for use
 
 ### Port Validation
 ```powershell
 # Port availability check performed
-PS> netstat -ano | findstr ":51534"
+PS> netstat -ano | findstr ":43533"
 # No output = port is available ✅
 ```
 
 ## Current Status
 
 ### ✅ **Completed Tasks**
-1. **Random Port Generated**: 51534 (validated available)
-2. **Docker Configuration**: Both production and local configs updated
-3. **MCP Configuration**: Cursor integration updated to use new port
-4. **Documentation**: Comprehensive guides created for future management
-5. **Setup Scripts**: PowerShell scripts updated for new port
+1. **Random Port Generated**: 43533 (validated available for MCP)
+2. **Docker Configuration**: Proxy remains on 51534
+3. **MCP Configuration**: Cursor integration updated to use new MCP port
+4. **Documentation**: Guides updated for new MCP port
+5. **Setup Scripts**: Update pending if needed
 
 ### 🔄 **Next Steps**
 1. **Restart Plane Services**: Use updated configuration
-2. **Test Connectivity**: Verify http://localhost:51534 is accessible
+2. **Test Connectivity**: Verify http://localhost:51534 and MCP on 43533 are accessible
 3. **Install MCP Server**: Copy configuration to Cursor
 4. **Test Integration**: Verify Plane tools work in Cursor
 
@@ -138,9 +141,11 @@ If MCP server doesn't connect:
 ## Quick Reference
 
 ### Current Configuration
-- **Port**: 51534
-- **URL**: http://localhost:51534
-- **Status**: ✅ Configured and ready for testing
+- **Plane API Proxy Port**: 51534
+- **Plane MCP Server Port**: 43533
+- **API URL**: http://localhost:51534
+- **MCP URL**: http://localhost:43533
+- **Status**: ✅ Configured and ready for service restart and testing
 
 ### Key Commands
 ```powershell

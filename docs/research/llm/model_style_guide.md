@@ -15,51 +15,177 @@ This document provides evidence-based development limits and best practices for 
 
 ## Recommended Development Limits per Model
 
+**⭐ SORTED BY VALUE FOR PLANE PROJECT MANAGEMENT & MCP DEVELOPMENT ⭐**
+
 Based on extensive research from multiple sources including OpenAI documentation, Anthropic guidelines, and developer best practices, these are the recommended limits for optimal performance with each model:
 
-| Model | Max Method Length | Max File Length | Max Context per Request | Max Concurrent Files | Max Modules/Imports | Cursor Requests | Monthly Cost @ $0.04/req | API Cost | MCP Support | Project Types | User Sentiment |
-|-------|------------------|-----------------|------------------------|---------------------|-------------------|----------------|-------------------------|----------|-------------|---------------|----------------|
-| **Claude 4 Sonnet** | 70 lines | 1500 lines | 200K tokens | 15-20 files | 45 imports | 1 req/msg | $0.04/msg | $3/$15 per MTok | 100 tools | Enterprise, AAA Games | ⭐⭐⭐⭐⭐ |
-| **Claude 4 Sonnet Thinking** | 70 lines | 1500 lines | 200K tokens | 15-20 files | 45 imports | 2 req/msg | $0.08/msg | $3/$15 per MTok | 100 tools | Enterprise, Complex Reasoning | ⭐⭐⭐⭐⭐ |
-| **Claude 4 Opus** | 75 lines | 1600 lines | 200K tokens | 20-25 files | 50 imports | Max Plan Only | $200/month | $15/$75 per MTok | 100 tools | Ultra-Complex Projects | ⭐⭐⭐⭐⭐ |
-| **Claude 4 Opus Thinking** | 75 lines | 1600 lines | 200K tokens | 20-25 files | 50 imports | Max Plan Only | $200/month | $15/$75 per MTok | 100 tools | Ultra-Complex Reasoning | ⭐⭐⭐⭐⭐ |
-| **Claude 3.7 Sonnet** | 60 lines | 1200 lines | 200K tokens | 12-15 files | 35 imports | 1 req/msg | $0.04/msg | $3/$15 per MTok | 80 tools | Professional, Architecture | ⭐⭐⭐⭐⭐ |
-| **Claude 3.7 Sonnet Thinking** | 60 lines | 1200 lines | 200K tokens | 12-15 files | 35 imports | 2 req/msg | $0.08/msg | $3/$15 per MTok | 80 tools | Complex Problem Solving | ⭐⭐⭐⭐⭐ |
-| **Claude 3.5 Sonnet** | 55 lines | 1000 lines | 200K tokens | 10-12 files | 30 imports | 1 req/msg | $0.04/msg | $3/$15 per MTok | 70 tools | General Development | ⭐⭐⭐⭐ |
-| **Claude 3.5 Haiku** | 40 lines | 700 lines | 100K tokens | 6-8 files | 20 imports | 0.33 req/msg | $0.013/msg | $0.25/$1.25 per MTok | 50 tools | Fast, Light Tasks | ⭐⭐⭐ |
-| **Claude 3 Opus** | 50 lines | 800 lines | 200K tokens | 8-10 files | 25 imports | 2.5 req/msg | $0.10/msg | $15/$75 per MTok | 60 tools | Legacy Complex Tasks | ⭐⭐⭐ |
-| **GPT-4.1** | 65 lines | 1400 lines | 1M tokens | 25-30 files | 40 imports | 1 req/msg | $0.04/msg | $2.50/$10 per MTok | 90 tools | Large Codebases, Research | ⭐⭐⭐⭐⭐ |
-| **GPT-4.5 Preview** | 70 lines | 1500 lines | 200K tokens | 20-25 files | 45 imports | 50 req/msg | $2.00/msg | $50/$200 per MTok | 95 tools | Cutting-edge Research | ⭐⭐⭐⭐ |
-| **GPT-4o** | 45 lines | 800 lines | 128K tokens | 8-12 files | 32 imports | 1 req/msg | $0.04/msg | $2.50/$10 per MTok | 60 tools | General Development | ⭐⭐⭐⭐ |
-| **GPT-4o Mini** | 35 lines | 600 lines | 128K tokens | 5-8 files | 25 imports | 0 req/msg | FREE | $0.15/$0.60 per MTok | 40 tools | Budget Development | ⭐⭐⭐ |
-| **o1** | 65 lines | 1200 lines | 128K tokens | 15-20 files | 35 imports | 10 req/msg | $0.40/msg | $15/$60 per MTok | 80 tools | Complex Reasoning | ⭐⭐⭐⭐ |
-| **o1 Mini** | 50 lines | 800 lines | 128K tokens | 8-12 files | 25 imports | 2.5 req/msg | $0.10/msg | $3/$12 per MTok | 50 tools | Moderate Reasoning | ⭐⭐⭐ |
-| **o3** | 75 lines | 1600 lines | 128K tokens | 18-25 files | 50 imports | 1 req/msg | $0.04/msg | $15/$60 per MTok | 95 tools | Advanced Reasoning | ⭐⭐⭐⭐⭐ |
-| **o3 Thinking** | 75 lines | 1600 lines | 128K tokens | 18-25 files | 50 imports | 1 req/msg | $0.04/msg | $15/$60 per MTok | 95 tools | Deep Reasoning | ⭐⭐⭐⭐⭐ |
-| **o3-Pro Thinking** | 80 lines | 1800 lines | 128K tokens | 25-30 files | 55 imports | Max Plan Only | $200/month | $60/$240 per MTok | 100 tools | Ultra-Complex Reasoning | ⭐⭐⭐⭐⭐ |
-| **o3-Mini** | 45 lines | 700 lines | 128K tokens | 6-10 files | 20 imports | 0.25 req/msg | $0.01/msg | $1/$4 per MTok | 40 tools | Light Reasoning | ⭐⭐⭐ |
-| **o4-Mini** | 50 lines | 800 lines | 128K tokens | 8-12 files | 25 imports | 1 req/msg | $0.04/msg | $2/$8 per MTok | 50 tools | Next-Gen Light Tasks | ⭐⭐⭐⭐ |
-| **o4-Mini Thinking** | 50 lines | 800 lines | 128K tokens | 8-12 files | 25 imports | 2 req/msg | $0.08/msg | $2/$8 per MTok | 50 tools | Next-Gen Reasoning | ⭐⭐⭐⭐ |
-| **DeepSeek R1** | 50 lines | 900 lines | 128K tokens | 10-15 files | 25 imports | 1 req/msg | $0.04/msg | $0.14/$2.19 per MTok | 55 tools | Budget Development | ⭐⭐⭐⭐ |
-| **DeepSeek R1 Thinking** | 50 lines | 900 lines | 128K tokens | 10-15 files | 25 imports | 1 req/msg | $0.04/msg | $0.14/$2.19 per MTok | 55 tools | Budget Reasoning | ⭐⭐⭐⭐ |
-| **DeepSeek R1-0528** | 50 lines | 900 lines | 128K tokens | 10-15 files | 25 imports | 1 req/msg | $0.04/msg | $0.14/$2.19 per MTok | 55 tools | Budget Development | ⭐⭐⭐⭐ |
-| **DeepSeek R1-0528 Thinking** | 50 lines | 900 lines | 128K tokens | 10-15 files | 25 imports | 1 req/msg | $0.04/msg | $0.14/$2.19 per MTok | 55 tools | Budget Reasoning | ⭐⭐⭐⭐ |
-| **DeepSeek V3.1** | 45 lines | 800 lines | 128K tokens | 8-12 files | 20 imports | 0 req/msg | FREE | $0.07/$0.28 per MTok | 45 tools | Ultra-Budget | ⭐⭐⭐ |
-| **DeepSeek V3** | 45 lines | 800 lines | 128K tokens | 8-12 files | 20 imports | 0 req/msg | FREE | $0.07/$0.28 per MTok | 45 tools | Ultra-Budget | ⭐⭐⭐ |
-| **Gemini 2.5 Pro** | 55 lines | 1000 lines | 1M tokens | 20-25 files | 42 imports | 1 req/msg | $0.04/msg | $1.25/$5 per MTok | 75 tools | Microservices, Multiplayer | ⭐⭐⭐⭐ |
-| **Gemini 2.5 Pro Thinking** | 55 lines | 1000 lines | 1M tokens | 20-25 files | 42 imports | 1 req/msg | $0.04/msg | $1.25/$5 per MTok | 75 tools | Complex Analysis | ⭐⭐⭐⭐ |
-| **Gemini 2.5 Pro Exp 03-25** | 55 lines | 1000 lines | 1M tokens | 20-25 files | 42 imports | 1 req/msg | $0.04/msg | $1.25/$5 per MTok | 75 tools | Experimental Features | ⭐⭐⭐⭐ |
-| **Gemini 2.5 Pro Exp 03-25 Thinking** | 55 lines | 1000 lines | 1M tokens | 20-25 files | 42 imports | 1 req/msg | $0.04/msg | $1.25/$5 per MTok | 75 tools | Experimental Reasoning | ⭐⭐⭐⭐ |
-| **Gemini 2.5 Flash** | 40 lines | 600 lines | 1M tokens | 12-15 files | 30 imports | 0 req/msg | FREE | $0.075/$0.30 per MTok | 50 tools | Fast, Free Tasks | ⭐⭐⭐ |
-| **Gemini 2.5 Flash Thinking** | 40 lines | 600 lines | 1M tokens | 12-15 files | 30 imports | 0 req/msg | FREE | $0.075/$0.30 per MTok | 50 tools | Fast, Free Reasoning | ⭐⭐⭐ |
-| **Gemini 2.5 Flash Preview 04-17** | 40 lines | 600 lines | 1M tokens | 12-15 files | 30 imports | 0 req/msg | FREE | $0.075/$0.30 per MTok | 50 tools | Preview Features | ⭐⭐⭐ |
-| **Gemini 2.0 Pro (Exp)** | 50 lines | 900 lines | 1M tokens | 15-20 files | 35 imports | 1 req/msg | $0.04/msg | $1.25/$5 per MTok | 70 tools | Experimental | ⭐⭐⭐⭐ |
-| **Grok 3** | 40 lines | 700 lines | 64K tokens | 6-10 files | 28 imports | 1 req/msg | $0.04/msg | $2/$10 per MTok | 50 tools | Internet-aware Projects | ⭐⭐⭐ |
-| **Grok 3 Beta** | 40 lines | 700 lines | 64K tokens | 6-10 files | 28 imports | 1 req/msg | $0.04/msg | $2/$10 per MTok | 50 tools | Beta Internet Features | ⭐⭐⭐ |
-| **Grok 3 Mini** | 30 lines | 500 lines | 32K tokens | 4-6 files | 20 imports | 0 req/msg | FREE | $0.50/$2 per MTok | 30 tools | Basic Internet Tasks | ⭐⭐ |
-| **Grok 2** | 35 lines | 600 lines | 64K tokens | 5-8 files | 25 imports | 1 req/msg | $0.04/msg | $2/$10 per MTok | 45 tools | Internet-aware | ⭐⭐⭐ |
-| **Cursor Small** | 25 lines | 400 lines | 32K tokens | 3-5 files | 15 imports | 0 req/msg | FREE | Custom | 20 tools | Simple Tasks | ⭐⭐ |
-| **Minimum (Free Models)** | 25 lines | 400 lines | 32K tokens | 3-5 files | 15 imports | 0 req/msg | FREE | $0.07/$0.28 per MTok | 20 tools | Basic Projects | ⭐⭐ |
+| Model | Max Method Length | Max File Length | Max Context per Request | Max Concurrent Files | Max Modules/Imports | Cursor Requests | Monthly Cost @ $0.04/req | API Cost | MCP Support | Project Types | User Sentiment | User Assigned Points |
+|-------|------------------|-----------------|------------------------|---------------------|-------------------|----------------|-------------------------|----------|-------------|---------------|----------------|---------------------|
+| **DeepSeek R1** | 50 lines | 900 lines | 128K tokens | 10-15 files | 25 imports | 1 req/msg | $0.04/msg | $0.14/$2.19 per MTok | 55 tools | Budget Development | ⭐⭐⭐⭐ | 0 |
+| **DeepSeek R1 Thinking** | 50 lines | 900 lines | 128K tokens | 10-15 files | 25 imports | 1 req/msg | $0.04/msg | $0.14/$2.19 per MTok | 55 tools | Budget Reasoning | ⭐⭐⭐⭐ | 0 |
+| **GPT-4.1** | 65 lines | 1400 lines | 1M tokens | 25-30 files | 40 imports | 1 req/msg | $0.04/msg | $2.50/$10 per MTok | 90 tools | Large Codebases, Research | ⭐⭐⭐⭐⭐ | 0 |
+| **Claude 3.7 Sonnet** | 60 lines | 1200 lines | 200K tokens | 12-15 files | 35 imports | 1 req/msg | $0.04/msg | $3/$15 per MTok | 80 tools | Professional, Architecture | ⭐⭐⭐⭐⭐ | 0 |
+| **o3** | 75 lines | 1600 lines | 128K tokens | 18-25 files | 50 imports | 1 req/msg | $0.04/msg | $15/$60 per MTok | 95 tools | Advanced Reasoning | ⭐⭐⭐⭐⭐ | 0 |
+| **o3 Thinking** | 75 lines | 1600 lines | 128K tokens | 18-25 files | 50 imports | 1 req/msg | $0.04/msg | $15/$60 per MTok | 95 tools | Deep Reasoning | ⭐⭐⭐⭐⭐ | 0 |
+| **Claude 4 Sonnet** | 70 lines | 1500 lines | 200K tokens | 15-20 files | 45 imports | 1 req/msg | $0.04/msg | $3/$15 per MTok | 100 tools | Enterprise, AAA Games | ⭐⭐⭐⭐⭐ | 0 |
+| **Gemini 2.5 Pro** | 55 lines | 1000 lines | 1M tokens | 20-25 files | 42 imports | 1 req/msg | $0.04/msg | $1.25/$5 per MTok | 75 tools | Microservices, Multiplayer | ⭐⭐⭐⭐ | 0 |
+| **o4-Mini** | 50 lines | 800 lines | 128K tokens | 8-12 files | 25 imports | 1 req/msg | $0.04/msg | $2/$8 per MTok | 50 tools | Next-Gen Light Tasks | ⭐⭐⭐⭐ | 0 |
+| **GPT-4o** | 45 lines | 800 lines | 128K tokens | 8-12 files | 32 imports | 1 req/msg | $0.04/msg | $2.50/$10 per MTok | 60 tools | General Development | ⭐⭐⭐⭐ | 0 |
+| **Claude 3.5 Sonnet** | 55 lines | 1000 lines | 200K tokens | 10-12 files | 30 imports | 1 req/msg | $0.04/msg | $3/$15 per MTok | 70 tools | General Development | ⭐⭐⭐⭐ | 0 |
+| **Gemini 2.5 Pro Thinking** | 55 lines | 1000 lines | 1M tokens | 20-25 files | 42 imports | 1 req/msg | $0.04/msg | $1.25/$5 per MTok | 75 tools | Complex Analysis | ⭐⭐⭐⭐ | 0 |
+| **Grok 3** | 40 lines | 700 lines | 64K tokens | 6-10 files | 28 imports | 1 req/msg | $0.04/msg | $2/$10 per MTok | 50 tools | Internet-aware Projects | ⭐⭐⭐ | 0 |
+| **Grok 2** | 35 lines | 600 lines | 64K tokens | 5-8 files | 25 imports | 1 req/msg | $0.04/msg | $2/$10 per MTok | 45 tools | Internet-aware | ⭐⭐⭐ | 0 |
+| **Gemini 2.5 Pro Exp 03-25** | 55 lines | 1000 lines | 1M tokens | 20-25 files | 42 imports | 1 req/msg | $0.04/msg | $1.25/$5 per MTok | 75 tools | Experimental Features | ⭐⭐⭐⭐ | 0 |
+| **Gemini 2.5 Pro Exp 03-25 Thinking** | 55 lines | 1000 lines | 1M tokens | 20-25 files | 42 imports | 1 req/msg | $0.04/msg | $1.25/$5 per MTok | 75 tools | Experimental Reasoning | ⭐⭐⭐⭐ | 0 |
+| **Gemini 2.0 Pro (Exp)** | 50 lines | 900 lines | 1M tokens | 15-20 files | 35 imports | 1 req/msg | $0.04/msg | $1.25/$5 per MTok | 70 tools | Experimental | ⭐⭐⭐⭐ | 0 |
+| **Grok 3 Beta** | 40 lines | 700 lines | 64K tokens | 6-10 files | 28 imports | 1 req/msg | $0.04/msg | $2/$10 per MTok | 50 tools | Beta Internet Features | ⭐⭐⭐ | 0 |
+| **Claude 4 Sonnet Thinking** | 70 lines | 1500 lines | 200K tokens | 15-20 files | 45 imports | 2 req/msg | $0.08/msg | $3/$15 per MTok | 100 tools | Enterprise, Complex Reasoning | ⭐⭐⭐⭐⭐ | 0 |
+| **Claude 3.7 Sonnet Thinking** | 60 lines | 1200 lines | 200K tokens | 12-15 files | 35 imports | 2 req/msg | $0.08/msg | $3/$15 per MTok | 80 tools | Complex Problem Solving | ⭐⭐⭐⭐⭐ | 0 |
+| **o4-Mini Thinking** | 50 lines | 800 lines | 128K tokens | 8-12 files | 25 imports | 2 req/msg | $0.08/msg | $2/$8 per MTok | 50 tools | Next-Gen Reasoning | ⭐⭐⭐⭐ | 0 |
+| **DeepSeek R1-0528** | 50 lines | 900 lines | 128K tokens | 10-15 files | 25 imports | 1 req/msg | $0.04/msg | $0.14/$2.19 per MTok | 55 tools | Budget Development | ⭐⭐⭐⭐ | 0 |
+| **DeepSeek R1-0528 Thinking** | 50 lines | 900 lines | 128K tokens | 10-15 files | 25 imports | 1 req/msg | $0.04/msg | $0.14/$2.19 per MTok | 55 tools | Budget Reasoning | ⭐⭐⭐⭐ | 0 |
+| **o3-Mini** | 45 lines | 700 lines | 128K tokens | 6-10 files | 20 imports | 0.25 req/msg | $0.01/msg | $1/$4 per MTok | 40 tools | Light Reasoning | ⭐⭐⭐ | 0 |
+| **Claude 3.5 Haiku** | 40 lines | 700 lines | 100K tokens | 6-8 files | 20 imports | 0.33 req/msg | $0.013/msg | $0.25/$1.25 per MTok | 50 tools | Fast, Light Tasks | ⭐⭐⭐ | 0 |
+| **o1 Mini** | 50 lines | 800 lines | 128K tokens | 8-12 files | 25 imports | 2.5 req/msg | $0.10/msg | $3/$12 per MTok | 50 tools | Moderate Reasoning | ⭐⭐⭐ | 0 |
+| **Claude 3 Opus** | 50 lines | 800 lines | 200K tokens | 8-10 files | 25 imports | 2.5 req/msg | $0.10/msg | $15/$75 per MTok | 60 tools | Legacy Complex Tasks | ⭐⭐⭐ | 0 |
+| **o1** | 65 lines | 1200 lines | 128K tokens | 15-20 files | 35 imports | 10 req/msg | $0.40/msg | $15/$60 per MTok | 80 tools | Complex Reasoning | ⭐⭐⭐⭐ | 0 |
+| **GPT-4.5 Preview** | 70 lines | 1500 lines | 200K tokens | 20-25 files | 45 imports | 50 req/msg | $2.00/msg | $50/$200 per MTok | 95 tools | Cutting-edge Research | ⭐⭐⭐⭐ | 0 |
+| **Claude 4 Opus** | 75 lines | 1600 lines | 200K tokens | 20-25 files | 50 imports | Max Plan Only | $200/month | $15/$75 per MTok | 100 tools | Ultra-Complex Projects | ⭐⭐⭐⭐⭐ | 0 |
+| **Claude 4 Opus Thinking** | 75 lines | 1600 lines | 200K tokens | 20-25 files | 50 imports | Max Plan Only | $200/month | $15/$75 per MTok | 100 tools | Ultra-Complex Reasoning | ⭐⭐⭐⭐⭐ | 0 |
+| **o3-Pro Thinking** | 80 lines | 1800 lines | 128K tokens | 25-30 files | 55 imports | Max Plan Only | $200/month | $60/$240 per MTok | 100 tools | Ultra-Complex Reasoning | ⭐⭐⭐⭐⭐ | 0 |
+| **GPT-4o Mini** | 35 lines | 600 lines | 128K tokens | 5-8 files | 25 imports | 0 req/msg | FREE | $0.15/$0.60 per MTok | 40 tools | Budget Development | ⭐⭐⭐ | 0 |
+| **DeepSeek V3.1** | 45 lines | 800 lines | 128K tokens | 8-12 files | 20 imports | 0 req/msg | FREE | $0.07/$0.28 per MTok | 45 tools | Ultra-Budget | ⭐⭐⭐ | 0 |
+| **DeepSeek V3** | 45 lines | 800 lines | 128K tokens | 8-12 files | 20 imports | 0 req/msg | FREE | $0.07/$0.28 per MTok | 45 tools | Ultra-Budget | ⭐⭐⭐ | 0 |
+| **Gemini 2.5 Flash** | 40 lines | 600 lines | 1M tokens | 12-15 files | 30 imports | 0 req/msg | FREE | $0.075/$0.30 per MTok | 50 tools | Fast, Free Tasks | ⭐⭐⭐ | 0 |
+| **Gemini 2.5 Flash Thinking** | 40 lines | 600 lines | 1M tokens | 12-15 files | 30 imports | 0 req/msg | FREE | $0.075/$0.30 per MTok | 50 tools | Fast, Free Reasoning | ⭐⭐⭐ | 0 |
+| **Gemini 2.5 Flash Preview 04-17** | 40 lines | 600 lines | 1M tokens | 12-15 files | 30 imports | 0 req/msg | FREE | $0.075/$0.30 per MTok | 50 tools | Preview Features | ⭐⭐⭐ | 0 |
+| **Grok 3 Mini** | 30 lines | 500 lines | 32K tokens | 4-6 files | 20 imports | 0 req/msg | FREE | $0.50/$2 per MTok | 30 tools | Basic Internet Tasks | ⭐⭐ | 0 |
+| **Cursor Small** | 25 lines | 400 lines | 32K tokens | 3-5 files | 15 imports | 0 req/msg | FREE | Custom | 20 tools | Simple Tasks | ⭐⭐ | 0 |
+| **Minimum (Free Models)** | 25 lines | 400 lines | 32K tokens | 3-5 files | 15 imports | 0 req/msg | FREE | $0.07/$0.28 per MTok | 20 tools | Basic Projects | ⭐⭐ | 0 |
+
+## User Assigned Points System
+
+### **How It Works**
+The "User Assigned Points" column tracks your personal preferences and experiences with each model. This allows you to customize the recommendations based on your specific use cases and satisfaction levels.
+
+### **Scoring Guidelines**
+- **+5 points**: Exceptional performance, exceeded expectations
+- **+3 points**: Very good performance, met expectations well
+- **+1 point**: Good performance, minor issues
+- **0 points**: Neutral/baseline (default starting point)
+- **-1 point**: Below expectations, some issues
+- **-3 points**: Poor performance, significant issues
+- **-5 points**: Terrible performance, major problems
+
+### **Usage Instructions**
+When you want to adjust a model's score, simply say:
+- "Add 3 points to DeepSeek R1" or "DeepSeek R1 +3"
+- "Subtract 2 points from GPT-4.1" or "GPT-4.1 -2"
+- "Give Claude 3.7 Sonnet 5 points" or "Claude 3.7 +5"
+
+The AI will automatically update both this document and the LLM selection guide to reflect your preferences.
+
+### **Score Impact on Recommendations**
+- **High scores (+3 to +5)**: Model will be prioritized in recommendations
+- **Neutral scores (-1 to +2)**: Standard recommendations apply
+- **Low scores (-3 to -5)**: Model will be deprioritized or avoided in recommendations
+
+### **Current Scores**
+All models start at 0 points. As you use different models and provide feedback, your personal scoring will help tailor future recommendations to your specific needs and preferences.
+
+## Dynamic Table Reordering Algorithm
+
+### **Automatic Row Reordering Based on User Points**
+
+When User Assigned Points become extreme enough, the entire table automatically reorders to reflect your personal preferences, potentially moving lower-capability models above higher-capability ones.
+
+### **Reordering Logic & Thresholds**
+
+**Impact Scaling System**:
+```
+Final Ranking Score = Base Capability Rating + (User Points × Impact Multiplier)
+
+Impact Multiplier Tiers:
+- ±1 point: 0.1× (minimal impact, fine-tuning only)
+- ±2 points: 0.3× (slight preference adjustment)
+- ±3 points: 0.6× (moderate impact, can shift 1-2 positions)
+- ±4 points: 1.0× (significant impact, notable reordering)
+- ±5 points: 1.5× (major impact, can override superior models)
+- ±6+ points: 2.0× (extreme impact, dramatic reordering)
+```
+
+### **Reordering Examples**
+
+**Example 1: Budget Model Override**
+```
+Original Order: Claude 4 Sonnet (5★), GPT-4.1 (5★), DeepSeek R1 (4★)
+User Experience: DeepSeek R1 +5 (exceptional cost-effectiveness)
+
+Calculations:
+- Claude 4: 5.0 + (0 × 1.5) = 5.0
+- GPT-4.1: 5.0 + (0 × 1.5) = 5.0  
+- DeepSeek R1: 4.0 + (5 × 1.5) = 11.5 ← Moves to #1
+
+New Order: DeepSeek R1, Claude 4 Sonnet, GPT-4.1
+```
+
+**Example 2: Premium Model Penalty**
+```
+Original Order: Claude 3.7 (5★), Claude 4 (5★), GPT-4.1 (5★)
+User Experience: Claude 3.7 -5 (poor documentation experience)
+
+Calculations:
+- Claude 3.7: 5.0 + (-5 × 1.5) = -2.5 ← Drops to bottom/removed
+- Claude 4: 5.0 + (0 × 1.5) = 5.0
+- GPT-4.1: 5.0 + (0 × 1.5) = 5.0
+
+New Order: Claude 4, GPT-4.1, [Claude 3.7 avoided]
+```
+
+### **Table Reordering Triggers**
+
+**Automatic Reordering Occurs When**:
+- Any model reaches ±3 points (moderate reordering within capability tiers)
+- Any model reaches ±5 points (major reordering across capability tiers)
+- Multiple models have significant point differences (±3+ spread)
+
+**Reordering Scope**:
+- **Local Reordering** (±1 to ±3): Within similar capability models
+- **Tier Jumping** (±4 to ±5): Across different capability levels  
+- **Dramatic Override** (±6+): Complete ranking reversal possible
+
+### **Task-Specific Table Variants**
+
+Different task types may show different orderings based on accumulated user points:
+
+**For Python/MCP Development**:
+- DeepSeek models may rank higher due to cost-effectiveness points
+- Premium models may rank lower if user prefers budget efficiency
+
+**For Large Codebase Analysis**:
+- GPT-4.1 likely maintains top position due to 1M context window
+- Other models may reorder based on analysis quality feedback
+
+**For Documentation Tasks**:
+- Claude models may maintain dominance unless user experience differs
+- Models with poor writing feedback will drop significantly
+
+### **Continuous Table Evolution**
+
+**Monthly Recalibration**:
+- Review point patterns and adjust impact multipliers
+- Identify systematic biases in user preferences
+- Refine algorithm based on recommendation accuracy
+
+**Pattern-Based Adjustments**:
+- If user consistently favors budget models → Increase cost-efficiency weighting globally
+- If user penalizes premium models → Investigate specific pain points
+- If certain tasks show consistent point patterns → Create task-specific algorithms
+
+**Quality Assurance**:
+- Prevent extreme outliers from completely breaking recommendations
+- Maintain minimum capability thresholds for critical tasks
+- Ensure reordering makes logical sense given user patterns
 
 ## Additional Organizational Limits
 
@@ -67,15 +193,16 @@ Based on extensive research from developer communities and LLM best practices, h
 
 | Model | Max Files per Folder | Max Subfolders per Folder | Max Folder Depth | Max File Name Length | Max Import Statements | Project Structure |
 |-------|---------------------|---------------------------|------------------|---------------------|-------------------|------------------|
-| **Claude 4 Sonnet** | 15-20 files | 8-10 subfolders | 6 levels | 50 characters | 25 imports | Modular, feature-based |
-| **Claude 3.7 Sonnet** | 12-15 files | 6-8 subfolders | 5 levels | 45 characters | 20 imports | Component-based |
-| **GPT-4.1** | 25-30 files | 12-15 subfolders | 8 levels | 60 characters | 35 imports | Hierarchical |
-| **GPT-4o** | 20-25 files | 10-12 subfolders | 7 levels | 55 characters | 30 imports | Domain-driven |
 | **DeepSeek R1** | 10-12 files | 5-6 subfolders | 4 levels | 40 characters | 15 imports | Simple, linear |
-| **Perplexity AI** | 15-18 files | 6-8 subfolders | 5 levels | 45 characters | 20 imports | Research-focused |
-| **Gemini 2.5 Pro** | 30-35 files | 15-20 subfolders | 10 levels | 70 characters | 40 imports | Microservice-oriented |
+| **GPT-4.1** | 25-30 files | 12-15 subfolders | 8 levels | 60 characters | 35 imports | Hierarchical |
+| **Claude 3.7 Sonnet** | 12-15 files | 6-8 subfolders | 5 levels | 45 characters | 20 imports | Component-based |
 | **o3** | 35-40 files | 18-22 subfolders | 12 levels | 75 characters | 45 imports | Complex, nested |
+| **Claude 4 Sonnet** | 15-20 files | 8-10 subfolders | 6 levels | 50 characters | 25 imports | Modular, feature-based |
+| **Gemini 2.5 Pro** | 30-35 files | 15-20 subfolders | 10 levels | 70 characters | 40 imports | Microservice-oriented |
+| **GPT-4o** | 20-25 files | 10-12 subfolders | 7 levels | 55 characters | 30 imports | Domain-driven |
+| **Claude 3.5 Sonnet** | 12-15 files | 6-8 subfolders | 5 levels | 45 characters | 20 imports | Component-based |
 | **Grok 3** | 18-22 files | 8-10 subfolders | 6 levels | 50 characters | 25 imports | Logic-tree structure |
+| **Perplexity AI** | 15-18 files | 6-8 subfolders | 5 levels | 45 characters | 20 imports | Research-focused |
 | **Minimum** | 10 files | 5 subfolders | 4 levels | 40 characters | 15 imports | Simplest possible |
 
 ### **Folder Organization Guidelines**
@@ -206,10 +333,10 @@ Based on extensive research from developer communities and LLM best practices, h
 
 ## Key Findings
 
-### **Most Permissive Models**
-- **o3**: Highest limits across most categories (70-line methods, 1500-line files)
-- **GPT-4.1**: Best for large codebases (1M token context, 20-30 concurrent files)
-- **Claude 4 Sonnet**: Balanced high performance with good file handling
+### **Most Cost-Effective for Plane Development**
+- **DeepSeek R1**: Best value (90% cost savings, excellent Python/TypeScript support)
+- **GPT-4.1**: Premium capabilities at standard pricing (1M context, free tier available)
+- **Claude 3.7 Sonnet**: Excellent architecture understanding, professional grade
 
 ### **Most Restrictive Models**
 - **Perplexity AI**: Lowest limits (30-line methods, 400-line files, 32K context)

@@ -60,11 +60,14 @@ if (-not $cursorConfigPath) {
 Write-Host "`n4. Preparing MCP configuration..." -ForegroundColor Yellow
 $configTemplate = Get-Content "cursor-mcp-config.json" -Raw | ConvertFrom-Json
 
-# Update the path to use the current directory
+# Update the path to use the current directory and Python server
 $currentPath = (Get-Location).Path
-$configTemplate.mcpServers.plane.args[0] = "$currentPath\plane-mcp-server.js"
+$configTemplate.mcpServers.plane.args[0] = "$currentPath\for_llm\plane-mcp-server.py"
+$configTemplate.mcpServers.plane.command = "python"
+$configTemplate.mcpServers.plane.env.PLANE_MCP_PORT = "43533"
 
 Write-Host "✅ MCP server path: $($configTemplate.mcpServers.plane.args[0])" -ForegroundColor Green
+Write-Host "✅ MCP server port: 43533" -ForegroundColor Green
 
 # Check if Cursor MCP config exists
 if ($cursorConfigPath -and (Test-Path $cursorConfigPath)) {
@@ -116,9 +119,10 @@ Write-Host "`n🎉 Setup complete! Ready for API key configuration." -Foreground
 # Test the MCP server
 Write-Host "`n7. Testing MCP server..." -ForegroundColor Yellow
 try {
-    $env:PLANE_API_URL = "http://localhost:8080"
+    $env:PLANE_API_URL = "http://localhost:51534"
     $env:PLANE_API_KEY = "test"
-    node "plane-mcp-server.js" --help 2>$null
+    $env:PLANE_MCP_PORT = "43533"
+    python "for_llm/plane-mcp-server.py" --help 2>$null
     Write-Host "✅ MCP server is ready" -ForegroundColor Green
 } catch {
     Write-Host "⚠️  MCP server test skipped (normal - needs API key)" -ForegroundColor Yellow

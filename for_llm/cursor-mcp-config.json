@@ -1,13 +1,14 @@
 {
   "mcpServers": {
     "plane": {
-      "command": "node",
-      "args": ["D:\\repos\\cursor-projects\\categories\\organization\\project-management\\plane-working\\for_llm\\plane-mcp-server.js"],
+      "command": "python",
+      "args": ["for_llm/plane-mcp-server.py"],
       "env": {
         "PLANE_API_URL": "http://localhost:51534",
         "PLANE_API_KEY": "your-api-key-here",
         "PLANE_DEFAULT_WORKSPACE": "your-workspace-slug",
-        "PLANE_DEFAULT_PROJECT": "your-project-id"
+        "PLANE_DEFAULT_PROJECT": "your-project-id",
+        "PLANE_MCP_PORT": "43533"
       }
     }
   }

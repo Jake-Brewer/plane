@@ -365,4 +365,11 @@ Copy-Item "$env:APPDATA\Cursor\User\mcp.json" ".\backups\mcp-backup-$(Get-Date -
 Copy-Item ".\backups\mcp-backup-TIMESTAMP.json" "$env:APPDATA\Cursor\User\mcp.json"
 ```
 
-**Remember**: Always backup MCP configurations before making changes, and test thoroughly in development environments before deploying to production. 
+**Remember**: Always backup MCP configurations before making changes, and test thoroughly in development environments before deploying to production.
+
+## Current MCP Servers
+
+- **Plane MCP Server**: Python FastAPI, running on port 43533 (`http://localhost:43533`).
+  - Exposes all Plane API endpoints as MCP tools for Cursor.
+  - Official port for Cursor integration.
+  - See for_llm/PLANE_PORT_UPDATE_STATUS.md for current port assignment. 

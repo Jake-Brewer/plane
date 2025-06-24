@@ -5,15 +5,20 @@
 
 **READ THIS COMPLETELY AT THE START OF EVERY PROMPT**
 
+### Agent Identity Requirement
+**MANDATORY**: Every LLM agent must establish a unique identity before beginning work:
+1. **Choose a unique name** that reflects your specialization (e.g., TestGuardian-E2E, DataArchitect-DB, SecurityAuditor-Infra)
+2. **Register in** `for_llm/_llm_agent_registry.md` with full details (purpose, scope, bio)
+3. **Check for conflicts** with existing agents and resolve with user if needed
+4. **Use your agent prefix** for file locking (see registry for format)
+
 This file contains essential behavioral standards needed for every interaction. For specialized knowledge, navigate to the appropriate for_llm/*.md file as indicated below.
 
 ### Navigation Map
+- **Agent Registry** → `for_llm/_llm_agent_registry.md`
 - **Linear Integration** → `for_llm/_llm_linear_project_management.md`
 - **Component Extraction** → `for_llm/_llm_extraction_primer.md`
 - **Multi-Agent Tasks** → `for_llm/_llm_multi-agent_primer.md`
-- **Port Management** → `for_llm/_llm_port_management.md`
-- **Cursor MCP Servers** → `for_llm/_llm_cursor_mcp_management.md`
-- **Documentation Management** → `for_llm/_llm_documentation_management.md`
 - **API Authentication** → `for_llm/LINEAR_API_CREDENTIALS.md`
 
 ---
@@ -69,6 +74,12 @@ docker-command-center/
 - **Timestamps**: Include "Last Updated" headers in guidance files
 - **Documentation**: Create FOLDER_GUIDE.md in every directory
 - **Todo Files**: Use format `for_llm_todo_<agent-name>.md`
+- **File Locking**: Always check for and respect file locks before editing:
+  - **Check for locks**: Look for `<!-- LOCKED:[AGENT]:[TIME]:[EXPIRES] -->` at file start
+  - **Respect active locks**: Do not edit files locked by other agents unless expired
+  - **Create locks**: Add lock comment when editing shared files
+  - **Lock format**: `<!-- LOCKED:[YOUR_PREFIX]:[ISO_TIMESTAMP]:[EXPIRES_TIMESTAMP] -->`
+  - **Auto-expiry**: Locks expire after 5 minutes or with next git commit
 
 ### Version Control Protocol
 1. **Always backup** before major changes
@@ -76,6 +87,51 @@ docker-command-center/
 3. **Never delete** protected files (_llm*.md)
 4. **Document changes** in commit messages
 5. **Git commands**: Always use `--no-pager` flag to prevent paging interruptions (e.g., `git branch -r --no-pager`, `git log --no-pager`)
+
+### Command Execution Standards
+**CRITICAL: All commands must be non-interactive and have appropriate timeouts**
+
+#### Interactive Prompt Prevention
+- **NPM/NPX**: Always use `--yes` flag (e.g., `npx create-next-app --yes`, `npm install --yes`)
+- **Package Managers**: Use non-interactive flags (`--assume-yes`, `--non-interactive`, `--quiet`)
+- **Git**: Use `--no-pager` to prevent paging (e.g., `git log --no-pager`, `git diff --no-pager`)
+- **Docker**: Use `--non-interactive` and `--quiet` flags where available
+- **General Rule**: Research and use non-interactive flags for ANY command that might prompt for user input
+
+#### Command Validation & Follow-up
+1. **Read Command Output**: Always analyze command output to verify expected results
+2. **Silent Commands**: Some commands produce no output on success - verify with follow-up commands:
+   - After `git commit`: Run `git status --porcelain` to verify clean state
+   - After file operations: Use `ls -la` or equivalent to verify file existence/permissions
+   - After service starts: Check with `curl` or `ping` to verify service is responding
+3. **Expected vs Actual**: Compare actual output with expected patterns
+4. **Error Detection**: Look for error codes, "error:" text, or unexpected output patterns
+
+#### Timeout & Watchdog Strategy
+- **Background Commands**: Use `is_background: true` for long-running services
+- **Expected Duration**: Set realistic expectations for command completion
+- **Watchdog Pattern**: For commands expected to take >30 seconds, consider breaking into smaller steps
+- **Verification Commands**: Use quick verification commands to check status rather than waiting indefinitely
+
+#### Common Non-Interactive Patterns
+```bash
+# NPM/NPX - Always use --yes
+npx create-next-app my-app --yes
+npm install package-name --yes
+
+# Git - Always use --no-pager for output commands  
+git log --oneline --no-pager
+git diff --no-pager
+git status --porcelain  # Machine-readable, no paging
+
+# Docker - Use quiet flags
+docker build . --quiet
+docker run --detach --name container-name image
+
+# Package managers
+apt-get install -y package-name
+yum install -y package-name
+```
 
 ### Quality Assurance
 - **Test before deploy**: Validate all changes
@@ -112,30 +168,6 @@ docker-command-center/
 - Distributed task execution
 - Shared resource management
 - Conflict resolution
-
-#### 🔧 Port Management & Configuration
-**Access:** `for_llm/_llm_port_management.md`
-**Triggers:**
-- Port conflicts or changes needed
-- Random port generation required
-- Docker configuration updates
-- Service connectivity issues
-
-#### 🔌 Cursor MCP Server Management
-**Access:** `for_llm/_llm_cursor_mcp_management.md`
-**Triggers:**
-- Adding new MCP servers to Cursor
-- MCP configuration backup/restore
-- Troubleshooting MCP connectivity
-- Custom MCP server development
-
-#### 📝 Documentation Management
-**Access:** `for_llm/_llm_documentation_management.md`
-**Triggers:**
-- Creating new LLM guidance files
-- Updating existing documentation
-- Managing documentation structure
-- Backup and recovery procedures
 
 #### 🔐 API Authentication
 **Access:** `for_llm/LINEAR_API_CREDENTIALS.md`

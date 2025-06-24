@@ -1,5 +1,5 @@
 # Project-Specific LLM Primer - Plane
-# Last Updated: 2025-01-27T00:00:00Z
+# Last Updated: 2025-06-24T00:00:00Z
 
 **PREREQUISITE**: Read `_llm_primer.md` first for core behavioral standards
 
@@ -66,24 +66,21 @@ plane-working/
 ## LLM Working Context
 
 ### Our Role
-We are working on **Linear integration capabilities** for this Plane installation. This includes:
-- Setting up Linear API authentication
-- Creating project management workflows
-- Implementing issue synchronization
-- Building cross-platform coordination
+**Linear MCP toolset is deprecated.**
 
-### Linear Integration Scope
-- **Authentication**: OAuth-based Linear API access
-- **Issue Sync**: Bidirectional issue synchronization
-- **Project Management**: Linear project management through Plane interface
-- **Workflow Automation**: Automated status updates and notifications
-- **Cross-References**: Link Plane issues to Linear issues and vice versa
+**Primary focus:**
+- Set up a Python-based Plane MCP server that exposes all Plane API endpoints to Cursor as MCP tools.
+- The Plane MCP must gather and log usage metrics for each endpoint (e.g., call count, error rate, latency).
+- The Plane MCP should auto-detect the Plane API port from the Docker environment and document it in the code and in this file.
+- Frequent refreshing of this file and _llm_primer.md from disk is required to ensure all instructions are followed precisely.
 
-### Current Focus Areas
-1. **Project Management**: Implementing Linear-compatible workflows
-2. **API Integration**: Robust Linear API connectivity
-3. **Documentation**: Maintaining comprehensive guidance for LLM agents
-4. **Multi-Agent Coordination**: Supporting collaborative development workflows
+### Plane MCP Server Requirements
+- **Language:** Python (FastAPI or Flask recommended)
+- **API Coverage:** Expose all Plane REST API endpoints as MCP tools
+- **Metrics:** Log and aggregate usage metrics for each endpoint (calls, errors, latency)
+- **Docker Awareness:** Detect Plane API port from running Docker containers (default: 8000, but may be mapped)
+- **Cursor Integration:** Register the MCP server with Cursor using the documented MCP config process
+- **Documentation:** Update this file and for_llm/_llm_cursor_mcp_management.md with any changes
 
 ---
 
@@ -138,28 +135,6 @@ We are working on **Linear integration capabilities** for this Plane installatio
 
 ---
 
-## Linear Integration Specifics
-
-### Authentication Flow
-1. **OAuth Setup**: Configure Linear OAuth application
-2. **Token Management**: Secure token storage and refresh
-3. **Connection Validation**: Regular connection health checks
-4. **Error Handling**: Robust error handling and retry logic
-
-### Data Synchronization
-- **Issue Mapping**: Map Plane issues to Linear issues
-- **Status Synchronization**: Keep status updates synchronized
-- **Comment Sync**: Synchronize comments and updates
-- **Attachment Handling**: Handle file attachments appropriately
-
-### Workflow Integration
-- **Project Creation**: Create projects in both systems
-- **Team Management**: Synchronize team member access
-- **Label Synchronization**: Keep labels and tags synchronized
-- **Milestone Tracking**: Coordinate milestone and deadline tracking
-
----
-
 ## Success Metrics
 
 ### Integration Quality
@@ -208,7 +183,7 @@ We are working on **Linear integration capabilities** for this Plane installatio
 - **Data Privacy**: Respect user privacy and data protection
 
 ### Performance Considerations
-- **API Limits**: Respect Linear API rate limits
+- **API Limits**: Respect Plane API rate limits
 - **Caching**: Implement appropriate caching strategies
 - **Database**: Optimize database queries and indexing
 - **Frontend**: Optimize bundle sizes and loading performance
