@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "plane-local": {
+      "command": "node",
+      "args": ["for_llm/plane-mcp-server.js"],
+      "cwd": "D:/repos/cursor-projects/categories/organization/project-management/plane-working",
+      "env": {
+        "PLANE_API_URL": "http://localhost:8000",
+        "PLANE_API_KEY": "your_plane_api_key_here",
+        "PLANE_DEFAULT_WORKSPACE": "your-workspace-slug",
+        "PLANE_DEFAULT_PROJECT": "your-project-id"
+      }
+    },
+    "plane-production": {
+      "command": "node",
+      "args": ["for_llm/plane-mcp-server.js"],
+      "cwd": "D:/repos/cursor-projects/categories/organization/project-management/plane-working",
+      "env": {
+        "PLANE_API_URL": "https://your-plane-instance.com",
+        "PLANE_API_KEY": "your_production_api_key_here",
+        "PLANE_DEFAULT_WORKSPACE": "your-workspace-slug",
+        "PLANE_DEFAULT_PROJECT": "your-project-id"
+      }
+    }
+  }
+} 

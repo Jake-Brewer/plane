@@ -1,0 +1,27 @@
+# Plane API Configuration
+# Copy this to your environment or .env file
+
+# Plane API Base URL (local development)
+PLANE_API_URL=http://localhost:8000
+
+# Plane API Authentication
+# Get this from Plane Settings → API → Create API Token
+PLANE_API_KEY=your_plane_api_key_here
+
+# Default Workspace and Project (optional, for convenience)
+PLANE_DEFAULT_WORKSPACE=your-workspace-slug
+PLANE_DEFAULT_PROJECT=your-project-id
+
+# Database Configuration (for direct DB access if needed)
+POSTGRES_HOST=localhost
+POSTGRES_DB=plane
+POSTGRES_USER=plane
+POSTGRES_PASSWORD=plane
+POSTGRES_PORT=5432
+
+# Redis Configuration (for caching if needed)
+REDIS_URL=redis://localhost:6379
+
+# Development Settings
+DEBUG=1
+NODE_ENV=development 
