@@ -1,222 +1,255 @@
-<br /><br />
+# Cursor LLM Model Selector
 
-<p align="center">
-<a href="https://plane.so">
-  <img src="https://plane-marketing.s3.ap-south-1.amazonaws.com/plane-readme/plane_logo_.webp" alt="Plane Logo" width="70">
-</a>
-</p>
-<h1 align="center"><b>Plane</b></h1>
-<p align="center"><b>Open-source project management that unlocks customer value</b></p>
+A comprehensive Python application that automatically selects the most cost-effective LLM model for project analysis in Cursor IDE based on technical requirements, user preferences, and budget constraints.
 
-<p align="center">
-<a href="https://discord.com/invite/A92xrEGCge">
-<img alt="Discord online members" src="https://img.shields.io/discord/1031547764020084846?color=5865F2&label=Discord&style=for-the-badge" />
-</a>
-<img alt="Commit activity per month" src="https://img.shields.io/github/commit-activity/m/makeplane/plane?style=for-the-badge" />
-</p>
+## 🎯 Purpose
 
-<p align="center">
-    <a href="https://dub.sh/plane-website-readme"><b>Website</b></a> •
-    <a href="https://git.new/releases"><b>Releases</b></a> •
-    <a href="https://dub.sh/planepowershq"><b>Twitter</b></a> •
-    <a href="https://dub.sh/planedocs"><b>Documentation</b></a>
-</p>
+This tool helps developers and teams optimize their LLM usage costs in Cursor IDE by:
+- **Analyzing project requirements** (file sizes, complexity, analysis frequency)
+- **Filtering compatible models** based on technical limitations
+- **Calculating real costs** using accurate Cursor pricing data
+- **Recommending optimal models** with cost-benefit analysis
+- **Suggesting optimizations** like hybrid approaches and frequency adjustments
 
-<p>
-    <a href="https://app.plane.so/#gh-light-mode-only" target="_blank">
-      <img
-        src="https://plane-marketing.s3.ap-south-1.amazonaws.com/plane-readme/plane_screen.webp"
-        alt="Plane Screens"
-        width="100%"
-      />
-    </a>
-    <a href="https://app.plane.so/#gh-dark-mode-only" target="_blank">
-      <img
-        src="https://plane-marketing.s3.ap-south-1.amazonaws.com/plane-readme/plane_screens_dark_mode.webp"
-        alt="Plane Screens"
-        width="100%"
-      />
-    </a>
-</p>
+## 🚀 Quick Start
 
-Meet [Plane](https://dub.sh/plane-website-readme), an open-source project management tool to track issues, run ~sprints~ cycles, and manage product roadmaps without the chaos of managing the tool itself. 🧘‍♀️
+### Prerequisites
+- Python 3.7+
+- No external dependencies (uses only standard library)
 
-> Plane is evolving every day. Your suggestions, ideas, and reported bugs help us immensely. Do not hesitate to join in the conversation on [Discord](https://discord.com/invite/A92xrEGCge) or raise a GitHub issue. We read everything and respond to most.
+### Installation
+```bash
+git clone <this-repo>
+cd cursor-llm-model-selector
+```
 
-## 🚀 Installation
+### Usage
 
-Getting started with Plane is simple. Choose the setup that works best for you:
+#### 1. Quick Test with Sample Project
+```bash
+python model_selector.py --sample
+```
 
-- **Plane Cloud**   
-Sign up for a free account on [Plane Cloud](https://app.plane.so)—it's the fastest way to get up and running without worrying about infrastructure.
+#### 2. Interactive Mode (Custom Input)
+```bash
+python model_selector.py --interactive
+```
 
-- **Self-host Plane**  
-Prefer full control over your data and infrastructure? Install and run Plane on your own servers. Follow our detailed [deployment guides](https://developers.plane.so/self-hosting/overview) to get started.
+#### 3. Configuration File (Repeatable Analysis)
+```bash
+python model_selector.py --config sample_config.json
+```
 
-| Installation methods | Docs link                                                                                                                                          |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Docker               | [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://developers.plane.so/self-hosting/methods/docker-compose)         |
-| Kubernetes           | [![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)](https://developers.plane.so/self-hosting/methods/kubernetes) |
+## 📊 Sample Output
 
-`Instance admins` can configure instance settings with [God mode](https://developers.plane.so/self-hosting/govern/instance-admin).
+```
+🎯 LLM MODEL SELECTION ANALYSIS
+================================================================================
 
-## 🌟 Features
+📊 ANALYSIS SUMMARY
+Total models evaluated: 10
+Technically suitable: 5
+Budget compatible: 5
 
-- **Issues**  
-Efficiently create and manage tasks with a robust rich text editor that supports file uploads. Enhance organization and tracking by adding sub-properties and referencing related issues.
+🏆 RECOMMENDED MODEL: Claude 4 Sonnet
+Monthly Cost: $0.10
+Cost per Analysis: $0.01
+Quality Rating: ⭐⭐⭐⭐⭐
+Overall Score: 1.07/1.0
+Budget Compatible: ✅
 
-- **Cycles**   
-Maintain your team’s momentum with Cycles. Track progress effortlessly using burn-down charts and other insightful tools.
+📋 TOP 5 ALTERNATIVES:
+1. Claude 4 Sonnet      $  0.10/mo ⭐⭐⭐⭐⭐ Score: 1.07 ✅
+2. Claude 3.7 Sonnet    $  0.10/mo ⭐⭐⭐⭐⭐ Score: 1.07 ✅
+3. GPT-4.1              $  0.10/mo ⭐⭐⭐⭐⭐ Score: 1.07 ✅
 
-- **Modules**  
-Simplify complex projects by dividing them into smaller, manageable modules. 
+💡 OPTIMIZATION OPPORTUNITIES:
+Free Alternative: DeepSeek V3.1 (saves $0.10/mo, quality diff: -2)
+Hybrid Approach: DeepSeek V3.1 + Claude 4 Sonnet ($0.08/mo, saves $0.02)
 
-- **Views**  
-Customize your workflow by creating filters to display only the most relevant issues. Save and share these views with ease.
+💾 Results automatically saved to model_selection_results.json
+```
 
-- **Pages**  
-Capture and organize ideas using Plane Pages, complete with AI capabilities and a rich text editor. Format text, insert images, add hyperlinks, or convert your notes into actionable items.
+## 🔧 Configuration
 
-- **Analytics**  
-Access real-time insights across all your Plane data. Visualize trends, remove blockers, and keep your projects moving forward.
+### Project Attributes
+Configure your project details in JSON format:
 
-- **Drive** (_coming soon_): The drive helps you share documents, images, videos, or any other files that make sense to you or your team and align on the problem/solution.
+```json
+{
+  "project": {
+    "largest_file_length": 800,
+    "p95_file_length": 650,
+    "median_file_length": 400,
+    "largest_method_length": 50,
+    "total_files": 100,
+    "analysis_frequency": 10,
+    "budget_limit": 10.0,
+    "quality_threshold": 3
+  }
+}
+```
 
+### Key Metrics Explained
 
-## 🛠️ Local development
+**File Size Metrics** (Critical for Understanding):
+- **`largest_file_length`**: Maximum file size that MUST fit in model (hard limit)
+- **`p95_file_length`**: 95th percentile size (handles edge cases)
+- **`median_file_length`**: Typical file size (cost estimation)
 
-### Pre-requisites
-- Ensure Docker Engine is installed and running.
+**Why This Matters**: Models have different maximum file size limits. If your largest file is 1200 lines but a model only supports 800 lines, that model will fail completely.
 
-###  Development setup
-Setting up your local environment is simple and straightforward. Follow these steps to get started:
+## 🧠 Algorithm Overview
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/makeplane/plane.git
-   ```
-2. Navigate to the project folder:
-   ```
-   cd plane
-   ```
-3. Create a new branch for your feature or fix:
-   ```
-   git checkout -b <feature-branch-name>
-   ```
-4. Run the setup script in the terminal:
-   ```
-   ./setup.sh
-   ```
-5. Open the project in an IDE such as VS Code.
+### 1. Technical Filtering
+- Eliminates models that can't handle your largest files/methods
+- Checks context window requirements
+- Validates feature support (reasoning, MCP tools)
+- Ensures minimum quality standards
 
-6. Review the `.env` files in the relevant folders. Refer to [Environment Setup](./ENV_SETUP.md) for details on the environment variables used.
+### 2. Weighted Scoring
+Each compatible model gets scored on:
+- **Cost Efficiency** (40% weight) - Lower cost = higher score
+- **Performance Quality** (30% weight) - Analysis capability + reasoning
+- **User Sentiment** (30% weight) - Community ratings and reviews
 
-7. Start the services using Docker:
-   ```
-   docker compose -f docker-compose-local.yml up -d
-   ```
+### 3. Optimization Suggestions
+- **Free Alternatives**: Zero-cost options with quality trade-offs
+- **Hybrid Approaches**: 80% budget model + 20% premium model
+- **Frequency Optimization**: Reduce analysis frequency to cut costs
 
-That’s it! You’re all set to begin coding. Remember to refresh your browser if changes don’t auto-reload. Happy contributing! 🎉
+## 📈 Supported Models
 
-## ⚙️ Built with
-[![Next JS](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
-[![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green)](https://www.djangoproject.com/)
-[![Node JS](https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white)](https://nodejs.org/en)
+### Free Tier ($0.00)
+- **GPT-4o Mini**: Basic analysis, 600-line files
+- **DeepSeek V3.1**: Advanced free option, 800-line files
+- **Gemini 2.5 Flash**: Fast analysis, 1M token context
 
-## 📸 Screenshots
+### Low-Cost ($0.01-$0.02)
+- **Claude 3.5 Haiku**: Fast, light tasks
+- **o3-Mini**: Light reasoning capabilities
 
-<p>
-    <a href="https://plane.so" target="_blank">
-      <img
-        src="https://ik.imagekit.io/w2okwbtu2/Issues_rNZjrGgFl.png?updatedAt=1709298765880"
-        alt="Plane Views"
-        width="100%"
-      />
-    </a>
-  </p>
-<p>
-    <a href="https://plane.so" target="_blank">
-      <img
-        src="https://ik.imagekit.io/w2okwbtu2/Cycles_jCDhqmTl9.png?updatedAt=1709298780697"
-        width="100%"
-      />
-    </a>
-  </p>
-  <p>
-    <a href="https://plane.so" target="_blank">
-      <img
-        src="https://ik.imagekit.io/w2okwbtu2/Modules_PSCVsbSfI.png?updatedAt=1709298796783"
-        alt="Plane Cycles and Modules"
-        width="100%"
-      />
-    </a>
-  </p>
-  <p>
-    <a href="https://plane.so" target="_blank">
-      <img
-        src="https://ik.imagekit.io/w2okwbtu2/Views_uxXsRatS4.png?updatedAt=1709298834522"
-        alt="Plane Analytics"
-        width="100%"
-      />
-    </a>
-  </p>
-   <p>
-    <a href="https://plane.so" target="_blank">
-      <img
-        src="https://ik.imagekit.io/w2okwbtu2/Analytics_0o22gLRtp.png?updatedAt=1709298834389"
-        alt="Plane Pages"
-        width="100%"
-      />
-    </a>
-  </p>
-</p>
-<p>
-    <a href="https://plane.so" target="_blank">
-      <img
-        src="https://ik.imagekit.io/w2okwbtu2/Drive_LlfeY4xn3.png?updatedAt=1709298837917"
-        alt="Plane Command Menu"
-        width="100%"
-      />
-    </a>
-  </p>
-</p>
+### Standard ($0.04)
+- **Claude 4 Sonnet**: Enterprise-grade, 1500-line files
+- **Claude 3.7 Sonnet**: Professional development
+- **GPT-4.1**: Large codebases, 1M token context
 
-## 📝 Documentation
-Explore Plane's [product documentation](https://docs.plane.so/) and [developer documentation](https://developers.plane.so/) to learn about features, setup, and usage.
+### Premium ($0.10-$0.40)
+- **o1 Mini**: Moderate reasoning
+- **o1**: Complex reasoning tasks
 
-## ❤️ Community
+## 📁 Project Structure
 
-Join the Plane community on [GitHub Discussions](https://github.com/orgs/makeplane/discussions) and our [Discord server](https://discord.com/invite/A92xrEGCge). We follow a [Code of conduct](https://github.com/makeplane/plane/blob/master/CODE_OF_CONDUCT.md) in all our community channels.
+```
+cursor-llm-model-selector/
+├── model_selector.py          # Main application
+├── sample_config.json         # Example configuration
+├── README.md                  # This file
+└── docs/                      # Research and documentation
+    ├── model_style_guide.md   # Complete model database
+    ├── project_analysis_prompt.md    # LLM prompt version
+    ├── project_analysis_selector.md  # Detailed algorithm
+    ├── preparation.md          # Research methodology
+    ├── ratings.md             # Model ratings and analysis
+    └── strengths-and-weaknesses.md   # Detailed model comparison
+```
 
-Feel free to ask questions, report bugs, participate in discussions, share ideas, request features, or showcase your projects. We’d love to hear from you!
+## 🔬 Research Documentation
 
-## 🛡️ Security
+The `docs/` directory contains comprehensive research:
 
-If you discover a security vulnerability in Plane, please report it responsibly instead of opening a public issue. We take all legitimate reports seriously and will investigate them promptly. See [Security policy](https://github.com/makeplane/plane/blob/master/SECURITY.md) for more info.
+- **`model_style_guide.md`**: Complete database of 37+ models with accurate pricing
+- **`strengths-and-weaknesses.md`**: Detailed analysis of each model's capabilities
+- **`project_analysis_prompt.md`**: Ready-to-use LLM prompt for manual analysis
+- **`ratings.md`**: Performance ratings across multiple criteria
+- **`preparation.md`**: Research methodology and benchmarks
 
-To disclose any security issues, please email us at security@plane.so. 
+## 💡 Advanced Usage
+
+### Custom Model Database
+Add new models or update pricing in `model_selector.py`:
+
+```python
+LLMModel(
+    name="New Model",
+    cursor_cost=0.05,  # Cursor requests per message
+    max_file_length=1000,
+    max_method_length=100,
+    # ... other attributes
+)
+```
+
+### Batch Analysis
+Process multiple projects:
+
+```bash
+for config in project_*.json; do
+    python model_selector.py --config "$config"
+done
+```
+
+### Custom Scoring Weights
+Prioritize different factors:
+
+```python
+preferences = UserPreferences(
+    cost_weight=0.6,      # Prioritize cost savings
+    performance_weight=0.2,
+    sentiment_weight=0.2
+)
+```
+
+## 🎯 Use Cases
+
+### Individual Developers
+- **Budget Optimization**: Find cheapest model for personal projects
+- **Quality Assurance**: Ensure model can handle your code complexity
+- **Feature Matching**: Match models to specific project needs
+
+### Development Teams
+- **Cost Management**: Control team LLM expenses
+- **Standardization**: Consistent model selection across projects
+- **Hybrid Strategies**: Mix models for different use cases
+
+### Enterprise
+- **Budget Planning**: Predict and control LLM costs
+- **Compliance**: Ensure models meet security/quality requirements
+- **Optimization**: Maximize value from LLM investments
+
+## 🔄 Integration
+
+### CI/CD Pipeline
+```bash
+# Add to your build process
+python model_selector.py --config project_config.json
+# Use output to set Cursor model preferences
+```
+
+### Project Templates
+Include `model_config.json` in project templates for automatic optimization.
+
+### Team Workflows
+Share configurations across team members for consistent model selection.
 
 ## 🤝 Contributing
 
-There are many ways you can contribute to Plane:
+This project was extracted from research on LLM optimization for development workflows. Contributions welcome for:
+- New model additions
+- Pricing updates
+- Algorithm improvements
+- Documentation enhancements
 
-- Report [bugs](https://github.com/makeplane/plane/issues/new?assignees=srinivaspendem%2Cpushya22&labels=%F0%9F%90%9Bbug&projects=&template=--bug-report.yaml&title=%5Bbug%5D%3A+) or submit [feature requests](https://github.com/makeplane/plane/issues/new?assignees=srinivaspendem%2Cpushya22&labels=%E2%9C%A8feature&projects=&template=--feature-request.yaml&title=%5Bfeature%5D%3A+).
-- Review the [documentation](https://docs.plane.so/) and submit [pull requests](https://github.com/makeplane/docs) to improve it—whether it's fixing typos or adding new content.
-- Talk or write about Plane or any other ecosystem integration and [let us know](https://discord.com/invite/A92xrEGCge)!
-- Show your support by upvoting [popular feature requests](https://github.com/makeplane/plane/issues).
+## 📄 License
 
-Please read [CONTRIBUTING.md](https://github.com/makeplane/plane/blob/master/CONTRIBUTING.md) for details on the process for submitting pull requests to us.
+MIT License - Feel free to use, modify, and distribute.
 
-### Repo activity
+## 🆘 Support
 
-![Plane Repo Activity](https://repobeats.axiom.co/api/embed/2523c6ed2f77c082b7908c33e2ab208981d76c39.svg "Repobeats analytics image")
+For questions or issues:
+1. Check the `docs/` directory for detailed documentation
+2. Review `sample_config.json` for configuration examples
+3. Run with `--sample` to see expected output format
 
-### We couldn't have done this without you.
+---
 
-<a href="https://github.com/makeplane/plane/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=makeplane/plane" />
-</a>
-
-
-## License
-This project is licensed under the [GNU Affero General Public License v3.0](https://github.com/makeplane/plane/blob/master/LICENSE.txt).
+**Pro Tip**: Start with `--sample` to understand the output, then use `--interactive` to input your project details, and finally create a JSON config file for repeated analysis.

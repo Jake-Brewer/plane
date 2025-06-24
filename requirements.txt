@@ -1,0 +1,9 @@
+# No external dependencies required
+# This project uses only Python standard library modules:
+# - json (JSON handling)
+# - argparse (command line parsing)
+# - dataclasses (data structures)
+# - typing (type hints)
+# - enum (enumerations)
+
+# Python 3.7+ required 
