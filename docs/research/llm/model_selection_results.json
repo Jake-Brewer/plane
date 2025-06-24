@@ -23,7 +23,7 @@
       "Express"
     ],
     "architecture_pattern": "MVC",
-    "analysis_depth": "AnalysisDepth.MEDIUM",
+    "analysis_depth": "medium",
     "analysis_frequency": 10,
     "reasoning_required": false,
     "internet_access_needed": false,
@@ -37,7 +37,7 @@
     "cost_weight": 0.4,
     "performance_weight": 0.3,
     "prefer_free_models": false,
-    "risk_tolerance": "RiskTolerance.MEDIUM"
+    "risk_tolerance": "medium"
   },
   "analysis": {
     "total_models_evaluated": 10,

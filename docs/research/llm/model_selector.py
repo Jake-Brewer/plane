@@ -638,28 +638,26 @@ def main():
     # Print results
     print_analysis_results(scored_models, analysis, optimizations)
     
-    # Save results to JSON if desired
-    save_results = input("\nSave results to JSON? (y/n): ").lower().strip()
-    if save_results == 'y':
-        results = {
-            "project": asdict(project),
-            "preferences": asdict(preferences),
-            "analysis": analysis,
-            "recommendations": [
-                {
-                    "model": model_score.model.name,
-                    "monthly_cost": model_score.monthly_cost,
-                    "score": model_score.score,
-                    "meets_budget": model_score.meets_budget
-                }
-                for model_score in scored_models[:5]
-            ],
-            "optimizations": optimizations
-        }
-        
-        with open("model_selection_results.json", "w") as f:
-            json.dump(results, f, indent=2, default=str)
-        print("Results saved to model_selection_results.json")
+    # Auto-save results to JSON
+    results = {
+        "project": asdict(project),
+        "preferences": asdict(preferences),
+        "analysis": analysis,
+        "recommendations": [
+            {
+                "model": model_score.model.name,
+                "monthly_cost": model_score.monthly_cost,
+                "score": model_score.score,
+                "meets_budget": model_score.meets_budget
+            }
+            for model_score in scored_models[:5]
+        ],
+        "optimizations": optimizations
+    }
+    
+    with open("model_selection_results.json", "w") as f:
+        json.dump(results, f, indent=2, default=str)
+    print("\n💾 Results automatically saved to model_selection_results.json")
 
 
 if __name__ == "__main__":
