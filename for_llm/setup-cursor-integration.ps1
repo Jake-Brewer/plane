@@ -2,7 +2,7 @@
 # Run this script to configure Cursor for Plane integration
 
 Write-Host "🚀 Plane-Cursor Integration Setup" -ForegroundColor Green
-Write-Host "=================================" -ForegroundColor Green
+Write-Host "==================================" -ForegroundColor Green
 
 # Check if Plane is running
 Write-Host "`n1. Checking Plane deployment..." -ForegroundColor Yellow
@@ -19,13 +19,12 @@ if ($planeContainers) {
 # Test web interface
 Write-Host "`n2. Testing Plane web interface..." -ForegroundColor Yellow
 try {
-    $response = Invoke-WebRequest -Uri "http://localhost:8080" -Method GET -UseBasicParsing -TimeoutSec 10
-    if ($response.StatusCode -eq 200) {
-        Write-Host "✅ Plane web interface is accessible at http://localhost:8080" -ForegroundColor Green
-    }
+    $response = Invoke-WebRequest -Uri "http://localhost:51534" -Method GET -UseBasicParsing -TimeoutSec 10
+    Write-Host "✅ Plane web interface is accessible" -ForegroundColor Green
 } catch {
-    Write-Host "❌ Cannot access Plane web interface. Please check the deployment." -ForegroundColor Red
+    Write-Host "❌ Plane web interface not accessible at http://localhost:51534" -ForegroundColor Red
     Write-Host "   Error: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "   Please check if Plane is running and accessible" -ForegroundColor Yellow
     exit 1
 }
 

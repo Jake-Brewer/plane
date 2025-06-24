@@ -11,6 +11,9 @@ This file contains essential behavioral standards needed for every interaction. 
 - **Linear Integration** → `for_llm/_llm_linear_project_management.md`
 - **Component Extraction** → `for_llm/_llm_extraction_primer.md`
 - **Multi-Agent Tasks** → `for_llm/_llm_multi-agent_primer.md`
+- **Port Management** → `for_llm/_llm_port_management.md`
+- **Cursor MCP Servers** → `for_llm/_llm_cursor_mcp_management.md`
+- **Documentation Management** → `for_llm/_llm_documentation_management.md`
 - **API Authentication** → `for_llm/LINEAR_API_CREDENTIALS.md`
 
 ---
@@ -109,6 +112,30 @@ docker-command-center/
 - Distributed task execution
 - Shared resource management
 - Conflict resolution
+
+#### 🔧 Port Management & Configuration
+**Access:** `for_llm/_llm_port_management.md`
+**Triggers:**
+- Port conflicts or changes needed
+- Random port generation required
+- Docker configuration updates
+- Service connectivity issues
+
+#### 🔌 Cursor MCP Server Management
+**Access:** `for_llm/_llm_cursor_mcp_management.md`
+**Triggers:**
+- Adding new MCP servers to Cursor
+- MCP configuration backup/restore
+- Troubleshooting MCP connectivity
+- Custom MCP server development
+
+#### 📝 Documentation Management
+**Access:** `for_llm/_llm_documentation_management.md`
+**Triggers:**
+- Creating new LLM guidance files
+- Updating existing documentation
+- Managing documentation structure
+- Backup and recovery procedures
 
 #### 🔐 API Authentication
 **Access:** `for_llm/LINEAR_API_CREDENTIALS.md`

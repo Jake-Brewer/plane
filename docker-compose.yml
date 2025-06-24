@@ -163,7 +163,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - 8080:80
+      - 51534:80
     environment:
       FILE_SIZE_LIMIT: ${FILE_SIZE_LIMIT:-5242880}
       BUCKET_NAME: ${AWS_S3_BUCKET_NAME:-uploads}

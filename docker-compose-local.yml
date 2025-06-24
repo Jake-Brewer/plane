@@ -187,7 +187,7 @@ services:
     networks:
       - dev_env
     ports:
-      - 8080:80
+      - 51534:80
     env_file:
       - .env
     environment:
