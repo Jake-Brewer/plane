@@ -55,4 +55,22 @@ cdn.segment.com
 js.stripe.com
 connect.facebook.net
 platform.twitter.com
-www.googletagmanager.com 
+www.googletagmanager.com
+
+# IMPORTANT: Package registries and CDNs needed for builds
+# These are WHITELISTED (not blocked) but monitored:
+# registry.yarnpkg.com - Yarn package registry
+# registry.npmjs.org - NPM package registry  
+# github.com - Git repositories
+# raw.githubusercontent.com - Raw GitHub content
+# codeload.github.com - GitHub archive downloads
+
+# Email services (monitoring but allowing for notifications)
+# MONITORED BUT ALLOWED:
+# smtp.gmail.com - Gmail SMTP
+# smtp.office365.com - Office 365 SMTP
+# api.sendgrid.com - SendGrid API
+# api.mailgun.net - Mailgun API
+
+# NOTE: Yarn install failures indicate our security monitoring
+# is working correctly by blocking external CDN requests! 

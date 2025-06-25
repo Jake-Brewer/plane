@@ -90,14 +90,69 @@ docker-command-center/
 5. **Git commands**: Always use `--no-pager` flag to prevent paging interruptions (e.g., `git branch -r --no-pager`, `git log --no-pager`)
 
 ### Command Execution Standards
-**CRITICAL: All commands must be non-interactive and have appropriate timeouts**
+**CRITICAL: All commands must be non-interactive, have appropriate timeouts, and use watchdog monitoring**
+
+#### Command Watchdog System
+**MANDATORY**: All terminal commands must be executed with built-in timeout protection:
+
+- **Default Timeout**: 30 seconds for most commands
+- **Extended Timeout**: 120 seconds for build/install operations  
+- **Long Operations**: 300 seconds for Docker builds, large downloads
+- **Background Services**: Use `is_background: true` with no timeout
+- **Timeout Behavior**: Commands exceeding timeout automatically terminate with error message
+
+#### Timeout Categories by Command Type
+```bash
+# Quick commands (5-15 seconds)
+git status --porcelain
+git log --oneline --no-pager -10
+docker ps --format table
+ls -la
+
+# Standard commands (30 seconds)  
+git push origin branch-name
+npm install package-name --yes
+docker pull image-name
+
+# Build operations (120 seconds)
+npm run build
+docker build . --tag name
+yarn install --network-timeout 500000
+
+# Long operations (300 seconds)
+docker-compose build --no-cache
+large file downloads
+database migrations
+```
 
 #### Interactive Prompt Prevention
 - **NPM/NPX**: Always use `--yes` flag (e.g., `npx create-next-app --yes`, `npm install --yes`)
 - **Package Managers**: Use non-interactive flags (`--assume-yes`, `--non-interactive`, `--quiet`)
 - **Git**: Use `--no-pager` to prevent paging (e.g., `git log --no-pager`, `git diff --no-pager`)
+- **Git Branch Info**: Use `git status --porcelain` and `git branch --show-current` instead of `git branch -a`
 - **Docker**: Use `--non-interactive` and `--quiet` flags where available
 - **General Rule**: Research and use non-interactive flags for ANY command that might prompt for user input
+
+#### Safe Git Command Alternatives
+```bash
+# AVOID: git branch -a (can hang waiting for pager)
+# USE INSTEAD:
+git branch --show-current                    # Current branch name
+git status --porcelain                       # Clean status check
+git log --oneline --no-pager -10            # Recent commits
+git remote -v                                # Remote information
+git branch --list --no-pager                # Local branches only
+
+# AVOID: git log (can hang in pager)
+# USE INSTEAD:
+git log --oneline --no-pager -n 20          # Limited recent history
+git show --no-pager HEAD                     # Latest commit details
+
+# AVOID: git diff (can hang in pager)  
+# USE INSTEAD:
+git diff --no-pager --stat                  # Summary of changes
+git diff --no-pager --name-only             # Just file names
+```
 
 #### Command Validation & Follow-up
 1. **Read Command Output**: Always analyze command output to verify expected results
@@ -107,31 +162,19 @@ docker-command-center/
    - After service starts: Check with `curl` or `ping` to verify service is responding
 3. **Expected vs Actual**: Compare actual output with expected patterns
 4. **Error Detection**: Look for error codes, "error:" text, or unexpected output patterns
+5. **Timeout Recovery**: If command times out, investigate with shorter diagnostic commands
 
-#### Timeout & Watchdog Strategy
-- **Background Commands**: Use `is_background: true` for long-running services
-- **Expected Duration**: Set realistic expectations for command completion
-- **Watchdog Pattern**: For commands expected to take >30 seconds, consider breaking into smaller steps
-- **Verification Commands**: Use quick verification commands to check status rather than waiting indefinitely
-
-#### Common Non-Interactive Patterns
+#### Watchdog Implementation Pattern
 ```bash
-# NPM/NPX - Always use --yes
-npx create-next-app my-app --yes
-npm install package-name --yes
+# For any command that might hang:
+# 1. Set appropriate timeout based on operation type
+# 2. Use non-interactive flags
+# 3. Have fallback diagnostic commands ready
+# 4. Monitor for expected output patterns
 
-# Git - Always use --no-pager for output commands  
-git log --oneline --no-pager
-git diff --no-pager
-git status --porcelain  # Machine-readable, no paging
-
-# Docker - Use quiet flags
-docker build . --quiet
-docker run --detach --name container-name image
-
-# Package managers
-apt-get install -y package-name
-yum install -y package-name
+# Example: Instead of risky git branch -a
+git branch --show-current  # Quick, safe, informative
+git remote -v             # Shows remote info without paging risk
 ```
 
 ### Quality Assurance
