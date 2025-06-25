@@ -5,16 +5,60 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Hello plane!</title>
+    <!-- 🚫 SECURITY: Removed external CDN dependencies to prevent data exfiltration -->
+    <!-- ✅ PRIVACY: Using minimal local styling instead of Bootstrap CDN -->
+    <style>
+      /* Minimal local styling to replace Bootstrap CDN */
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+             line-height: 1.6; color: #333; background: #f8f9fa; padding: 20px; }
+      .container { max-width: 1200px; margin: 0 auto; background: white; 
+                   padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+      h1 { color: #2563eb; margin-bottom: 20px; }
+      .btn { display: inline-block; padding: 8px 16px; background: #2563eb; 
+             color: white; text-decoration: none; border-radius: 4px; border: none; cursor: pointer; }
+      .btn:hover { background: #1d4ed8; }
+      .alert { padding: 12px; margin: 10px 0; border-radius: 4px; }
+      .alert-info { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+      .alert-success { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    </style>
+    <title>✈️ Admin Panel</title>
   </head>
   <body>
-    {% block content %}{% endblock content %}
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
+    <div class="container">
+      <h1>✈️ Project Management System</h1>
+      <div class="alert alert-success">
+        🔒 <strong>Privacy Protected:</strong> All external tracking and CDN dependencies have been removed for your security.
+      </div>
+      {% block content %}{% endblock content %}
+    </div>
+    <!-- 🚫 SECURITY: Removed jQuery, Popper.js, and Bootstrap JS CDN dependencies -->
+    <!-- ✅ PRIVACY: Using minimal vanilla JavaScript instead of external libraries -->
+    <script>
+      // Minimal local JavaScript to replace external CDN dependencies
+      console.log('✈️ Admin panel loaded - No external dependencies');
+      
+      // Simple tooltip functionality to replace Popper.js
+      document.addEventListener('DOMContentLoaded', function() {
+        const tooltipElements = document.querySelectorAll('[data-tooltip]');
+        tooltipElements.forEach(el => {
+          el.addEventListener('mouseenter', function() {
+            const tooltip = document.createElement('div');
+            tooltip.textContent = this.getAttribute('data-tooltip');
+            tooltip.style.cssText = `
+              position: absolute; background: #333; color: white; padding: 5px 10px;
+              border-radius: 4px; font-size: 12px; z-index: 1000; pointer-events: none;
+              top: ${this.offsetTop - 30}px; left: ${this.offsetLeft}px;
+            `;
+            tooltip.id = 'local-tooltip';
+            document.body.appendChild(tooltip);
+          });
+          el.addEventListener('mouseleave', function() {
+            const tooltip = document.getElementById('local-tooltip');
+            if (tooltip) tooltip.remove();
+          });
+        });
+      });
+    </script>
   </body>
 </html>
