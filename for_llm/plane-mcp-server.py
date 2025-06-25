@@ -46,7 +46,8 @@ async def proxy_plane_api(path: str, request: Request):
     url = f"{PLANE_API_URL}/api/{path}"
     method = request.method
     headers = dict(request.headers)
-    headers["Authorization"] = f"Bearer {PLANE_API_KEY}"
+    if PLANE_API_KEY:
+        headers["X-Api-Key"] = PLANE_API_KEY
     data = await request.body()
     params = dict(request.query_params)
     start = time.time()

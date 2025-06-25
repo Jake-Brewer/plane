@@ -82,6 +82,18 @@ The `llm_owned_notes/` directory contains individual agent workspaces and tracki
   - Environment variable configuration template
   - API keys, database, and Redis configuration
 
+- **`plane-mcp-server.py`** (2.6KB, 101 lines)
+  - **ACTIVE** Python FastAPI MCP server implementation
+  - Updated with proper X-Api-Key authentication
+  - API proxying, Prometheus metrics, FastAPI framework
+  - Preferred implementation for Windows/PowerShell environments
+
+- **`PLANE_MCP_SETUP.md`** (10.8KB, 245 lines)
+  - Comprehensive setup guide for Plane MCP integration
+  - Step-by-step Windows/PowerShell compatible instructions
+  - API token creation, environment setup, troubleshooting
+  - Security considerations and monitoring guidance
+
 #### Core Collaboration and Management
 - **`_llm_linear_project_management.md`** (8.3KB, 234 lines)
   - Comprehensive Linear project management guidance

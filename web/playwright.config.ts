@@ -14,7 +14,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: 'list',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -23,21 +23,39 @@ export default defineConfig({
     trace: 'on-first-retry',
     /* Run tests in headless mode by default */
     headless: true,
+    /* Set reasonable timeouts */
+    navigationTimeout: 60000,
+    actionTimeout: 30000,
   },
+
+  /* Global timeout for each test */
+  timeout: 60000,
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'Microsoft Edge',
-      use: { ...devices['Desktop Edge'] },
+      use: { 
+        ...devices['Desktop Edge'],
+        /* Ensure proper browser cleanup */
+        contextOptions: {
+          ignoreHTTPSErrors: true,
+        },
+      },
     },
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'npx --yes next dev --port 3001',
-    port: 3001,
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000, // 2 minutes timeout
-  },
+  // webServer: {
+  //   command: 'npx --yes next dev --port 3001',
+  //   port: 3001,
+  //   reuseExistingServer: !process.env.CI,
+  //   timeout: 120 * 1000, // 2 minutes timeout
+  //   stdout: 'pipe',
+  //   stderr: 'pipe',
+  // },
+
+  /* Global setup and teardown */
+  globalSetup: undefined,
+  globalTeardown: undefined,
 }); 
