@@ -1,5 +1,5 @@
 {
-  "repository": "https://github.com/make✈️/✈️.git",
+  "repository": "https://github.com/makeplane/plane.git",
   "version": "0.24.1",
   "license": "AGPL-3.0",
   "private": true,
@@ -25,5 +25,5 @@
     "turbo": "^2.3.3"
   },
   "packageManager": "yarn@1.22.22",
-  "name": "✈️"
+  "name": "plane"
 }
