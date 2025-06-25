@@ -1,5 +1,10 @@
 import { action, computed, makeObservable, observable } from "mobx";
-import posthog from "posthog-js";
+// LOCAL ANALYTICS: Replaced external PostHog with local analytics system
+// ORIGINAL: posthog from "posthog-js" -> Sent user behavior data to app.posthog.com
+// REPLACEMENT: Local analytics with identical API, data stored locally in IndexedDB
+// VALUE PRESERVED: All user behavior tracking, feature usage analytics, conversion funnels
+// ADMIN VISIBILITY: All events visible in admin dashboard with original destination noted
+import { posthog } from "@/lib/local-analytics";
 // stores
 import {
   GROUP_WORKSPACE,
