@@ -1,14 +1,12 @@
 "use client";
 
-import { FC } from "react";
-import { LocalAnalyticsDashboard } from "@/core/components/analytics/local-analytics-dashboard";
+import React from 'react';
+import { LocalAnalyticsDashboard } from '@/core/components/analytics/local-analytics-dashboard';
 
-const AnalyticsPage: FC = () => {
+export default function AnalyticsPage() {
   return (
-    <div className="h-full w-full">
+    <div className="min-h-screen bg-gray-50">
       <LocalAnalyticsDashboard />
     </div>
   );
-};
-
-export default AnalyticsPage; 
+} 

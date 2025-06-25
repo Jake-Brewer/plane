@@ -1,30 +1,34 @@
 """
-Local Analytics API URLs
-Secure routing for local analytics dashboard with exception handling
+URL routing for Local Analytics API
+Routes all analytics endpoints that replace external service calls
 """
 
 from django.urls import path
-from plane.api.views import local_analytics
+from plane.api.views.local_analytics import (
+    analytics_dashboard,
+    user_events,
+    log_event,
+    log_error,
+    log_page_view,
+    log_session_recording,
+    log_performance_metric,
+    log_plane_telemetry,
+    health_check,
+)
 
 urlpatterns = [
-    # Dashboard endpoints
-    path('dashboard/', local_analytics.analytics_dashboard, 
-         name='analytics_dashboard'),
-    path('health/', local_analytics.health_check, name='analytics_health'),
+    # Dashboard endpoint - main analytics overview
+    path('dashboard/', analytics_dashboard, name='local_analytics_dashboard'),
     
     # Data retrieval endpoints
-    path('events/', local_analytics.user_events, name='user_events'),
-    path('errors/summary/', local_analytics.error_summary, 
-         name='error_summary'),
+    path('events/', user_events, name='local_analytics_events'),
+    path('health/', health_check, name='local_analytics_health'),
     
-    # Data logging endpoints (POST)
-    path('events/', local_analytics.log_event, name='log_event'),
-    path('errors/', local_analytics.log_error, name='log_error'),
-    path('pageviews/', local_analytics.log_page_view, name='log_page_view'),
-    path('session-recordings/', local_analytics.log_session_recording, 
-         name='log_session_recording'),
-    path('metrics/', local_analytics.log_performance_metric, 
-         name='log_performance_metric'),
-    path('telemetry/', local_analytics.log_plane_telemetry, 
-         name='log_plane_telemetry'),
+    # Data ingestion endpoints (replacements for external services)
+    path('events/log/', log_event, name='log_user_event'),
+    path('errors/', log_error, name='log_error'),
+    path('page-views/', log_page_view, name='log_page_view'),
+    path('sessions/', log_session_recording, name='log_session'),
+    path('metrics/', log_performance_metric, name='log_metric'),
+    path('telemetry/', log_plane_telemetry, name='log_telemetry'),
 ] 
