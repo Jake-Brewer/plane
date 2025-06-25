@@ -87,7 +87,15 @@ docker-command-center/
 2. **Commit regularly** with descriptive messages
 3. **Never delete** protected files (_llm*.md)
 4. **Document changes** in commit messages
-5. **Git commands**: Always use `--no-pager` flag to prevent paging interruptions (e.g., `git branch -r --no-pager`, `git log --no-pager`)
+5. **Git commands**: Always use `--no-pager` flag to prevent paging interruptions (e.g., `git log --no-pager`)
+
+#### Branch Management Strategy
+**CRITICAL**: Never work directly on master or main branches
+- **Always create feature branches** from develop: `git checkout -b feature/your-feature-name origin/develop`
+- **Merge from develop regularly** to stay current: `git merge origin/develop --no-edit`
+- **Push feature branches** to origin for backup: `git push origin feature/your-feature-name`
+- **Coordinate with other workers** by keeping branches synced with latest develop changes
+- **Branch naming**: Use descriptive prefixes (feature/, bugfix/, security/, refactor/)
 
 ### Command Execution Standards
 **CRITICAL: All commands must be non-interactive, have appropriate timeouts, and use watchdog monitoring**
@@ -141,10 +149,11 @@ git branch --show-current                    # Current branch name
 git status --porcelain                       # Clean status check
 git log --oneline --no-pager -10            # Recent commits
 git remote -v                                # Remote information
-git branch --list --no-pager                # Local branches only
+git branch -r | Select-Object -First 10     # PowerShell: Remote branches (limited)
 
-# AVOID: git log (can hang in pager)
+# AVOID: git log --oneline -5 (can hang waiting for pager input)
 # USE INSTEAD:
+git log --oneline --no-pager -n 5           # ALWAYS use -n flag with --no-pager
 git log --oneline --no-pager -n 20          # Limited recent history
 git show --no-pager HEAD                     # Latest commit details
 
@@ -152,6 +161,12 @@ git show --no-pager HEAD                     # Latest commit details
 # USE INSTEAD:
 git diff --no-pager --stat                  # Summary of changes
 git diff --no-pager --name-only             # Just file names
+
+# CRITICAL: git branch commands that don't support --no-pager
+# AVOID: git branch -r --no-pager (invalid option)
+# USE INSTEAD:
+git branch -r | Select-String "pattern" | Select-Object -First 10  # PowerShell
+git branch -r | head -10                     # Bash/Linux
 ```
 
 #### Command Validation & Follow-up
