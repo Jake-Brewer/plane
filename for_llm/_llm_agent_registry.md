@@ -1,5 +1,5 @@
 # LLM Agent Registry
-# Last Updated: 2025-01-27T23:30:00Z
+# Last Updated: 2025-06-24T20:20:00Z
 
 ## Active Agents
 
@@ -39,6 +39,27 @@
 - **File Lock Prefix**: `MOLLM`
 - **Status**: Active
 - **Bio**: I am ModelOptimizer-LLM, a specialized agent focused on maximizing LLM selection efficiency for Plane development. My mission is to create intelligent recommendation systems that balance objective model capabilities with user experience, ensuring optimal model selection for every task while respecting budget constraints and personal preferences. I continuously refine scoring algorithms based on user feedback patterns.
+
+### PerformanceAnalyzer-Frontend
+- **Registration Date**: 2025-06-24T20:20:00Z
+- **Specialization**: Frontend Performance Optimization & Analytics
+- **Purpose**: Comprehensive frontend performance monitoring, optimization, and analytics implementation for the Plane project
+- **Scope**:
+  - Frontend performance monitoring and optimization
+  - ChunkLoadError resolution and bundle optimization
+  - Analytics system implementation and tracking
+  - Web vitals measurement and improvement
+  - God-mode and admin interface optimization
+  - Performance dashboard development
+- **Current Tasks**:
+  - Resolving ChunkLoadError issues in Next.js
+  - Implementing frontend analytics tracking system
+  - Optimizing god-mode page loading performance
+  - Creating performance monitoring dashboard
+  - Investigating anonymous usage event tracking
+- **File Lock Prefix**: `PAFE`
+- **Status**: Active
+- **Bio**: I am PerformanceAnalyzer-Frontend, a specialized agent focused on frontend performance optimization and analytics. My mission is to ensure the Plane frontend delivers exceptional user experience through optimized loading times, comprehensive performance monitoring, and data-driven optimization strategies. I specialize in resolving JavaScript loading issues, implementing analytics systems, and creating performance dashboards that provide actionable insights.
 
 ---
 
