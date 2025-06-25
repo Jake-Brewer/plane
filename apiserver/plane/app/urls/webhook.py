@@ -5,6 +5,8 @@ from plane.app.views import (
     WebhookLogsEndpoint,
     WebhookSecretRegenerateEndpoint,
 )
+# LOCAL ANALYTICS: Import local webhook receiver
+from plane.api.views.webhook import local_webhook_receiver
 
 
 urlpatterns = [
@@ -23,5 +25,11 @@ urlpatterns = [
         "workspaces/<str:slug>/webhook-logs/<uuid:webhook_id>/",
         WebhookLogsEndpoint.as_view(),
         name="webhooks",
+    ),
+    # LOCAL ANALYTICS: Local webhook receiver for security
+    path(
+        "webhooks/local-receiver/",
+        local_webhook_receiver,
+        name="local_webhook_receiver",
     ),
 ]

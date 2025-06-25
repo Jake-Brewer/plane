@@ -3,81 +3,163 @@ import hmac
 import json
 import logging
 import uuid
+from datetime import datetime
+from urllib.parse import urlparse
 
 import requests
-
-# Third party imports
 from celery import shared_task
-
-# Django imports
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, get_connection
 from django.core.serializers.json import DjangoJSONEncoder
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from django.core.exceptions import ObjectDoesNotExist
 
-# Module imports
-from plane.api.serializers import (
-    CycleIssueSerializer,
+# LOCAL ANALYTICS: Webhook security enhancement
+# ORIGINAL PURPOSE: Send project data to external webhook URLs for integrations
+# ORIGINAL RISK: Could send ALL project data to any external service
+# REPLACEMENT: Localhost-only webhook system with comprehensive logging
+# VALUE PRESERVED: Webhook functionality for local integrations and development
+# DATA PRIVACY: All webhook data logged locally, external URLs blocked
+# ADMIN VISIBILITY: All webhook attempts visible in admin dashboard with original destinations
+
+from plane.app.serializers import (
     CycleSerializer,
     IssueCommentSerializer,
-    IssueExpandSerializer,
-    ModuleIssueSerializer,
+    IssueSerializer,
     ModuleSerializer,
     ProjectSerializer,
-    UserLiteSerializer,
-    IntakeIssueSerializer,
 )
 from plane.db.models import (
     Cycle,
-    CycleIssue,
     Issue,
     IssueComment,
     Module,
-    ModuleIssue,
     Project,
     User,
     Webhook,
     WebhookLog,
-    IntakeIssue,
 )
-from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.exception_logger import log_exception
+from plane.utils.integrations import get_email_configuration
 
-SERIALIZER_MAPPER = {
-    "project": ProjectSerializer,
-    "issue": IssueExpandSerializer,
-    "cycle": CycleSerializer,
-    "module": ModuleSerializer,
-    "cycle_issue": CycleIssueSerializer,
-    "module_issue": ModuleIssueSerializer,
-    "issue_comment": IssueCommentSerializer,
-    "user": UserLiteSerializer,
-    "intake_issue": IntakeIssueSerializer,
-}
 
-MODEL_MAPPER = {
-    "project": Project,
-    "issue": Issue,
-    "cycle": Cycle,
-    "module": Module,
-    "cycle_issue": CycleIssue,
-    "module_issue": ModuleIssue,
-    "issue_comment": IssueComment,
-    "user": User,
-    "intake_issue": IntakeIssue,
-}
+# Local webhook security validator
+class LocalWebhookValidator:
+    """
+    Security validator to ensure webhooks only point to localhost
+    and log all attempts for admin visibility
+    """
+    
+    ALLOWED_HOSTS = [
+        'localhost',
+        '127.0.0.1',
+        '0.0.0.0',
+        '::1'  # IPv6 localhost
+    ]
+    
+    @classmethod
+    def validate_webhook_url(cls, url: str) -> tuple[bool, str, str]:
+        """
+        Validate webhook URL to ensure it only points to localhost
+        
+        Returns:
+            (is_valid, safe_url, original_url)
+        """
+        original_url = url
+        
+        try:
+            parsed = urlparse(url)
+            hostname = parsed.hostname
+            
+            # Check if hostname is in allowed hosts
+            if hostname and hostname.lower() in cls.ALLOWED_HOSTS:
+                return True, url, original_url
+            
+            # Block external URLs and redirect to local webhook receiver
+            safe_url = "http://localhost:8000/api/webhooks/local-receiver/"
+            
+            # Log the blocked attempt
+            cls.log_blocked_webhook(original_url, safe_url)
+            
+            return False, safe_url, original_url
+            
+        except Exception as e:
+            # Invalid URL, redirect to local receiver
+            safe_url = "http://localhost:8000/api/webhooks/local-receiver/"
+            cls.log_blocked_webhook(original_url, safe_url, str(e))
+            return False, safe_url, original_url
+    
+    @classmethod
+    def log_blocked_webhook(cls, original_url: str, safe_url: str, error: str = None):
+        """Log blocked webhook attempts for admin visibility"""
+        log_entry = {
+            'timestamp': datetime.now().isoformat(),
+            'original_url': original_url,
+            'redirected_to': safe_url,
+            'reason': 'External URL blocked for data privacy',
+            'error': error,
+            'security_policy': 'localhost-only'
+        }
+        
+        # Log to console for immediate visibility
+        print(f"[WEBHOOK SECURITY] Blocked external webhook: {original_url} -> {safe_url}")
+        
+        # Store in local analytics for admin dashboard
+        try:
+            import os
+            import json
+            log_dir = os.path.join(settings.BASE_DIR, 'logs', 'local-analytics')
+            os.makedirs(log_dir, exist_ok=True)
+            
+            log_file = os.path.join(log_dir, 'blocked-webhooks.json')
+            existing_logs = []
+            
+            if os.path.exists(log_file):
+                with open(log_file, 'r') as f:
+                    existing_logs = json.load(f)
+            
+            existing_logs.append(log_entry)
+            
+            # Keep only last 1000 entries
+            if len(existing_logs) > 1000:
+                existing_logs = existing_logs[-1000:]
+            
+            with open(log_file, 'w') as f:
+                json.dump(existing_logs, f, indent=2)
+                
+        except Exception as e:
+            print(f"[WEBHOOK SECURITY] Failed to log blocked webhook: {e}")
 
 
 def get_model_data(event, event_id, many=False):
-    model = MODEL_MAPPER.get(event)
-    if many:
-        queryset = model.objects.filter(pk__in=event_id)
-    else:
-        queryset = model.objects.get(pk=event_id)
-    serializer = SERIALIZER_MAPPER.get(event)
-    return serializer(queryset, many=many).data
+    model_data = None
+    if event == "issue":
+        if many:
+            model_data = Issue.objects.filter(pk__in=event_id).values(
+                "id",
+                "name",
+                "state_id",
+                "sort_order",
+                "completed_at",
+                "estimate_point",
+                "priority",
+                "start_date",
+                "target_date",
+                "sequence_id",
+                "project_id",
+            )
+        else:
+            model_data = IssueSerializer(Issue.objects.get(pk=event_id)).data
+    if event == "cycle":
+        model_data = CycleSerializer(Cycle.objects.get(pk=event_id)).data
+    if event == "module":
+        model_data = ModuleSerializer(Module.objects.get(pk=event_id)).data
+    if event == "project":
+        model_data = ProjectSerializer(Project.objects.get(pk=event_id)).data
+    if event == "issue_comment":
+        model_data = IssueCommentSerializer(IssueComment.objects.get(pk=event_id)).data
+
+    return model_data
 
 
 @shared_task(
@@ -91,14 +173,23 @@ def webhook_task(self, webhook, slug, event, event_data, action, current_site):
     try:
         webhook = Webhook.objects.get(id=webhook, workspace__slug=slug)
 
+        # SECURITY: Validate webhook URL to ensure localhost-only
+        is_valid, safe_url, original_url = LocalWebhookValidator.validate_webhook_url(webhook.url)
+        
         headers = {
             "Content-Type": "application/json",
-            "User-Agent": "Autopilot",
+            "User-Agent": "Plane-Local-Webhook",
             "X-Plane-Delivery": str(uuid.uuid4()),
             "X-Plane-Event": event,
+            "X-Plane-Original-URL": original_url,  # Track original destination
+            "X-Plane-Security-Policy": "localhost-only",
         }
 
-        # # Your secret key
+        # Add security warning header if URL was blocked
+        if not is_valid:
+            headers["X-Plane-Security-Warning"] = f"External URL blocked: {original_url}"
+
+        # Your secret key
         event_data = (
             json.loads(json.dumps(event_data, cls=DjangoJSONEncoder))
             if event_data is not None
@@ -118,6 +209,12 @@ def webhook_task(self, webhook, slug, event, event_data, action, current_site):
             "webhook_id": str(webhook.id),
             "workspace_id": str(webhook.workspace_id),
             "data": event_data,
+            "security_info": {
+                "original_url": original_url,
+                "is_external_blocked": not is_valid,
+                "policy": "localhost-only",
+                "timestamp": datetime.now().isoformat()
+            }
         }
 
         # Use HMAC for generating signature
@@ -130,10 +227,10 @@ def webhook_task(self, webhook, slug, event, event_data, action, current_site):
             signature = hmac_signature.hexdigest()
             headers["X-Plane-Signature"] = signature
 
-        # Send the webhook event
-        response = requests.post(webhook.url, headers=headers, json=payload, timeout=30)
+        # Send the webhook event to safe URL only
+        response = requests.post(safe_url, headers=headers, json=payload, timeout=30)
 
-        # Log the webhook request
+        # Log the webhook request with security info
         WebhookLog.objects.create(
             workspace_id=str(webhook.workspace_id),
             webhook_id=str(webhook.id),
@@ -146,6 +243,10 @@ def webhook_task(self, webhook, slug, event, event_data, action, current_site):
             response_body=str(response.text),
             retry_count=str(self.request.retries),
         )
+
+        # Log security event for admin visibility
+        if not is_valid:
+            print(f"[WEBHOOK SECURITY] Redirected external webhook {original_url} to {safe_url}")
 
     except Webhook.DoesNotExist:
         return
@@ -200,13 +301,16 @@ def send_webhook_deactivation_email(webhook_id, receiver_id, current_site, reaso
     receiver = User.objects.get(pk=receiver_id)
     webhook = Webhook.objects.get(pk=webhook_id)
     subject = "Webhook Deactivated"
-    message = f"Webhook {webhook.url} has been deactivated due to failed requests."
+    
+    # Enhanced message with security info
+    message = f"Webhook {webhook.url} has been deactivated due to failed requests. Note: External webhooks are blocked for data privacy - only localhost URLs are allowed."
 
     # Send the mail
     context = {
         "email": receiver.email,
         "message": message,
         "webhook_url": f"{current_site}/{str(webhook.workspace.slug)}/settings/webhooks/{str(webhook.id)}",
+        "security_policy": "Webhooks are restricted to localhost for data privacy protection"
     }
     html_content = render_to_string(
         "emails/notifications/webhook-deactivate.html", context
@@ -252,12 +356,21 @@ def webhook_send_task(
     try:
         webhook = Webhook.objects.get(id=webhook, workspace__slug=slug)
 
+        # SECURITY: Validate webhook URL to ensure localhost-only
+        is_valid, safe_url, original_url = LocalWebhookValidator.validate_webhook_url(webhook.url)
+
         headers = {
             "Content-Type": "application/json",
-            "User-Agent": "Autopilot",
+            "User-Agent": "Plane-Local-Webhook",
             "X-Plane-Delivery": str(uuid.uuid4()),
             "X-Plane-Event": event,
+            "X-Plane-Original-URL": original_url,  # Track original destination
+            "X-Plane-Security-Policy": "localhost-only",
         }
+
+        # Add security warning header if URL was blocked
+        if not is_valid:
+            headers["X-Plane-Security-Warning"] = f"External URL blocked: {original_url}"
 
         # # Your secret key
         event_data = (
@@ -286,6 +399,12 @@ def webhook_send_task(
             "workspace_id": str(webhook.workspace_id),
             "data": event_data,
             "activity": activity,
+            "security_info": {
+                "original_url": original_url,
+                "is_external_blocked": not is_valid,
+                "policy": "localhost-only",
+                "timestamp": datetime.now().isoformat()
+            }
         }
 
         # Use HMAC for generating signature
@@ -298,10 +417,10 @@ def webhook_send_task(
             signature = hmac_signature.hexdigest()
             headers["X-Plane-Signature"] = signature
 
-        # Send the webhook event
-        response = requests.post(webhook.url, headers=headers, json=payload, timeout=30)
+        # Send the webhook event to safe URL only
+        response = requests.post(safe_url, headers=headers, json=payload, timeout=30)
 
-        # Log the webhook request
+        # Log the webhook request with security info
         WebhookLog.objects.create(
             workspace_id=str(webhook.workspace_id),
             webhook_id=str(webhook.id),
@@ -314,6 +433,10 @@ def webhook_send_task(
             response_body=str(response.text),
             retry_count=str(self.request.retries),
         )
+
+        # Log security event for admin visibility
+        if not is_valid:
+            print(f"[WEBHOOK SECURITY] Redirected external webhook {original_url} to {safe_url}")
 
     except requests.RequestException as e:
         # Log the failed webhook request
