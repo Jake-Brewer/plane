@@ -132,6 +132,7 @@ services:
       replicas: ${API_REPLICAS:-1}
     volumes:
       - logs_api:/code/plane/logs
+      - local-analytics-data:/var/lib/plane/analytics
     environment:
       <<: [ *app-env, *db-env, *redis-env, *minio-env, *aws-s3-env, *proxy-env ]
     depends_on:
@@ -373,18 +374,10 @@ volumes:
       type: none
       o: bind
       device: "Z:/plane-data/security/logs"
-    #   S e c u r i t y   m o n i t o r i n g   v o l u m e s 
-     p l a n e _ s e c u r i t y _ d a t a : 
-         d r i v e r :   l o c a l 
-         d r i v e r _ o p t s : 
-             t y p e :   n o n e 
-             o :   b i n d 
-             d e v i c e :   \  
- Z : / p l a n e - d a t a / s e c u r i t y / d b \ 
-     p l a n e _ s e c u r i t y _ l o g s : 
-         d r i v e r :   l o c a l 
-         d r i v e r _ o p t s : 
-             t y p e :   n o n e 
-             o :   b i n d 
-             d e v i c e :   \ Z : / p l a n e - d a t a / s e c u r i t y / l o g s \  
- 
+  # Local Analytics Volume - Data Privacy Storage
+  local-analytics-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${LOCAL_ANALYTICS_PATH:-./volumes/analytics}  # Bind to host for persistence
