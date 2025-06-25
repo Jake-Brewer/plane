@@ -132,11 +132,7 @@ if ($missingPackages.Count -gt 0) {
 
 # Step 5: Final test
 Write-Host "`n🧪 Step 5: Running final tests..."
-if (Test-Path "test-mcp.ps1") {
-    .\test-mcp.ps1
-} else {
-    Write-Host "⚠️  test-mcp.ps1 not found, skipping automated tests" -ForegroundColor Yellow
-}
+Write-Host "⚠️  Skipping automated tests (will be added after API key setup)" -ForegroundColor Yellow
 
 # Summary
 Write-Host "`n🎉 Setup Summary" -ForegroundColor Cyan
@@ -156,4 +152,4 @@ if ($env:PLANE_API_KEY) {
 }
 
 Write-Host ""
-Write-Host "📚 For detailed instructions, see: for_llm/PLANE_MCP_SETUP.md" -ForegroundColor Gray 
+Write-Host "📚 For detailed instructions, see: for_llm/PLANE_MCP_SETUP.md" -ForegroundColor Gray
