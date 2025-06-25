@@ -1,0 +1,58 @@
+# Plane Security Monitor - Blocked Domains List
+# This file contains domains that should be blocked to prevent data exfiltration
+
+# Plane.so domains (telemetry and analytics)
+telemetry.plane.so
+app.plane.so
+api.plane.so
+analytics.plane.so
+tracking.plane.so
+metrics.plane.so
+
+# Analytics and tracking services
+posthog.com
+mixpanel.com
+segment.com
+amplitude.com
+hotjar.com
+fullstory.com
+logrocket.com
+
+# Error tracking services
+sentry.io
+bugsnag.com
+rollbar.com
+airbrake.io
+
+# Google Analytics and tracking
+google-analytics.com
+googletagmanager.com
+doubleclick.net
+googlesyndication.com
+
+# Social media tracking pixels
+facebook.com/tr
+linkedin.com/px
+twitter.com/i/adsct
+pinterest.com/ct
+snapchat.com/tr
+
+# Other tracking services
+mouseflow.com
+crazyegg.com
+optimizely.com
+vwo.com
+kissmetrics.com
+heap.io
+intercom.io
+zendesk.com/embeddable_framework
+drift.com
+crisp.chat
+
+# CDN and external services that might collect data
+cdn.jsdelivr.net/npm/posthog-js
+cdn.segment.com
+js.stripe.com
+connect.facebook.net
+platform.twitter.com
+www.googletagmanager.com 

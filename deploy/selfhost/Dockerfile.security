@@ -1,0 +1,47 @@
+FROM python:3.11-slim
+
+# Install system dependencies for network monitoring
+RUN apt-get update && apt-get install -y \
+    iptables \
+    netstat-nat \
+    net-tools \
+    iproute2 \
+    tcpdump \
+    sqlite3 \
+    curl \
+    wget \
+    procps \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create app directory
+WORKDIR /app
+
+# Copy requirements and install Python dependencies
+COPY requirements-security.txt .
+RUN pip install --no-cache-dir -r requirements-security.txt
+
+# Copy security monitoring scripts
+COPY network-monitor.py .
+COPY traffic-interceptor.py .
+COPY security-dashboard.py .
+COPY blocked-domains.txt .
+
+# Create log directory
+RUN mkdir -p /var/log && chmod 755 /var/log
+
+# Create non-root user for security (but we need root for iptables)
+RUN useradd -m -s /bin/bash security_monitor
+
+# Copy startup script
+COPY start-security-monitor.sh .
+RUN chmod +x start-security-monitor.sh
+
+# Expose monitoring ports
+EXPOSE 8888 8889
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "import sqlite3; conn = sqlite3.connect('/var/log/plane-security.db'); conn.close()" || exit 1
+
+# Start security monitor
+CMD ["./start-security-monitor.sh"] 
