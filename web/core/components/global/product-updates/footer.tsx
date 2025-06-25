@@ -5,7 +5,7 @@ import { getButtonStyling } from "@plane/ui";
 // helpers
 import { cn } from "@/helpers/common.helper";
 // assets
-import PlaneLogo from "@/public/plane-logos/blue-without-text.png";
+import ✈️Logo from "@/public/plane-logos/blue-without-text.png";
 
 export const ProductUpdatesFooter = () => {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ export const ProductUpdatesFooter = () => {
     <div className="flex items-center justify-between flex-shrink-0 gap-4 m-6 mb-4">
       <div className="flex items-center gap-2">
         <a
-        href="https://go.plane.so/p-docs"
+        href="https://go.✈️.so/p-docs"
         target="_blank"
         className="text-sm text-custom-text-200 hover:text-custom-text-100 hover:underline underline-offset-1 outline-none"
         >
@@ -23,7 +23,7 @@ export const ProductUpdatesFooter = () => {
           <circle cx={1} cy={1} r={1} />
       </svg>
       <a
-        href="https://go.plane.so/p-changelog"
+        href="https://go.✈️.so/p-changelog"
         target="_blank"
         className="text-sm text-custom-text-200 hover:text-custom-text-100 hover:underline underline-offset-1 outline-none"
         >
@@ -33,7 +33,7 @@ export const ProductUpdatesFooter = () => {
           <circle cx={1} cy={1} r={1} />
       </svg>
       <a
-        href="mailto:support@plane.so"
+        href="mailto:support@✈️.so"
         target="_blank"
         className="text-sm text-custom-text-200 hover:text-custom-text-100 hover:underline underline-offset-1 outline-none"
         >
@@ -43,7 +43,7 @@ export const ProductUpdatesFooter = () => {
           <circle cx={1} cy={1} r={1} />
       </svg>
       <a
-        href="https://go.plane.so/p-discord"
+        href="https://go.✈️.so/p-discord"
         target="_blank"
         className="text-sm text-custom-text-200 hover:text-custom-text-100 hover:underline underline-offset-1 outline-none"
       >
@@ -51,15 +51,15 @@ export const ProductUpdatesFooter = () => {
       </a>
     </div>
     <a
-      href="https://plane.so/pages"
+      href="https://✈️.so/pages"
       target="_blank"
       className={cn(
         getButtonStyling("accent-primary", "sm"),
         "flex gap-1.5 items-center text-center font-medium hover:underline underline-offset-2 outline-none"
       )}
     >
-        <Image src={PlaneLogo} alt="Plane" width={12} height={12} />
-        {t("powered_by_plane_pages")}
+        <Image src={✈️Logo} alt="✈️" width={12} height={12} />
+        {t("powered_by_✈️_pages")}
       </a>
     </div>
   );

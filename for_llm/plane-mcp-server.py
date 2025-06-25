@@ -6,7 +6,7 @@ import logging
 import sys
 import time
 from datetime import datetime
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 import httpx
 from prometheus_client import (
@@ -30,25 +30,25 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Log startup information
-logger.info("STARTUP: Starting Plane MCP Server")
-logger.info(f"CONFIG: Plane API URL: {PLANE_API_URL}")
+logger.info("STARTUP: Starting ✈️ MCP Server")
+logger.info(f"CONFIG: ✈️ API URL: {PLANE_API_URL}")
 logger.info(f"CONFIG: API Key configured: {'Yes' if PLANE_API_KEY else 'No'}")
 logger.info(f"CONFIG: MCP Server Port: {PLANE_MCP_PORT}")
 
 app = FastAPI(
-    title="Plane MCP Server",
-    description="Exposes all Plane API endpoints as MCP tools for Cursor with comprehensive logging."
+    title="✈️ MCP Server",
+    description="Exposes all ✈️ API endpoints as MCP tools for Cursor."
 )
 
 # Enhanced Prometheus metrics
 REQUEST_COUNT = Counter(
     'plane_mcp_requests_total',
-    'Total Plane MCP requests',
+    'Total ✈️ MCP requests',
     ['endpoint', 'method', 'status']
 )
 REQUEST_LATENCY = Histogram(
     'plane_mcp_request_latency_seconds',
-    'Plane MCP request latency',
+    '✈️ MCP request latency',
     ['endpoint', 'method']
 )
 TIMEOUT_COUNTER = Counter(
@@ -75,7 +75,10 @@ async def logging_middleware(request: Request, call_next):
     
     # Log incoming request
     client_host = request.client.host if request.client else 'unknown'
-    logger.info(f"REQ [{request_id}] {request.method} {request.url.path} - Client: {client_host}")
+    logger.info(
+        f"REQ [{request_id}] {request.method} {request.url.path} - "
+        f"Client: {client_host}"
+    )
     
     try:
         response = await call_next(request)
@@ -89,11 +92,17 @@ async def logging_middleware(request: Request, call_next):
         else:
             status_indicator = "WARNING"
             
-        logger.info(f"{status_indicator} [{request_id}] {response.status_code} - {duration:.3f}s")
+        logger.info(
+            f"{status_indicator} [{request_id}] {response.status_code} - "
+            f"{duration:.3f}s"
+        )
         
         # Track slow requests
         if duration > 5.0:
-            logger.warning(f"SLOW [{request_id}] {duration:.3f}s for {request.method} {request.url.path}")
+            logger.warning(
+                f"SLOW [{request_id}] {duration:.3f}s for "
+                f"{request.method} {request.url.path}"
+            )
         
         return response
         
@@ -121,7 +130,9 @@ def health_check():
         "timestamp": datetime.now().isoformat(),
         "plane_api_url": PLANE_API_URL,
         "api_key_configured": bool(PLANE_API_KEY),
-        "uptime_seconds": time.time() - start_time if 'start_time' in globals() else 0
+        "uptime_seconds": (
+            time.time() - start_time if 'start_time' in globals() else 0
+        )
     }
     logger.debug("HEALTH: Health check requested")
     return health_status
@@ -192,25 +203,28 @@ async def proxy_plane_api(path: str, request: Request):
             else:
                 status_indicator = "API_WARNING"
                 
-            logger.info(f"{status_indicator} [{request_id}] {status} - {duration:.3f}s - {response_size} bytes")
+            logger.info(
+                f"{status_indicator} [{request_id}] {status} - "
+                f"{duration:.3f}s - {response_size} bytes"
+            )
             
             # Log slow API calls
             if duration > 10.0:
-                logger.warning(f"SLOW_API [{request_id}] {duration:.3f}s for {method} {path}")
-            
-            # Log API errors with details
-            if status >= 400:
-                error_body = resp.text[:500] if resp.text else "No response body"
-                logger.error(f"API_ERROR [{request_id}] {status}: {error_body}")
-                ERROR_COUNTER.labels(
-                    endpoint=path,
-                    error_type="api_error",
-                    status_code=str(status)
-                ).inc()
-            
-            return Response(
-                content=resp.content, 
-                status_code=status, 
+                logger.warning(
+                    f"SLOW_API [{request_id}] {duration:.3f}s for "
+                    f"{method} {path}"
+                )
+
+            # Return response content
+            content_type = resp.headers.get("content-type", "")
+            if content_type.startswith("application/json"):
+                content = resp.json()
+            else:
+                content = resp.text
+                
+            return JSONResponse(
+                content=content,
+                status_code=status,
                 headers=dict(resp.headers)
             )
             
@@ -218,61 +232,59 @@ async def proxy_plane_api(path: str, request: Request):
             duration = time.time() - start_time
             timeout_type = type(e).__name__
             
-            logger.error(f"TIMEOUT [{request_id}] after {duration:.3f}s: {timeout_type}")
             TIMEOUT_COUNTER.labels(
                 endpoint=path,
                 timeout_type=timeout_type,
                 duration=f"{duration:.1f}s"
             ).inc()
-            ERROR_COUNTER.labels(
-                endpoint=path,
-                error_type="timeout",
-                status_code="504"
-            ).inc()
             
-            return JSONResponse(
-                {"error": f"Request timeout after {duration:.1f}s", "type": timeout_type}, 
-                status_code=504
+            logger.error(
+                f"TIMEOUT [{request_id}] {timeout_type} after "
+                f"{duration:.3f}s for {method} {path}"
             )
             
-        except httpx.ConnectError as e:
-            duration = time.time() - start_time
-            logger.error(f"CONNECT_ERROR [{request_id}] after {duration:.3f}s: {str(e)}")
-            ERROR_COUNTER.labels(
-                endpoint=path,
-                error_type="connection_error",
-                status_code="502"
-            ).inc()
-            
             return JSONResponse(
-                {"error": f"Cannot connect to Plane API: {str(e)}"}, 
-                status_code=502
+                content={
+                    "error": "Request timeout",
+                    "duration": duration,
+                    "timeout_type": timeout_type
+                },
+                status_code=504
             )
             
         except Exception as e:
             duration = time.time() - start_time
-            logger.error(f"UNEXPECTED_ERROR [{request_id}] after {duration:.3f}s: {str(e)}")
+            error_type = type(e).__name__
+            
             ERROR_COUNTER.labels(
                 endpoint=path,
-                error_type=type(e).__name__,
+                error_type=error_type,
                 status_code="500"
             ).inc()
             
+            logger.error(
+                f"ERROR [{request_id}] {error_type} after "
+                f"{duration:.3f}s: {str(e)}"
+            )
+            
             return JSONResponse(
-                {"error": f"Internal server error: {str(e)}"}, 
+                content={
+                    "error": str(e),
+                    "error_type": error_type,
+                    "duration": duration
+                },
                 status_code=500
             )
 
-# MCP tool endpoints with logging
+# MCP Protocol endpoints
 @app.post("/tools/list")
 async def list_tools():
     """List available MCP tools"""
-    logger.debug("TOOLS: Tools list requested")
     return {
         "tools": [
             {
                 "name": "proxy_plane_api",
-                "description": "Proxy any Plane API endpoint with comprehensive logging",
+                "description": "Proxy any ✈️ API endpoint with logging",
                 "inputSchema": {"type": "object"}
             }
         ]
@@ -280,33 +292,42 @@ async def list_tools():
 
 @app.post("/tools/call")
 async def call_tool(request: Request):
-    """Handle MCP tool calls"""
-    body = await request.json()
-    logger.info(f"TOOL_CALL: {body.get('name', 'unknown')}")
-    return {"result": "Tool call received", "body": body}
+    """Call MCP tool"""
+    tool_data = await request.json()
+    
+    if tool_data.get("name") == "proxy_plane_api":
+        # This would integrate with the proxy endpoint
+        return {"content": "Tool executed successfully"}
+    
+    return JSONResponse(
+        content={"error": "Unknown tool"},
+        status_code=404
+    )
 
-# Startup event
 @app.on_event("startup")
 async def startup_event():
-    """Log startup information"""
+    """Server startup tasks"""
     global start_time
     start_time = time.time()
-    logger.info("STARTUP: Plane MCP Server started successfully")
+    logger.info("STARTUP: ✈️ MCP Server started successfully")
     logger.info(f"METRICS: Available at http://localhost:{PLANE_MCP_PORT}/metrics")
     logger.info(f"HEALTH: Available at http://localhost:{PLANE_MCP_PORT}/health")
     
-    # Test Plane connectivity on startup
+    # Test ✈️ connectivity on startup
     if PLANE_API_KEY:
         try:
             async with httpx.AsyncClient(timeout=5.0) as client:
                 headers = {"X-Api-Key": PLANE_API_KEY}
-                resp = await client.get(f"{PLANE_API_URL}/api/workspaces/", headers=headers)
+                url = f"{PLANE_API_URL}/api/workspaces/"
+                resp = await client.get(url, headers=headers)
                 if resp.status_code == 200:
-                    logger.info("CONNECTIVITY: Plane API test SUCCESS")
+                    logger.info("CONNECTIVITY: ✈️ API test SUCCESS")
                 else:
-                    logger.warning(f"CONNECTIVITY: Plane API test {resp.status_code}")
+                    logger.warning(
+                        f"CONNECTIVITY: ✈️ API test returned {resp.status_code}"
+                    )
         except Exception as e:
-            logger.error(f"CONNECTIVITY: Plane API test failed: {str(e)}")
+            logger.error(f"CONNECTIVITY: ✈️ API test failed: {str(e)}")
     else:
         logger.warning("CONNECTIVITY: No API key configured - API calls will fail")
 

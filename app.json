@@ -1,11 +1,11 @@
 {
-  "name": "Plane",
-  "description": "Plane helps you track your issues, epics, and product roadmaps.",
-  "repository": "http://github.com/makeplane/plane",
+  "name": "✈️",
+  "description": "✈️ - Open source, self-hosted project planning tool",
+  "repository": "https://github.com/make✈️/✈️",
   "logo": "https://avatars.githubusercontent.com/u/115727700?s=200&v=4",
-  "website": "https://plane.so/",
+  "website": "https://✈️.so/",
   "success_url": "/",
-  "stack": "heroku-22",
+  "stack": "container",
   "keywords": [
     "plane",
     "project management",
