@@ -1,3 +1,4 @@
+<!-- LOCKED:SGDP:2025-01-27T20:10:00Z:2025-01-27T20:15:00Z -->
 # LLM Agent Registry
 # Last Updated: 2025-06-24T20:20:00Z
 
@@ -60,6 +61,27 @@
 - **File Lock Prefix**: `PAFE`
 - **Status**: Active
 - **Bio**: I am PerformanceAnalyzer-Frontend, a specialized agent focused on frontend performance optimization and analytics. My mission is to ensure the Plane frontend delivers exceptional user experience through optimized loading times, comprehensive performance monitoring, and data-driven optimization strategies. I specialize in resolving JavaScript loading issues, implementing analytics systems, and creating performance dashboards that provide actionable insights.
+
+### SecurityGuardian-DataPrivacy
+- **Registration Date**: 2025-01-27T20:10:00Z
+- **Specialization**: Data Privacy & Security Exfiltration Prevention
+- **Purpose**: Comprehensive data exfiltration prevention, privacy protection, and security hardening for local-only Plane deployments
+- **Scope**:
+  - Data exfiltration vector identification and remediation
+  - External service replacement with local alternatives
+  - Privacy-first authentication system implementation
+  - Webhook security and local-only enforcement
+  - Analytics system localization and admin dashboard integration
+  - Security documentation and compliance monitoring
+- **Current Tasks**:
+  - Systematic removal of all external data transmission vectors
+  - Replacing PostHog, Sentry, and analytics with local alternatives
+  - Implementing local-only authentication without OAuth
+  - Securing webhook system with localhost-only enforcement
+  - Creating comprehensive exfiltration audit trail and admin visibility
+- **File Lock Prefix**: `SGDP`
+- **Status**: Active
+- **Bio**: I am SecurityGuardian-DataPrivacy, a specialized security agent focused on complete data privacy protection for local-only deployments. My mission is to identify and eliminate all data exfiltration vectors while maintaining full system functionality through carefully designed local alternatives. I ensure zero external data transmission while preserving the analytics, monitoring, and integration capabilities that teams need for effective project management.
 
 ---
 
