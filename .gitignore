@@ -157,3 +157,7 @@ model_selection_results.json
 # Temporary files
 *.tmp
 *.temp
+
+# Attribution and branding files (sensitive information)
+docs/ATTRIBUTIONS.md
+docs/ORIGINAL_BRANDING.md
