@@ -109,28 +109,53 @@ docker-command-center/
 - **Background Services**: Use `is_background: true` with no timeout
 - **Timeout Behavior**: Commands exceeding timeout automatically terminate with error message
 
-#### Timeout Categories by Command Type
+#### Timeout Override System
+**CRITICAL**: Agents can request longer timeouts for specific operations:
+
+**Override Syntax**: When requesting longer timeouts, specify in command explanation:
+- `"explanation": "Docker build requires 600s timeout - building complex multi-stage image"`
+- `"explanation": "Yarn install needs 180s timeout - installing 200+ packages"`
+- `"explanation": "Database migration requires 900s timeout - processing 1M+ records"`
+
+**Timeout Override Categories**:
 ```bash
-# Quick commands (5-15 seconds)
-git status --porcelain
-git log --oneline --no-pager -10
-docker ps --format table
-ls -la
+# Emergency overrides (up to 1800s = 30 minutes)
+docker-compose build --no-cache           # 600-1800s for complex builds
+yarn install --network-timeout 500000     # 180-600s for large package sets
+npm install --yes                         # 120-300s for package installation
+database migrations                       # 300-1800s depending on data size
 
-# Standard commands (30 seconds)  
-git push origin branch-name
-npm install package-name --yes
-docker pull image-name
+# When to request overrides:
+# - Docker builds with multiple stages
+# - Package installations with 100+ dependencies  
+# - Database operations on large datasets
+# - File downloads over 100MB
+# - Complex compilation processes
+```
 
-# Build operations (120 seconds)
-npm run build
-docker build . --tag name
-yarn install --network-timeout 500000
+#### Yarn Install Whitelisting
+**CRITICAL**: Yarn/NPM installs are REQUIRED for development:
+- **Registry Access**: registry.yarnpkg.com and registry.npmjs.org are WHITELISTED
+- **Package Downloads**: Well-known packages from official registries are allowed
+- **Security Monitoring**: All package downloads are logged but not blocked
+- **Timeout Requirements**: Use 180-600s timeouts for large package installations
 
-# Long operations (300 seconds)
-docker-compose build --no-cache
-large file downloads
-database migrations
+#### Timeout Recovery Procedures
+**When a command times out:**
+1. **Analyze the cause**: Check if operation legitimately needs more time
+2. **Request longer timeout**: Use override syntax with specific reasoning
+3. **Break into smaller steps**: Consider chunking large operations
+4. **Use background mode**: For services that run indefinitely
+5. **Verify prerequisites**: Ensure dependencies are available
+
+**Example Timeout Recovery**:
+```bash
+# If yarn install times out:
+# 1. Check network connectivity
+# 2. Verify package.json validity  
+# 3. Request 300s timeout with explanation
+# 4. Consider using --network-timeout flag
+# 5. Check for package registry accessibility
 ```
 
 #### Interactive Prompt Prevention
