@@ -49,7 +49,8 @@ const nextConfig = {
     ];
   },
   async rewrites() {
-    const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://app.posthog.com";
+    const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST || "DISABLED_REDIRECT_TO_LOCAL";
+    const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY || "DISABLED_REDIRECT_TO_LOCAL";
     const rewrites = [
       {
         source: "/ingest/static/:path*",

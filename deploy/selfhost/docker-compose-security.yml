@@ -1,0 +1,158 @@
+version: "3.8"
+
+services:
+  # Network Security Monitor
+  plane-security-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile.security
+    container_name: plane-security-monitor
+    restart: unless-stopped
+    privileged: true  # Required for iptables and network monitoring
+    network_mode: "host"  # Monitor all network traffic
+    volumes:
+      - /var/log/plane-security:/var/log:rw
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - CONTAINER_NAME=plane-security-monitor
+      - LOG_LEVEL=INFO
+      - MONITOR_INTERVAL=30
+      - ALERT_WEBHOOK_URL=${SECURITY_ALERT_WEBHOOK_URL:-}
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+      - NET_RAW
+    depends_on:
+      - plane-security-db
+    labels:
+      - "plane.security=monitor"
+      - "plane.component=security"
+
+  # Security Database (separate from main Plane DB)
+  plane-security-db:
+    image: postgres:15-alpine
+    container_name: plane-security-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: plane_security
+      POSTGRES_USER: security_user
+      POSTGRES_PASSWORD: ${SECURITY_DB_PASSWORD:-secure_random_password_123}
+    volumes:
+      - plane_security_data:/var/lib/postgresql/data
+      - ./security-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - plane-security
+    ports:
+      - "5433:5432"  # Different port from main DB
+    labels:
+      - "plane.security=database"
+      - "plane.component=security"
+
+  # Security Dashboard (Web UI for monitoring)
+  plane-security-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.security-dashboard
+    container_name: plane-security-dashboard
+    restart: unless-stopped
+    ports:
+      - "8889:8080"  # Security dashboard port
+    environment:
+      - SECURITY_DB_URL=postgresql://security_user:${SECURITY_DB_PASSWORD:-secure_random_password_123}@plane-security-db:5432/plane_security
+      - DASHBOARD_SECRET_KEY=${SECURITY_DASHBOARD_SECRET:-security_secret_key_123}
+    volumes:
+      - /var/log/plane-security:/var/log:ro
+    depends_on:
+      - plane-security-db
+    networks:
+      - plane-security
+    labels:
+      - "plane.security=dashboard"
+      - "plane.component=security"
+
+  # Traffic Interceptor (HTTP/HTTPS proxy)
+  plane-traffic-interceptor:
+    build:
+      context: .
+      dockerfile: Dockerfile.traffic-interceptor
+    container_name: plane-traffic-interceptor
+    restart: unless-stopped
+    ports:
+      - "8888:8888"  # HTTP proxy port
+      - "8443:8443"  # HTTPS proxy port
+    environment:
+      - PROXY_MODE=intercept
+      - LOG_ALL_TRAFFIC=true
+      - BLOCK_EXTERNAL=true
+    volumes:
+      - /var/log/plane-security:/var/log:rw
+      - ./blocked-domains.txt:/app/blocked-domains.txt:ro
+    networks:
+      - plane-security
+      - default  # Connect to main Plane network
+    cap_add:
+      - NET_ADMIN
+    labels:
+      - "plane.security=interceptor"
+      - "plane.component=security"
+
+networks:
+  plane-security:
+    driver: bridge
+    internal: false
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  plane_security_data:
+    driver: local
+
+# Security monitoring configuration
+x-security-config: &security-config
+  # Blocked domains list
+  blocked_domains:
+    - telemetry.plane.so
+    - app.plane.so
+    - api.plane.so
+    - analytics.plane.so
+    - tracking.plane.so
+    - metrics.plane.so
+    - posthog.com
+    - mixpanel.com
+    - segment.com
+    - amplitude.com
+    - hotjar.com
+    - fullstory.com
+    - logrocket.com
+    - sentry.io
+    - bugsnag.com
+    - rollbar.com
+    - google-analytics.com
+    - googletagmanager.com
+    - facebook.com/tr
+    - linkedin.com/px
+    - twitter.com/i/adsct
+  
+  # Allowed internal domains
+  allowed_domains:
+    - localhost
+    - 127.0.0.1
+    - 0.0.0.0
+    - redis
+    - postgres
+    - db
+    - database
+    - plane-web
+    - plane-api
+    - plane-worker
+
+  # Alert thresholds
+  alerts:
+    max_blocked_per_hour: 10
+    max_data_size_mb: 100
+    critical_domains:
+      - telemetry.plane.so
+      - posthog.com 

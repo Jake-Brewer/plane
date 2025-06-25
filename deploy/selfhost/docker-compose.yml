@@ -54,7 +54,21 @@ x-app-env: &app-env
   SPACE_BASE_URL: ${SPACE_BASE_URL}
   APP_BASE_URL: ${APP_BASE_URL}
   AMQP_URL: ${AMQP_URL:-amqp://plane:plane@plane-mq:5672/plane}
-
+  
+  # DATA PRIVACY - External service redirections
+  # Original destinations disabled and redirected to local storage
+  NEXT_PUBLIC_POSTHOG_HOST: "DISABLED_REDIRECT_TO_LOCAL"  # was: app.posthog.com
+  NEXT_PUBLIC_POSTHOG_KEY: "DISABLED_REDIRECT_TO_LOCAL"
+  NEXT_PUBLIC_SENTRY_DSN: "DISABLED_REDIRECT_TO_LOCAL"    # was: sentry.io  
+  NEXT_PUBLIC_SENTRY_ENVIRONMENT: "local-only"
+  NEXT_PUBLIC_SESSION_RECORDER_KEY: "DISABLED_REDIRECT_TO_LOCAL"  # was: clarity.microsoft.com
+  NEXT_PUBLIC_PLAUSIBLE_DOMAIN: "DISABLED_REDIRECT_TO_LOCAL"       # was: plausible.io
+  NEXT_PUBLIC_ENABLE_SESSION_RECORDER: "0"
+  
+  # Plane.so service redirections - CRITICAL DATA EXFILTRATION PREVENTION
+  PLANE_TELEMETRY_URL: "http://localhost:8000/api/local-analytics/telemetry"  # was: telemetry.plane.so
+  PLANE_SUPPORT_EMAIL: "local-support@localhost"  # was: support@plane.so
+  PLANE_SALES_EMAIL: "local-sales@localhost"      # was: sales@plane.so
 
 services:
   web:
