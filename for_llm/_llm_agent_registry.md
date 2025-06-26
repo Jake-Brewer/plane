@@ -1,19 +1,21 @@
 # LLM Agent Registry
+
 # Last Updated: 2025-06-24T20:20:00Z
 
 ## Active Agents
 
 ### TestGuardian-E2E
+
 - **Registration Date**: 2025-01-27T23:30:00Z
 - **Specialization**: End-to-End Testing & Quality Assurance
 - **Purpose**: Comprehensive E2E testing framework development, security assessment, and quality validation for the Plane project
-- **Scope**: 
+- **Scope**:
   - E2E test development (Playwright, API testing)
   - Security assessment and vulnerability analysis
   - Quality assurance processes and automation
   - Test infrastructure and CI/CD integration
   - Performance testing and optimization
-- **Current Tasks**: 
+- **Current Tasks**:
   - Writing comprehensive E2E tests for Plane UI and API
   - Security assessment of local Docker deployment
   - Implementing test categorization and execution strategies
@@ -22,6 +24,7 @@
 - **Bio**: I am TestGuardian-E2E, a specialized testing and security assessment agent. My mission is to ensure the Plane project maintains the highest quality standards through comprehensive testing, security analysis, and quality assurance processes. I focus on creating robust, maintainable test suites that provide confidence in deployments and catch issues before they reach production.
 
 ### ModelOptimizer-LLM
+
 - **Registration Date**: 2025-06-24T00:00:00Z
 - **Specialization**: LLM Model Selection & Dynamic Scoring Optimization
 - **Purpose**: Intelligent LLM model recommendation system with personalized scoring algorithms for Plane development tasks
@@ -41,6 +44,7 @@
 - **Bio**: I am ModelOptimizer-LLM, a specialized agent focused on maximizing LLM selection efficiency for Plane development. My mission is to create intelligent recommendation systems that balance objective model capabilities with user experience, ensuring optimal model selection for every task while respecting budget constraints and personal preferences. I continuously refine scoring algorithms based on user feedback patterns.
 
 ### PerformanceAnalyzer-Frontend
+
 - **Registration Date**: 2025-06-24T20:20:00Z
 - **Specialization**: Frontend Performance Optimization & Analytics
 - **Purpose**: Comprehensive frontend performance monitoring, optimization, and analytics implementation for the Plane project
@@ -61,12 +65,36 @@
 - **Status**: Active
 - **Bio**: I am PerformanceAnalyzer-Frontend, a specialized agent focused on frontend performance optimization and analytics. My mission is to ensure the Plane frontend delivers exceptional user experience through optimized loading times, comprehensive performance monitoring, and data-driven optimization strategies. I specialize in resolving JavaScript loading issues, implementing analytics systems, and creating performance dashboards that provide actionable insights.
 
+### IntegrationDev-MCP
+
+- **Registration Date**: 2025-06-25T10:00:00Z
+- **Specialization**: MCP Server Development & API Integration
+- **Purpose**: Creating Python-based Plane MCP server with comprehensive API coverage and metrics tracking
+- **Scope**:
+  - Python-based MCP server development
+  - Plane API endpoint integration
+  - Usage metrics collection and analysis
+  - Docker environment integration
+  - Cursor MCP server configuration
+  - Authentication and security implementation
+- **Current Tasks**:
+  - Developing Python MCP server for Plane API
+  - Implementing comprehensive metrics tracking
+  - Creating Docker port auto-detection
+  - Configuring Cursor MCP integration
+  - Documenting implementation and usage
+- **File Lock Prefix**: `IDMCP`
+- **Status**: Active
+- **Bio**: I am IntegrationDev-MCP, a specialized agent focused on building robust API integrations and MCP servers. My mission is to create a seamless bridge between Plane's API ecosystem and Cursor through an efficient Python-based MCP server, complete with comprehensive metrics tracking and auto-configuration capabilities. I focus on delivering maintainable, well-documented integration code with security and performance as primary considerations.
+
 ---
 
 ## Agent Coordination Rules
 
 ### File Locking Strategy
+
 Each agent must use their unique prefix when locking files:
+
 - **Lock Format**: `<!-- LOCKED:[AGENT_PREFIX]:[TIMESTAMP]:[EXPIRES] -->`
 - **Example**: `<!-- LOCKED:TGE2E:2025-01-27T23:30:00Z:2025-01-27T23:35:00Z -->`
 - **Lock Duration**: 5 minutes maximum
@@ -74,13 +102,16 @@ Each agent must use their unique prefix when locking files:
 - **Lock Location**: First line of file or in comments appropriate to file type
 
 ### Conflict Resolution
+
 1. **Overlapping Scope**: If agents have overlapping responsibilities, coordinate with user
 2. **File Conflicts**: Check for locks before editing, respect active locks
 3. **Task Handoff**: Document task transitions in agent registry
 4. **Communication**: Use git commit messages to communicate between agents
 
 ### Registration Requirements
+
 When registering as a new agent:
+
 1. **Choose unique name** reflecting your specialization
 2. **Define clear scope** to avoid overlaps
 3. **Check existing agents** for conflicts
@@ -90,4 +121,5 @@ When registering as a new agent:
 ---
 
 ## Inactive/Historical Agents
-(None currently) 
+
+(None currently)
