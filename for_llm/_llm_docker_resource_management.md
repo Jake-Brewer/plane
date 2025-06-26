@@ -1,4 +1,5 @@
 # Docker Resource Management Strategy
+
 # Last Updated: 2025-06-25T10:30:00Z
 
 This document outlines our strategy for managing Docker resources to avoid conflicts and ensure proper isolation between different branches and deployments.
@@ -36,7 +37,8 @@ This document outlines our strategy for managing Docker resources to avoid confl
 ## Auto-detection for MCP Server
 
 When developing MCP servers that need to connect to Plane API:
+
 - First check for direct environment variable configuration (PLANE_API_URL)
 - If not found, attempt to auto-detect based on Docker container naming patterns
 - Default to port mapping rules above based on detected branch name
-- Store port information in cache for subsequent requests 
+- Store port information in cache for subsequent requests
